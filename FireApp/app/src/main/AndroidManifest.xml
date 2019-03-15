@@ -2,22 +2,27 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.intel.fireapp">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="Tabungan Sampah"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        android:theme="@style/Theme.Design.NoActionBar">
+        <activity android:name=".MainActivity" />
+        <activity android:name=".Account.register" />
+        <activity android:name=".Account.login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".PengepulKecil.HomePK" />
+        <activity android:name=".TukangRombeng.Home_tr" />
+        <activity android:name=".Anggota.Home_Anggota"></activity>
     </application>
 
 </manifest>
