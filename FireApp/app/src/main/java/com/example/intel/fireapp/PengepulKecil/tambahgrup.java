@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.intel.fireapp.Account.login;
 import com.example.intel.fireapp.Model.TambahGrup;
 import com.example.intel.fireapp.Model.User;
 import com.example.intel.fireapp.R;
@@ -61,12 +62,14 @@ public class tambahgrup extends AppCompatActivity {
         return TextUtils.isEmpty(s);
     }
     private void TambahGrup() {
+
+        mDatabase = FirebaseDatabase.getInstance().getReference("grup");
+
         final String nama_grup = etTambahgrup.getText().toString();
-        SharedPreferences handler = this.getPreferences(Context.MODE_PRIVATE);
-        String id_user = handler.getString("id","");
+
+        String id_user = getIntent().getStringExtra("id");
         String id_grup = mDatabase.push().getKey();
 
-        mDatabase = FirebaseDatabase.getInstance().getReference("users");
 
         TambahGrup tambahGrup = new TambahGrup(id_grup, nama_grup, id_user);
 

@@ -24,6 +24,7 @@ public class HomePK extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomePK.this,tambahgrup.class);
+                intent.putExtra("id", getIntent().getStringExtra("id"));
                 startActivity(intent);
                 finish();
             }

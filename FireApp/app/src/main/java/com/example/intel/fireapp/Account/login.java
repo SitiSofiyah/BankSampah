@@ -26,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class login extends AppCompatActivity {
     private EditText username, password;
+    private String idUser;
     private Button login;
     private boolean hasil=false;
     SharedPreferences sharedPreferences;
@@ -61,16 +62,19 @@ public class login extends AppCompatActivity {
                                     if(login.getLevel().equals("Tukang Rombeng")){
                                         saveCredentials(login.getNama(),login.getPassword(),login.getId(),login.getLevel());
                                         Intent i = new Intent(getApplicationContext(),Home_tr.class);
+                                        i.putExtra("id", login.getId());
                                         startActivity(i);
                                         // Toast.makeText(login.this, "Tukang Rombeng", Toast.LENGTH_LONG).show();
                                     }else if (login.getLevel().equals("Pengepul Kecil")){
                                         saveCredentials(login.getNama(),login.getPassword(),login.getId(),login.getLevel());
                                         Intent i = new Intent(getApplicationContext(),HomePK.class);
+                                        i.putExtra("id", login.getId());
                                         startActivity(i);
                                         // Toast.makeText(login.this, "Pengepul Kecil", Toast.LENGTH_LONG).show();
                                     }else{
                                         saveCredentials(login.getNama(),login.getPassword(),login.getId(),login.getLevel());
                                         Intent i = new Intent(getApplicationContext(),Home_Anggota.class);
+                                        i.putExtra("id", login.getId());
                                         startActivity(i);
                                         //Toast.makeText(login.this, "Anggota", Toast.LENGTH_LONG).show();
                                     }

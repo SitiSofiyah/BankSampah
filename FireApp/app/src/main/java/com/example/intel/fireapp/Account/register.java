@@ -30,7 +30,7 @@ public class register extends AppCompatActivity {
      private Button regis;
      private Spinner levell, jekel;
      private EditText nama, telp, alamat, password;
-     private DatabaseReference mDatabase;
+     private DatabaseReference meDatabase;
 
 
     @Override
@@ -71,13 +71,16 @@ public class register extends AppCompatActivity {
         final String pass = password.getText().toString();
         final String level = levell.getSelectedItem().toString();
         final String jk = jekel.getSelectedItem().toString();
-        String id = mDatabase.push().getKey();
 
-        mDatabase = FirebaseDatabase.getInstance().getReference("users");
+        meDatabase = FirebaseDatabase.getInstance().getReference("users");
+
+        String id = meDatabase.push().getKey();
+
+
 
         User user = new User(id, name,address, telpon, jk, level, pass);
 
-        mDatabase.child(id).setValue(user);
+        meDatabase.child(id).setValue(user);
 
 
     }
