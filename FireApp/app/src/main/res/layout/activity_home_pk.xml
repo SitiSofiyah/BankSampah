@@ -19,5 +19,10 @@
         android:textSize="75dp"
         tools:layout_editor_absoluteX="17dp"
         tools:layout_editor_absoluteY="159dp" />
+    <Button
+        android:id="@+id/grup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gruo"/>
 
 </RelativeLayout>

@@ -22,7 +22,8 @@
         </activity>
         <activity android:name=".PengepulKecil.HomePK" />
         <activity android:name=".TukangRombeng.Home_tr" />
-        <activity android:name=".Anggota.Home_Anggota"></activity>
+        <activity android:name=".Anggota.Home_Anggota" />
+        <activity android:name=".PengepulKecil.tambahgrup"></activity>
     </application>
 
 </manifest>
