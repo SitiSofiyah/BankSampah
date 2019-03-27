@@ -37,21 +37,20 @@ public class tambahgrup extends AppCompatActivity {
         etTambahgrup = (EditText) findViewById(R.id.tambahgrup);
 
 
-        sharedPreferences = getSharedPreferences("myPref", Context.MODE_PRIVATE);
 
         btTambahGrup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    if (!isEmpty(etTambahgrup.getText().toString()))
+//                    if (!isEmpty(etTambahgrup.getText().toString()))
                     TambahGrup();
-                else
-                    Snackbar.make(findViewById(R.id.tambahgrupbutton), "Data barang tidak boleh kosong",
-                            Snackbar.LENGTH_LONG).show();
-
-                InputMethodManager imm = (InputMethodManager)
-                        getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(
-                        etTambahgrup.getWindowToken(), 0);
+//                else
+//                    Snackbar.make(findViewById(R.id.tambahgrupbutton), "Data barang tidak boleh kosong",
+//                            Snackbar.LENGTH_LONG).show();
+//
+//                InputMethodManager imm = (InputMethodManager)
+//                        getSystemService(Context.INPUT_METHOD_SERVICE);
+//                imm.hideSoftInputFromWindow(
+//                        etTambahgrup.getWindowToken(), 0);
             }
 
         });
@@ -66,7 +65,7 @@ public class tambahgrup extends AppCompatActivity {
         String id_user = handler.getString("id","");
         String id_grup = mDatabase.push().getKey();
 
-        mDatabase = FirebaseDatabase.getInstance().getReference("users");
+        mDatabase = FirebaseDatabase.getInstance().getReference("Grup");
 
         TambahGrup tambahGrup = new TambahGrup(id_grup, nama_grup, id_user);
 
