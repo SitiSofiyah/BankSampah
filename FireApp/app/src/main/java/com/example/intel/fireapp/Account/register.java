@@ -12,14 +12,21 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.intel.fireapp.Anggota.Home_Anggota;
 import com.example.intel.fireapp.Model.User;
+import com.example.intel.fireapp.PengepulKecil.HomePK;
 import com.example.intel.fireapp.R;
+import com.example.intel.fireapp.TukangRombeng.Home_tr;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.nio.file.FileVisitResult;
 import java.util.ArrayList;
@@ -30,7 +37,7 @@ public class register extends AppCompatActivity {
      private Button regis;
      private Spinner levell, jekel;
      private EditText nama, telp, alamat, password;
-     private DatabaseReference mDatabase;
+     private DatabaseReference meDatabase;
 
 
     @Override
@@ -50,17 +57,32 @@ public class register extends AppCompatActivity {
         regis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createAccount();
-                Toast.makeText(register.this, "Register Berhasil", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(register.this,login.class);
-                startActivity(intent);
-                finish();
 
+                final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+                String user = nama.getText().toString();
+                final Query query = databaseReference.child("users").orderByChild("nama").equalTo(user);
+
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.exists()){
+                            Toast.makeText(register.this, "Username sudah tersedia", Toast.LENGTH_LONG).show();
+                        }else {
+                            createAccount();
+                            Toast.makeText(register.this, "Register Berhasil", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(register.this,login.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
             }
         });
-
-
-
     }
 
     public void createAccount(){
@@ -71,13 +93,16 @@ public class register extends AppCompatActivity {
         final String pass = password.getText().toString();
         final String level = levell.getSelectedItem().toString();
         final String jk = jekel.getSelectedItem().toString();
-        String id = mDatabase.push().getKey();
 
-        mDatabase = FirebaseDatabase.getInstance().getReference("users");
+        meDatabase = FirebaseDatabase.getInstance().getReference("users");
+
+        String id = meDatabase.push().getKey();
+
+
 
         User user = new User(id, name,address, telpon, jk, level, pass);
 
-        mDatabase.child(id).setValue(user);
+        meDatabase.child(id).setValue(user);
 
 
     }

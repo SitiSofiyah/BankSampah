@@ -134,7 +134,6 @@
                 android:layout_height="24dp"
                 android:layout_gravity="right"
                 android:background="@color/red"
-                android:onClick="regis"
                 android:text="Register"
                 android:textColor="@color/white" />
 
