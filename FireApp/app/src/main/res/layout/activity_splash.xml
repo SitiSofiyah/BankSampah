@@ -12,4 +12,13 @@
         android:layout_height="wrap_content"
         android:src="@drawable/splash"/>
 
+    <ProgressBar
+        android:id="@+id/progressBar1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        tools:layout_editor_absoluteX="168dp"
+        tools:layout_editor_absoluteY="417dp" />
+
 </android.support.constraint.ConstraintLayout>
