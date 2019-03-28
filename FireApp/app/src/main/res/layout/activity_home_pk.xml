@@ -16,7 +16,7 @@
         android:gravity="center"
         android:text="PENGEPUL KECIL"
         android:textColor="@color/red"
-        android:textSize="75dp"
+        android:textSize="70dp"
         tools:layout_editor_absoluteX="17dp"
         tools:layout_editor_absoluteY="159dp" />
     <Button
