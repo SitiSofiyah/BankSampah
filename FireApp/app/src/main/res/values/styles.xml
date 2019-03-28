@@ -9,6 +9,8 @@
         <item name="textInputStyle">@style/Widget.Design.TextInputLayout</item>
         <item name="tabStyle">@style/Widget.Design.TabLayout</item>
         <item name="floatingActionButtonStyle">@style/Widget.Design.FloatingActionButton</item>
+        <item name="cardViewStyle">@style/Base.CardView</item>
+
     </style>
 
 </resources>

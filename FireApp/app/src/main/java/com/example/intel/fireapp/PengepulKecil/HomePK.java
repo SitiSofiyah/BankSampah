@@ -17,18 +17,13 @@ public class HomePK extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_pk);
+    }
 
-        btgrup = (Button) findViewById(R.id.grup);
 
-        btgrup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HomePK.this,tambahgrup.class);
-                intent.putExtra("id", getIntent().getStringExtra("id"));
-                startActivity(intent);
-                finish();
-            }
-        });
-
+    public void grup(View view) {
+        Intent intent = new Intent(HomePK.this,tambahgrup.class);
+        intent.putExtra("id", getIntent().getStringExtra("id"));
+        startActivity(intent);
+        finish();
     }
 }
