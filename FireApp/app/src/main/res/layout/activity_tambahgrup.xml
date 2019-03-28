@@ -12,14 +12,14 @@
         android:id="@+id/tambahgrup"
         android:layout_width="250dp"
         android:layout_height="49dp"
-        android:background="@drawable/edittext"
+        android:background="@color/white"
         android:hint="Tambah Grup"
         android:textColor="@color/black"
         android:textColorHint="@color/grey" />
 
     <Button
         android:id="@+id/tambahgrupbutton"
-        android:layout_width="104dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/tambahgrup"
@@ -34,10 +34,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_below="@id/tambahgrupbutton">
-        <ListView
-            android:id="@+id/listGrup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></ListView>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recylerview_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible" />
     </LinearLayout>
 
 

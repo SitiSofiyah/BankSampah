@@ -8,6 +8,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -18,6 +20,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.intel.fireapp.Account.login;
+import com.example.intel.fireapp.Adapter.GrupAdapter;
 import com.example.intel.fireapp.Anggota.Home_Anggota;
 import com.example.intel.fireapp.Model.TambahGrup;
 import com.example.intel.fireapp.Model.User;
@@ -28,9 +31,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.EmptyStackException;
+import java.util.List;
 
 import static android.text.TextUtils.isEmpty;
 
@@ -41,6 +47,10 @@ public class tambahgrup extends AppCompatActivity {
     private DatabaseReference mDatabase,grupDB;
     ListView listView;
     ArrayList<String> list = new ArrayList<>();
+    ArrayAdapter<String> adapter;
+    TambahGrup tagrup;
+    public RecyclerView recyclerListView;
+    public GrupAdapter myAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,72 +58,109 @@ public class tambahgrup extends AppCompatActivity {
         setContentView(R.layout.activity_tambahgrup);
 
         //inisialisasi edit teks dan button
-        listView = (ListView) findViewById(R.id.listGrup);
+
         btTambahGrup = (Button) findViewById(R.id.tambahgrupbutton);
         etTambahgrup = (EditText) findViewById(R.id.tambahgrup);
 
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,list);
-        listView.setAdapter(adapter);
-
-        grupDB = FirebaseDatabase.getInstance().getInstance().getReference("grup");
-
-        grupDB.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                for(DataSnapshot grupSnapshot : dataSnapshot.getChildren()){
-                    TambahGrup grup = grupSnapshot.getValue(TambahGrup.class);
-
-                    if(grup.getId().equals(getIntent().getStringExtra("id"))){
-                        list.add(grup.getNama_grup());
-                        adapter.notifyDataSetChanged();
-                    }
-                }
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                list.remove(dataSnapshot.getValue(String.class));
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
+        recyclerListView=(RecyclerView) findViewById(R.id.recylerview_list);
+        recyclerListView.setLayoutManager(new LinearLayoutManager(this));
+        myAdapter= new GrupAdapter(this);
+        updateAdapter();
+        recyclerListView.setAdapter(myAdapter);
 
         btTambahGrup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                    if (!isEmpty(etTambahgrup.getText().toString()))
-                    TambahGrup();
-//                else
-//                    Snackbar.make(findViewById(R.id.tambahgrupbutton), "Data barang tidak boleh kosong",
-//                            Snackbar.LENGTH_LONG).show();
-//
-//                InputMethodManager imm = (InputMethodManager)
-//                        getSystemService(Context.INPUT_METHOD_SERVICE);
-//                imm.hideSoftInputFromWindow(
-//                        etTambahgrup.getWindowToken(), 0);
+                  if (!isEmpty(etTambahgrup.getText().toString())){
+                      TambahGrup();
+                      updateAdapter();
+                  }
+                   else{
+                      Snackbar.make(findViewById(R.id.tambahgrupbutton), "Data barang tidak boleh kosong",Snackbar.LENGTH_LONG).show();
+                  }
+
+
             }
 
         });
     }
+
+//    private void update(){
+//        tagrup = new TambahGrup();
+//        listView = (ListView) findViewById(R.id.listGrup);
+//
+//        adapter = new ArrayAdapter<String>(this,R.layout.list_grup,R.id.nama,list);
+//
+//        grupDB = FirebaseDatabase.getInstance().getInstance().getReference();
+//        final Query query = grupDB.child("grup").orderByChild("id").equalTo(getIntent().getStringExtra("id"));
+//
+//        query.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                for(DataSnapshot ds : dataSnapshot.getChildren()){
+//                    tagrup =  ds.getValue(TambahGrup.class);
+//                    list.add(tagrup.getNama_grup().toString());
+//                    listView.setAdapter(adapter);
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+//    }
+//
+    private void updateAdapter(){
+        final List<TambahGrup> listGrup= new ArrayList<>();
+        grupDB = FirebaseDatabase.getInstance().getInstance().getReference();
+        final Query query = grupDB.child("grup").orderByChild("id").equalTo(getIntent().getStringExtra("id"));
+        query.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                listGrup.add(dataSnapshot.getValue(TambahGrup.class));
+                displayUsers(listGrup);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(getApplicationContext(),"Canceled",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
+
     private boolean isEmpty(String s){
         //Cek apakah ada fields yang kosong, sebelum disubmit
         return TextUtils.isEmpty(s);
+    }
+
+    public void displayUsers(List<TambahGrup> ls){
+        recyclerListView.setVisibility(View.VISIBLE);
+        etTambahgrup.setText(null);
+        myAdapter.setData(ls);
+        myAdapter.notifyDataSetChanged();
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
     private void TambahGrup() {
 
@@ -122,9 +169,13 @@ public class tambahgrup extends AppCompatActivity {
         final String nama_grup = etTambahgrup.getText().toString();
 
         String id_user = getIntent().getStringExtra("id");
+
         String id_grup = mDatabase.push().getKey();
 
+<<<<<<< HEAD
+=======
         mDatabase = FirebaseDatabase.getInstance().getReference("Grup");
+>>>>>>> 9ee8baf5a903422579c232e7660aa5ad7abee81b
 
 
         TambahGrup tambahGrup = new TambahGrup(id_grup, nama_grup, id_user);
