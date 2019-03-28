@@ -172,10 +172,9 @@ public class tambahgrup extends AppCompatActivity {
 
         String id_grup = mDatabase.push().getKey();
 
-<<<<<<< HEAD
-=======
+
         mDatabase = FirebaseDatabase.getInstance().getReference("Grup");
->>>>>>> 9ee8baf5a903422579c232e7660aa5ad7abee81b
+
 
 
         TambahGrup tambahGrup = new TambahGrup(id_grup, nama_grup, id_user);
