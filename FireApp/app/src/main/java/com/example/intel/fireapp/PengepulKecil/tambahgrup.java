@@ -124,10 +124,8 @@ public class tambahgrup extends AppCompatActivity {
         String id_user = getIntent().getStringExtra("id");
         String id_grup = mDatabase.push().getKey();
 
-<<<<<<< HEAD
         mDatabase = FirebaseDatabase.getInstance().getReference("Grup");
-=======
->>>>>>> 28401986c2e4cb50d606f1ff60999cb0338180a3
+
 
         TambahGrup tambahGrup = new TambahGrup(id_grup, nama_grup, id_user);
 
