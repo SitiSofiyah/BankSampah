@@ -14,16 +14,18 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".Account.register" />
         <activity android:name=".Account.login">
+        </activity>
+        <activity android:name=".PengepulKecil.HomePK" />
+        <activity android:name=".TukangRombeng.Home_tr" />
+        <activity android:name=".Anggota.Home_Anggota" />
+        <activity android:name=".PengepulKecil.tambahgrup" />
+        <activity android:name=".Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PengepulKecil.HomePK" />
-        <activity android:name=".TukangRombeng.Home_tr" />
-        <activity android:name=".Anggota.Home_Anggota" />
-        <activity android:name=".PengepulKecil.tambahgrup"></activity>
     </application>
 
 </manifest>
