@@ -3,15 +3,37 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#efefef"
     android:layout_gravity="center_horizontal"
     android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:padding="10dp">
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/app"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/green">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/app_bar"></include>
+
+    </android.support.design.widget.AppBarLayout>
+    </LinearLayout>
 
     <EditText
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/app"
         android:id="@+id/tambahgrup"
         android:layout_width="250dp"
         android:layout_height="49dp"
+        android:layout_marginLeft="10dp"
+        android:padding="10dp"
         android:background="@color/white"
         android:hint="Tambah Grup"
         android:textColor="@color/black"
@@ -21,18 +43,18 @@
         android:id="@+id/tambahgrupbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/tambahgrup"
-        android:background="@drawable/roundcorner"
+        android:layout_toEndOf="@+id/tambahgrup"
+        android:background="@color/green"
         android:text="Tambah"
         android:textAllCaps="false"
         android:textColor="#fff"
         android:textSize="12sp" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:padding="10dp"
         android:layout_below="@id/tambahgrupbutton">
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recylerview_list"
