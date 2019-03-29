@@ -6,31 +6,19 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.intel.fireapp.Anggota.Home_Anggota;
 import com.example.intel.fireapp.Model.User;
-import com.example.intel.fireapp.PengepulKecil.HomePK;
 import com.example.intel.fireapp.R;
-import com.example.intel.fireapp.TukangRombeng.Home_tr;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
-import java.nio.file.FileVisitResult;
-import java.util.ArrayList;
-import java.util.List;
 
 public class register extends AppCompatActivity {
 

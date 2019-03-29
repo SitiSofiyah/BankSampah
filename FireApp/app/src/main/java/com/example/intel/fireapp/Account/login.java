@@ -16,7 +16,6 @@ import com.example.intel.fireapp.Model.User;
 import com.example.intel.fireapp.PengepulKecil.HomePK;
 import com.example.intel.fireapp.R;
 import com.example.intel.fireapp.TukangRombeng.Home_tr;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -76,7 +75,7 @@ public class login extends AppCompatActivity {
                                         Intent i = new Intent(getApplicationContext(),Home_Anggota.class);
                                         i.putExtra("id", login.getId());
                                         startActivity(i);
-                                        //Toast.makeText(login.this, "Anggota", Toast.LENGTH_LONG).show();
+                                        //Toast.makeText(login.this, "PageAnggota", Toast.LENGTH_LONG).show();
                                     }
                                 }else{
                                     Toast.makeText(login.this, "gaaadaaaa", Toast.LENGTH_LONG).show();
@@ -113,7 +112,7 @@ public class login extends AppCompatActivity {
         boolean loginCorrect = this.checkCredentials(username,password);
 
         if(loginCorrect){
-            if(level=="Anggota"){
+            if(level=="PageAnggota"){
                 Intent i = new Intent(getApplicationContext(),Home_Anggota.class);
                 startActivity(i);
             }else if(level=="Tukang Rombeng"){

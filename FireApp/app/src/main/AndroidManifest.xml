@@ -13,8 +13,7 @@
         android:theme="@style/Theme.Design.NoActionBar">
         <activity android:name=".MainActivity" />
         <activity android:name=".Account.register" />
-        <activity android:name=".Account.login">
-        </activity>
+        <activity android:name=".Account.login" />
         <activity android:name=".PengepulKecil.HomePK" />
         <activity android:name=".TukangRombeng.Home_tr" />
         <activity android:name=".Anggota.Home_Anggota" />
@@ -26,6 +25,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".PengepulKecil.InputAnggota" />
+        <activity android:name=".PengepulKecil.PageAnggota"></activity>
     </application>
 
 </manifest>
