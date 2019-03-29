@@ -13,7 +13,11 @@
         android:theme="@style/Theme.Design.NoActionBar">
         <activity android:name=".MainActivity" />
         <activity android:name=".Account.register" />
+<<<<<<< HEAD
         <activity android:name=".Account.login" />
+=======
+        <activity android:name=".Account.login"></activity>
+>>>>>>> 45481218153c22428f207dfc8cc4073f5b676cd3
         <activity android:name=".PengepulKecil.HomePK" />
         <activity android:name=".TukangRombeng.Home_tr" />
         <activity android:name=".Anggota.Home_Anggota" />
@@ -25,8 +29,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
         <activity android:name=".PengepulKecil.InputAnggota" />
         <activity android:name=".PengepulKecil.PageAnggota"></activity>
+=======
+        <activity android:name=".Anggota.Infoamasi"></activity>
+>>>>>>> 45481218153c22428f207dfc8cc4073f5b676cd3
     </application>
 
 </manifest>
