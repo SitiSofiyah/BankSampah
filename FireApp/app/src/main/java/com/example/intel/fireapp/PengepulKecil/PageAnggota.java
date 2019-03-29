@@ -53,97 +53,99 @@ public class PageAnggota extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anggota);
 
+
+
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Grup Tabungan Sampah");
         setSupportActionBar(toolbar);
 
-        recyclerListView=(RecyclerView) findViewById(R.id.recylerview_list);
-        recyclerListView.setLayoutManager(new LinearLayoutManager(this));
-        myAdapter= new AnggotaAdapter(this, getIntent().getStringExtra("id"));
-        updateAdapter();
-        recyclerListView.setAdapter(myAdapter);
-
-        updateAdapter();
-
-
-    }
-
-    private void updateAdapter(){
-        final List<Anggota> listAnggota= new ArrayList<>();
-        final List<User> listUser= new ArrayList<>();
-        ref = FirebaseDatabase.getInstance().getInstance().getReference();
-        final Query query = ref.child("anggota").orderByChild("id_grup").equalTo(getIntent().getStringExtra("idGrup"));
-        query.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                for(DataSnapshot ds : dataSnapshot.getChildren()){
-                    Anggota anggota = ds.getValue(Anggota.class);
-                    final Query query = ref.child("users").orderByChild("id").equalTo(anggota.getId_user().toString());
-
-                    query.addChildEventListener(new ChildEventListener() {
-                        @Override
-                        public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                            listAnggota.add(dataSnapshot.getValue(Anggota.class));
-                            listUser.add(dataSnapshot.getValue(User.class));
-                            displayUsers(listAnggota, listUser);
-                        }
-
-                        @Override
-                        public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                        }
-
-                        @Override
-                        public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                        }
-
-                        @Override
-                        public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-                }
-
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(getApplicationContext(),"Canceled",Toast.LENGTH_SHORT).show();
-            }
-        });
+//        recyclerListView=(RecyclerView) findViewById(R.id.recylerview_list);
+//        recyclerListView.setLayoutManager(new LinearLayoutManager(this));
+//        myAdapter= new AnggotaAdapter(this, getIntent().getStringExtra("id"));
+//        updateAdapter();
+//        recyclerListView.setAdapter(myAdapter);
+//
+//        updateAdapter();
 
 
     }
-
-
-    public void displayUsers(List<Anggota> ls, List<User> lu){
-        recyclerListView.setVisibility(View.VISIBLE);
-        myAdapter.setData(ls,lu);
-        myAdapter.notifyDataSetChanged();
-    }
-
+//
+//    private void updateAdapter(){
+//        final List<Anggota> listAnggota= new ArrayList<>();
+//        final List<User> listUser= new ArrayList<>();
+//        ref = FirebaseDatabase.getInstance().getInstance().getReference();
+//        final Query query = ref.child("anggota").orderByChild("id_grup").equalTo(getIntent().getStringExtra("idGrup"));
+//        query.addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                for(DataSnapshot ds : dataSnapshot.getChildren()){
+//                    Anggota anggota = ds.getValue(Anggota.class);
+//                    final Query query = ref.child("users").orderByChild("id").equalTo(anggota.getId_user().toString());
+//
+//                    query.addChildEventListener(new ChildEventListener() {
+//                        @Override
+//                        public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//                            listAnggota.add(dataSnapshot.getValue(Anggota.class));
+//                            listUser.add(dataSnapshot.getValue(User.class));
+//                            displayUsers(listAnggota, listUser);
+//                        }
+//
+//                        @Override
+//                        public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                        }
+//                    });
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                Toast.makeText(getApplicationContext(),"Canceled",Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//
+//    }
+//
+//
+//    public void displayUsers(List<Anggota> ls, List<User> lu){
+//        recyclerListView.setVisibility(View.VISIBLE);
+//        myAdapter.setData(ls,lu);
+//        myAdapter.notifyDataSetChanged();
+//    }
+//
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
