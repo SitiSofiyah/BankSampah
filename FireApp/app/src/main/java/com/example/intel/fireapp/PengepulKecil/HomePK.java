@@ -50,7 +50,7 @@ public class HomePK extends AppCompatActivity {
                 return true;
 
             case R.id.out:
-                SharedPreferences preferences =getSharedPreferences("loginPrefs", Context.MODE_PRIVATE);
+                SharedPreferences preferences =getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.clear();
                 editor.commit();

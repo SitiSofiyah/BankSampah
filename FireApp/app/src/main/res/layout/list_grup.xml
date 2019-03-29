@@ -1,13 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:orientation="horizontal"
+    tools:context=".PengepulKecil.HomePK">
 
-    <TextView
-        android:id="@+id/nama"
-        android:hint="Nama Grup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+            <android.support.v7.widget.CardView
+                style="@style/Base.CardView"
+                android:layout_width="match_parent"
+                android:background="@color/white"
+                android:layout_height="wrap_content"
+                android:onClick="grup">
+                <LinearLayout
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:id="@+id/nama"
+                        android:textAllCaps="true"
+                        android:hint="Haiii"
+                        android:textColorHint="@color/green"
+                        android:textColor="@color/green"
+                        android:textSize="35dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:id="@+id/ket"
+                        android:text="110 Anggota"
+                        android:textColor="@color/green"
+                        android:textSize="12dp" />
+                </LinearLayout>
 
-</android.support.v7.widget.CardView>
+
+
+            </android.support.v7.widget.CardView>
+</LinearLayout>
