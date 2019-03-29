@@ -26,4 +26,10 @@ public class HomePK extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    public void order(View view) {
+    }
+
+    public void transaksi(View view) {
+    }
 }
