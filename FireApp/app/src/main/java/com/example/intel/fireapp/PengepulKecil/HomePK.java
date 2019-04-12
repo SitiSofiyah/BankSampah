@@ -21,6 +21,9 @@ import com.example.intel.fireapp.R;
 public class HomePK extends AppCompatActivity {
 
     private Button btgrup;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +32,8 @@ public class HomePK extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Tabungan Sampah");
         setSupportActionBar(toolbar);
+
+
     }
 
     @Override

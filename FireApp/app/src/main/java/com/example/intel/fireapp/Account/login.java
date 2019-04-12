@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.intel.fireapp.Anggota.Home_Anggota;
@@ -29,16 +30,22 @@ public class login extends AppCompatActivity {
     private Button login;
     private boolean hasil=false;
     SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        this.checkSavedCredentials();
+
 
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
         login = (Button) findViewById(R.id.login);
+
+        this.checkSavedCredentials();
+
+
+
 
         sharedPreferences = getSharedPreferences("myPrefs",Context.MODE_PRIVATE);
 
@@ -63,18 +70,21 @@ public class login extends AppCompatActivity {
                                         Intent i = new Intent(getApplicationContext(),Home_tr.class);
                                         i.putExtra("id", login.getId());
                                         startActivity(i);
+                                        finish();
                                         // Toast.makeText(login.this, "Tukang Rombeng", Toast.LENGTH_LONG).show();
                                     }else if (login.getLevel().equals("Pengepul Kecil")){
                                         saveCredentials(login.getNama(),login.getPassword(),login.getId(),login.getLevel());
                                         Intent i = new Intent(getApplicationContext(),HomePK.class);
                                         i.putExtra("id", login.getId());
                                         startActivity(i);
+                                        finish();
                                         // Toast.makeText(login.this, "Pengepul Kecil", Toast.LENGTH_LONG).show();
                                     }else{
                                         saveCredentials(login.getNama(),login.getPassword(),login.getId(),login.getLevel());
                                         Intent i = new Intent(getApplicationContext(),Home_Anggota.class);
                                         i.putExtra("id", login.getId());
                                         startActivity(i);
+                                        finish();
                                         //Toast.makeText(login.this, "PageAnggota", Toast.LENGTH_LONG).show();
                                     }
                                 }else{
@@ -115,15 +125,17 @@ public class login extends AppCompatActivity {
             if(level=="PageAnggota"){
                 Intent i = new Intent(getApplicationContext(),Home_Anggota.class);
                 startActivity(i);
+                finish();
             }else if(level=="Tukang Rombeng"){
                 Intent i = new Intent(getApplicationContext(),Home_tr.class);
                 startActivity(i);
+                finish();
             }else{
                 Intent i = new Intent(getApplicationContext(),HomePK.class);
                 startActivity(i);
+                finish();
             }
         }
-
     }
 
     private boolean checkCredentials(String username, final String password) {

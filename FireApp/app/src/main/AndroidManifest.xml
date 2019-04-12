@@ -14,7 +14,7 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".Account.register" />
 
-        <activity android:name=".Account.login" />
+        <activity android:name=".Account.login"/>
 
         <activity android:name=".PengepulKecil.HomePK" />
         <activity android:name=".TukangRombeng.Home_tr" />

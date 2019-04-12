@@ -32,13 +32,9 @@ public class AnggotaAdapter extends RecyclerView.Adapter<AnggotaAdapter.MyViewHo
         idUser = id;
     }
 
-    public void setData(List<Anggota> anggota, List<User> user) {
+    public void setData(List<Anggota> anggota) {
         anggotaList.clear();
         anggotaList.addAll(anggota);
-        notifyDataSetChanged();
-
-        userList.clear();
-        userList.addAll(user);
         notifyDataSetChanged();
     }
 
@@ -55,11 +51,8 @@ public class AnggotaAdapter extends RecyclerView.Adapter<AnggotaAdapter.MyViewHo
     @Override
     public void onBindViewHolder(final AnggotaAdapter.MyViewHolder holder, final int position) {
         final Anggota anggota = anggotaList.get(position);
-        final User user = userList.get(position);
 
         holder.id.setText(anggota.getId());
-        holder.nama.setText(user.getNama());
-        holder.grup.setText(anggota.getId_grup());
         holder.user.setText(anggota.getId_user());
 
 //        holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -83,14 +76,12 @@ public class AnggotaAdapter extends RecyclerView.Adapter<AnggotaAdapter.MyViewHo
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView grup,user,id,nama;
+        public TextView user,id;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            grup = (TextView) itemView.findViewById(R.id.idGrup);
             id = (TextView) itemView.findViewById(R.id.id);
             user = (TextView) itemView.findViewById(R.id.idAnggota);
-            nama = (TextView) itemView.findViewById(R.id.namaAnggota);
         }
     }
 }
