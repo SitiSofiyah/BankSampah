@@ -5,7 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.example.intel.fireapp.Account.Utils.PreferencesUtility;
 import com.example.intel.fireapp.Account.login;
+import com.example.intel.fireapp.Anggota.Home_Anggota;
+import com.example.intel.fireapp.PengepulKecil.HomePK;
+import com.example.intel.fireapp.TukangRombeng.Home_tr;
 
 public class Splash extends AppCompatActivity {
 
@@ -16,21 +20,24 @@ public class Splash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        new Handler().postDelayed(new Runnable() {
+
+            new Handler().postDelayed(new Runnable() {
 
 
-            @Override
-            public void run() {
-                // TODO Auto-generated method stub
-                Intent i = new Intent(Splash.this, login.class);
-                startActivity(i); // menghubungkan activity splashscren ke main activity dengan intent
+                @Override
+                public void run() {
+                    // TODO Auto-generated method stub
+                    Intent i = new Intent(Splash.this, login.class);
+                    startActivity(i); // menghubungkan activity splashscren ke main activity dengan intent
 
 
-                //jeda selesai Splashscreen
-                finish();
-            }
-        }, splashInterval);
+                    //jeda selesai Splashscreen
+                    finish();
+                }
+            }, splashInterval);
 
-    };
+        }
+        ;
+
 }
 

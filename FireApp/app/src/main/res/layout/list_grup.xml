@@ -28,7 +28,7 @@
                         android:hint="Haiii"
                         android:textColorHint="@color/green"
                         android:textColor="@color/green"
-                        android:textSize="35dp" />
+                        android:textSize="20dp" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

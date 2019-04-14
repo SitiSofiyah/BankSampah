@@ -2,10 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back"
-    android:id="@+id/loginForm"
-    android:visibility="invisible"
+    android:background="@drawable/hijau"
     android:orientation="vertical"
+    android:id="@+id/loginForm"
+    android:visibility="visible"
     android:scrollbarAlwaysDrawVerticalTrack="true">
 
     <RelativeLayout
@@ -27,20 +27,10 @@
             android:paddingTop="20dp">
 
             <ImageView
-                android:layout_width="133dp"
-                android:layout_height="79dp"
+                android:layout_width="139dp"
+                android:layout_height="116dp"
                 android:layout_gravity="center"
-                android:src="@drawable/bank_sampah_logo" />
-
-            <TextView
-                android:id="@+id/header"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="TABUNGAN SAMPAH"
-                android:textColor="@color/black"
-                android:textSize="26sp"
-                android:textStyle="bold" />
+                android:src="@drawable/splash" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -87,6 +77,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="22dp"
                 android:background="@drawable/roundcorner"
+                android:onClick="login"
                 android:text="Login"
                 android:textAllCaps="false"
                 android:textColor="#fff"
