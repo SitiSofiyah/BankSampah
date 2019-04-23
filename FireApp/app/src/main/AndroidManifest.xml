@@ -28,7 +28,8 @@
         <activity android:name=".PengepulKecil.InputAnggota" />
         <activity android:name=".PengepulKecil.PageAnggota" />
         <activity android:name=".Anggota.Infoamasi" />
-        <activity android:name=".Update"></activity>
+        <activity android:name=".Account.Update" />
+        <activity android:name=".Account.db_ReadAkun"></activity>
     </application>
 
 </manifest>
