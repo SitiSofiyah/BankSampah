@@ -12,7 +12,6 @@ import android.support.v7.widget.Toolbar;
 
 import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
 import com.example.intel.fireapp.Account.login;
-import com.example.intel.fireapp.Model.User;
 import com.example.intel.fireapp.R;
 
 public class HomePK extends AppCompatActivity {
@@ -46,6 +45,8 @@ public class HomePK extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.akun:
                 // User chose the "Settings" item, show the app settings UI...
+                Intent intents = new Intent(HomePK.this, db_ReadAkun.class);
+                startActivity(intents);
                 return true;
 
             case R.id.help:
