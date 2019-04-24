@@ -30,6 +30,12 @@
 
         <activity android:name=".PengepulKecil.InputAnggota" />
         <activity android:name=".PengepulKecil.PageAnggota"></activity>
+        <activity android:name=".PengepulKecil.db_ReadAkun"
+            android:parentActivityName=".PengepulKecil.HomePK">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".PengepulKecil.HomePK"></meta-data>
+        </activity>
 
         <activity android:name=".Anggota.Infoamasi"></activity>
     </application>
