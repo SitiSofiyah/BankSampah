@@ -49,7 +49,6 @@ public class HomePK extends AppCompatActivity {
                 // User chose the "Settings" item, show the app settings UI...
                 Intent intents = new Intent(HomePK.this, db_ReadAkun.class);
                 startActivity(intents);
-                finish();
                 return true;
 
             case R.id.help:
