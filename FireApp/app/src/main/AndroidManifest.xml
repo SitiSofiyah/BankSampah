@@ -29,7 +29,7 @@
         <activity android:name=".PengepulKecil.PageAnggota" />
         <activity android:name=".Anggota.Infoamasi" />
         <activity android:name=".Account.Update" />
-        <activity android:name=".Account.db_ReadAkun"
+        <activity android:name=".PengepulKecil.db_ReadAkun"
             android:parentActivityName=".PengepulKecil.HomePK"
             >
             <meta-data

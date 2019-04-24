@@ -11,9 +11,7 @@ import android.widget.Button;
 import android.support.v7.widget.Toolbar;
 
 import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
-import com.example.intel.fireapp.Account.db_ReadAkun;
 import com.example.intel.fireapp.Account.login;
-import com.example.intel.fireapp.Model.User;
 import com.example.intel.fireapp.R;
 
 public class HomePK extends AppCompatActivity {

@@ -1,10 +1,9 @@
-package com.example.intel.fireapp.Account;
+package com.example.intel.fireapp.PengepulKecil;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,11 +11,14 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.example.intel.fireapp.Account.Update;
 import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
+import com.example.intel.fireapp.Account.login;
 import com.example.intel.fireapp.Adapter.AdapterRecycleViewAkun;
+import com.example.intel.fireapp.Anggota.Home_Anggota;
 import com.example.intel.fireapp.Model.User;
-import com.example.intel.fireapp.PengepulKecil.HomePK;
 import com.example.intel.fireapp.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -153,8 +155,9 @@ public class db_ReadAkun extends AppCompatActivity {
         }
     }
 
-    public static Intent getActIntent(Activity activity){
-        return new Intent(activity, db_ReadAkun.class);
+    public void edit(View view) {
+        Intent i = new Intent(getApplicationContext(),Update.class);
+        startActivity(i);
     }
 }
 
