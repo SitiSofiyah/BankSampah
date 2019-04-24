@@ -3,13 +3,19 @@ package com.example.intel.fireapp.Account;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 
+import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
 import com.example.intel.fireapp.Adapter.AdapterRecycleViewAkun;
 import com.example.intel.fireapp.Model.User;
+import com.example.intel.fireapp.PengepulKecil.HomePK;
 import com.example.intel.fireapp.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,6 +44,12 @@ public class db_ReadAkun extends AppCompatActivity {
          */
         setContentView(R.layout.activity_db__read_akun);
 
+
+        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Tabungan Sampah");
+        setSupportActionBar(toolbar);
+
         /**
          * Inisialisasi RecyclerView & komponennya
          */
@@ -54,7 +66,7 @@ public class db_ReadAkun extends AppCompatActivity {
         /**
          * Mengambil data barang dari Firebase Realtime DB
          */
-        database.child("barang").addValueEventListener(new ValueEventListener() {
+        database.child("users").orderByChild("id").equalTo(SaveSharedPreference.getId(getApplicationContext())).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -96,6 +108,44 @@ public class db_ReadAkun extends AppCompatActivity {
                 System.out.println(databaseError.getDetails()+" "+databaseError.getMessage());
             }
         });
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.akun:
+                // User chose the "Settings" item, show the app settings UI...
+                Intent intents = new Intent(db_ReadAkun.this, db_ReadAkun.class);
+                startActivity(intents);
+                finish();
+                return true;
+
+            case R.id.help:
+                // User chose the "Favorite" action, mark the current item
+                // as a favorite...
+                return true;
+
+            case R.id.out:
+                SaveSharedPreference.setLoggedInPK(getApplicationContext(), false);
+                SaveSharedPreference.setId(getApplicationContext(), null);
+                Intent intent = new Intent(db_ReadAkun.this, login.class);
+                startActivity(intent);
+                finish();
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 
     public static Intent getActIntent(Activity activity){

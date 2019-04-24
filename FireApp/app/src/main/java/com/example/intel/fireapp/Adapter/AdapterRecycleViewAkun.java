@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.intel.fireapp.Model.Anggota;
 import com.example.intel.fireapp.Model.User;
 import com.example.intel.fireapp.R;
 
@@ -32,12 +33,16 @@ public class AdapterRecycleViewAkun extends RecyclerView.Adapter<AdapterRecycleV
          * Di tutorial ini kita hanya menggunakan data String untuk tiap item
          * dan juga view nya hanyalah satu TextView
          */
-        TextView tvTitle;
+        TextView tvNama, tvAlamat, tvJK, tvTelp;
+
 
         ViewHolder(View v) {
             super(v);
-            tvTitle = (TextView) v.findViewById(R.id.akun);
-        }
+            tvNama = (TextView) v.findViewById(R.id.tv_nama);
+            tvJK = (TextView) v.findViewById(R.id.tv_JK);
+            tvAlamat = (TextView) v.findViewById(R.id.tv_Alamat);
+            tvTelp = (TextView) v.findViewById(R.id.tv_Telepon);
+    }
     }
 
     @Override
@@ -57,8 +62,9 @@ public class AdapterRecycleViewAkun extends RecyclerView.Adapter<AdapterRecycleV
         /**
          *  Menampilkan data pada view
          */
-        final String name = dataUser.get(position).getNama();
-        holder.tvTitle.setOnClickListener(new View.OnClickListener() {
+
+        final User user = dataUser.get(position);
+        holder.tvNama.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 /**
@@ -66,7 +72,7 @@ public class AdapterRecycleViewAkun extends RecyclerView.Adapter<AdapterRecycleV
                  */
             }
         });
-        holder.tvTitle.setOnLongClickListener(new View.OnLongClickListener() {
+        holder.tvNama.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
                 /**
@@ -75,7 +81,10 @@ public class AdapterRecycleViewAkun extends RecyclerView.Adapter<AdapterRecycleV
                 return true;
             }
         });
-        holder.tvTitle.setText(name);
+        holder.tvNama.setText(user.getNama());
+        holder.tvJK.setText(user.getJeniskel());
+        holder.tvAlamat.setText(user.getAlamat());
+        holder.tvTelp.setText(user.getTelp());
     }
 
     @Override
