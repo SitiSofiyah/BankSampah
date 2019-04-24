@@ -22,14 +22,11 @@ import java.util.List;
 
 public class AnggotaAdapter extends RecyclerView.Adapter<AnggotaAdapter.MyViewHolder>{
     private final Context mContext;
-    private final String idUser;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private List<Anggota> anggotaList = new ArrayList<>();
-    private List<User> userList = new ArrayList<>();
 
-    public AnggotaAdapter(Context context, String id) {
+    public AnggotaAdapter(Context context) {
         mContext = context;
-        idUser = id;
     }
 
     public void setData(List<Anggota> anggota) {
@@ -52,8 +49,10 @@ public class AnggotaAdapter extends RecyclerView.Adapter<AnggotaAdapter.MyViewHo
     public void onBindViewHolder(final AnggotaAdapter.MyViewHolder holder, final int position) {
         final Anggota anggota = anggotaList.get(position);
 
-        holder.id.setText(anggota.getId());
-        holder.user.setText(anggota.getId_user());
+        holder.id_grup.setText(anggota.getId_grup());
+        holder.user_id.setText(anggota.getId_user());
+        holder.nama.setText(anggota.getNama());
+        holder.alamat.setText(anggota.getAlamat());
 
 //        holder.itemView.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -76,12 +75,14 @@ public class AnggotaAdapter extends RecyclerView.Adapter<AnggotaAdapter.MyViewHo
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView user,id;
+        public TextView user_id,id_grup,nama, alamat;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            id = (TextView) itemView.findViewById(R.id.id);
-            user = (TextView) itemView.findViewById(R.id.idAnggota);
+            user_id = (TextView) itemView.findViewById(R.id.idUser);
+            id_grup = (TextView) itemView.findViewById(R.id.idGrup);
+            nama = (TextView) itemView.findViewById(R.id.namaAnggota);
+            alamat = (TextView) itemView.findViewById(R.id.alamatAnggota);
         }
     }
 }

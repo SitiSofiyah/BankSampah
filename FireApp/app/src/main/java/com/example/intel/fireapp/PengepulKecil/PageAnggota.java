@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
 import com.example.intel.fireapp.Account.login;
 import com.example.intel.fireapp.Adapter.AnggotaAdapter;
 import com.example.intel.fireapp.Model.Anggota;
@@ -27,6 +28,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,56 +52,47 @@ public class PageAnggota extends AppCompatActivity {
 
 
 
-//        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        toolbar.setTitle("Grup Tabungan Sampah");
-//        setSupportActionBar(toolbar);
+        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Anggota Grup "+getIntent().getStringExtra("namaGrup"));
+        setSupportActionBar(toolbar);
 
-        recyclerListView=(RecyclerView) findViewById(R.id.recylerview_list);
+        recyclerListView=(RecyclerView) findViewById(R.id.anggota_list);
         recyclerListView.setLayoutManager(new LinearLayoutManager(this));
-        myAdapter= new AnggotaAdapter(this, getIntent().getStringExtra("id"));
+        myAdapter= new AnggotaAdapter(this);
         updateAdapter();
         recyclerListView.setAdapter(myAdapter);
-
-        updateAdapter();
-
-
     }
 //
     private void updateAdapter(){
         final List<Anggota> listAnggota= new ArrayList<>();
         ref = FirebaseDatabase.getInstance().getInstance().getReference();
-        final Query query = ref.child("anggota").equalTo(getIntent().getStringExtra("idGrup"));
+        final Query query = ref.child("anggota").child(getIntent().getStringExtra("idGrup"));
         query.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                listAnggota.add(dataSnapshot.getValue(Anggota.class));
+                displayUsers(listAnggota);
+            }
 
-
-
-                            listAnggota.add(dataSnapshot.getValue(Anggota.class));
-                            displayUsers(listAnggota);
-
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
             }
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
 
             }
 
             @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
             }
 
             @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(getApplicationContext(),"Canceled",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -132,12 +125,9 @@ public class PageAnggota extends AppCompatActivity {
                 return true;
 
             case R.id.out:
-                SharedPreferences preferences =getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.clear();
-                editor.commit();
-                finish();
-                Intent intent = new Intent(PageAnggota.this,login.class);
+                SaveSharedPreference.setLoggedInPK(getApplicationContext(), false);
+                SaveSharedPreference.setId(getApplicationContext(), null);
+                Intent intent = new Intent(PageAnggota.this, login.class);
                 startActivity(intent);
                 finish();
                 return true;

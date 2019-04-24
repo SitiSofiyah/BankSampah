@@ -10,9 +10,9 @@
         android:label="Tabungan Sampah"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Design.NoActionBar">
+        android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" />
-        <activity android:name=".Account.register" />
+        <activity android:name=".Account.register"/>
 
         <activity android:name=".Account.login"/>
 

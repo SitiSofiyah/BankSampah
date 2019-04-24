@@ -6,8 +6,11 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -23,9 +26,12 @@ import com.google.firebase.database.ValueEventListener;
 public class register extends AppCompatActivity {
 
      private Button regis;
-     private Spinner levell, jekel;
+     private RadioGroup jekel;
+     private Spinner levell;
+     private RadioButton lk, pr;
      private EditText nama, telp, alamat, password;
      private DatabaseReference meDatabase;
+     private String jenisKel;
 
 
     @Override
@@ -33,14 +39,18 @@ public class register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
 
+
+
         // Get reference of widgets from XML layout
         nama = (EditText) findViewById(R.id.nama) ;
         telp = (EditText) findViewById(R.id.telp) ;
         alamat = (EditText) findViewById(R.id.alamat) ;
         password = (EditText) findViewById(R.id.password) ;
          levell = (Spinner) findViewById(R.id.level);
-         jekel = (Spinner) findViewById(R.id.jk);
+         jekel = (RadioGroup) findViewById(R.id.jk);
         regis = (Button) findViewById(R.id.register);
+        lk = (RadioButton) findViewById(R.id.lk);
+        pr = (RadioButton) findViewById(R.id.pr);
 
         regis.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +63,11 @@ public class register extends AppCompatActivity {
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if(dataSnapshot.exists()){
+                        if(nama.getText().toString()==""||telp.getText().toString()==""||alamat.getText().toString()==""||password.getText().toString()=="")
+                        {
+                            Toast.makeText(register.this, "Lengkapi Data diri Anda !", Toast.LENGTH_LONG).show();
+                        }
+                        else if(dataSnapshot.exists()){
                             Toast.makeText(register.this, "Username sudah tersedia", Toast.LENGTH_LONG).show();
                         }else {
                             createAccount();
@@ -75,12 +89,20 @@ public class register extends AppCompatActivity {
 
     public void createAccount(){
 
+        int selectedId = jekel.getCheckedRadioButtonId();
+
+        if(selectedId == pr.getId()){
+            jenisKel = "pria";
+        } else{
+            jenisKel = "wanita";
+        }
+
         final String name = nama.getText().toString();
         final String address = alamat.getText().toString();
         final String telpon = telp.getText().toString();
         final String pass = password.getText().toString();
         final String level = levell.getSelectedItem().toString();
-        final String jk = jekel.getSelectedItem().toString();
+        final String jk = jenisKel;
 
         meDatabase = FirebaseDatabase.getInstance().getReference("users");
 

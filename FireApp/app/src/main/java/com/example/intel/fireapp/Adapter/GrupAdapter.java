@@ -7,7 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.intel.fireapp.Account.login;
 import com.example.intel.fireapp.PengepulKecil.PageAnggota;
 import com.example.intel.fireapp.Model.TambahGrup;
 import com.example.intel.fireapp.R;
@@ -53,7 +55,9 @@ public class GrupAdapter extends RecyclerView.Adapter<GrupAdapter.MyViewHolder>{
                 Context context = view.getContext();
                 Intent intent = new Intent(context,PageAnggota.class);
                 intent.putExtra("idGrup", ""+grup.getId_grup());
+                intent.putExtra("namaGrup", ""+grup.getNama_grup());
                 intent.putExtra("id", ""+idUser);
+                Toast.makeText(context, grup.getId_grup(), Toast.LENGTH_LONG).show();
                 context.startActivity(intent);
             }
         });

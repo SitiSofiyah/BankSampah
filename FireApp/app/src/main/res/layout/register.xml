@@ -2,39 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back"
+    android:background="@drawable/hijau"
     android:orientation="vertical"
     android:scrollbarAlwaysDrawVerticalTrack="true">
 
     <RelativeLayout
-        android:id="@+id/relativeLayout"
-        android:layout_width="358dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="14dp"
-        android:background="#fff"
-        android:elevation="4dp"
-        android:orientation="vertical"
-        android:padding="20dp">
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="REGISTRASI AKUN"
-            android:textAlignment="center"
-            android:textColor="@color/black" />
-
-
-    </RelativeLayout>
-
-    <RelativeLayout
         android:id="@+id/relativeLayout2"
-        android:layout_width="358dp"
-        android:layout_height="471dp"
-        android:layout_marginTop="75dp"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
         android:background="#fff"
         android:elevation="4dp"
         android:orientation="vertical"
@@ -49,42 +26,66 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="REGISTRASI"
+                android:textAlignment="center"
+                android:textColor="@color/green"
+                android:textSize="30dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:text="Nama "
-                android:textColor="@color/black" />
+                android:textColor="@color/black"/>
 
             <EditText
                 android:id="@+id/nama"
+                android:textColor="@color/black"
                 style="@android:style/Widget.EditText"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black" />
+                android:layout_height="wrap_content"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Alamat "
-                android:textColor="@color/black" />
+                android:textColor="@color/black"/>
 
             <EditText
                 android:id="@+id/alamat"
                 style="@android:style/Widget.EditText"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Jenis Kelamin"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:text="Jenis Kelamin"/>
 
-            <Spinner
+            <RadioGroup
                 android:id="@+id/jk"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:entries="@array/jenisKel"
-                android:visibility="visible"></Spinner>
+                android:layout_height="53dp"
+                android:checkedButton="@id/lk"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/lk"
+                    android:buttonTint="@color/green"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Pria" />
+
+                <RadioButton
+                    android:id="@+id/pr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/green"
+                    android:text="Wanita" />
+            </RadioGroup>
 
             <TextView
                 android:layout_width="match_parent"
@@ -121,8 +122,10 @@
             <Spinner
                 android:id="@+id/level"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:entries="@array/level"></Spinner>
+                android:layout_height="54dp"
+                android:entries="@array/level">
+
+            </Spinner>
 
             <View
                 android:layout_width="match_parent"
@@ -133,7 +136,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="24dp"
                 android:layout_gravity="right"
-                android:background="@color/red"
+                android:background="@color/green"
                 android:text="Register"
                 android:textColor="@color/white" />
 

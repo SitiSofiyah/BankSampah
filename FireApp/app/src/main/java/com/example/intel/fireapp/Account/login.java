@@ -45,12 +45,15 @@ public class login extends AppCompatActivity {
         if(SaveSharedPreference.getLoggedStatusPK(getApplicationContext())) {
             Intent intent = new Intent(getApplicationContext(), HomePK.class);
             startActivity(intent);
+            finish();
         }else if(SaveSharedPreference.getLoggedStatusTR(getApplicationContext())){
             Intent intent = new Intent(getApplicationContext(), Home_tr.class);
             startActivity(intent);
+            finish();
         }else if(SaveSharedPreference.getLoggedStatusAnggota(getApplicationContext())) {
             Intent intent = new Intent(getApplicationContext(), Home_Anggota.class);
             startActivity(intent);
+            finish();
         }else {
             loginForm.setVisibility(View.VISIBLE);
         }

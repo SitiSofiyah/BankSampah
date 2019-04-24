@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
 import com.example.intel.fireapp.Account.login;
 import com.example.intel.fireapp.Adapter.GrupAdapter;
 import com.example.intel.fireapp.Model.Anggota;
@@ -104,12 +105,9 @@ public class tambahgrup extends AppCompatActivity {
                 return true;
 
             case R.id.out:
-                SharedPreferences preferences =getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.clear();
-                editor.commit();
-                finish();
-                Intent intent = new Intent(tambahgrup.this,login.class);
+                SaveSharedPreference.setLoggedInPK(getApplicationContext(), false);
+                SaveSharedPreference.setId(getApplicationContext(), null);
+                Intent intent = new Intent(tambahgrup.this, login.class);
                 startActivity(intent);
                 finish();
                 return true;
@@ -125,7 +123,7 @@ public class tambahgrup extends AppCompatActivity {
     private void updateAdapter(){
         final List<TambahGrup> listGrup= new ArrayList<>();
         grupDB = FirebaseDatabase.getInstance().getInstance().getReference();
-        final Query query = grupDB.child("grup").orderByChild("id").equalTo(getIntent().getStringExtra("id"));
+        final Query query = grupDB.child("grup").orderByChild("id").equalTo(SaveSharedPreference.getId(getApplicationContext()));
         query.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
