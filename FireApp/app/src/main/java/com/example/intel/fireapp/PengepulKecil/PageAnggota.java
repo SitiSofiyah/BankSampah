@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
@@ -44,6 +46,7 @@ public class PageAnggota extends AppCompatActivity {
     User user;
     public RecyclerView recyclerListView;
     public AnggotaAdapter myAdapter;
+    public FloatingActionButton add;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,9 +62,20 @@ public class PageAnggota extends AppCompatActivity {
 
         recyclerListView=(RecyclerView) findViewById(R.id.anggota_list);
         recyclerListView.setLayoutManager(new LinearLayoutManager(this));
-        myAdapter= new AnggotaAdapter(this);
+        myAdapter= new AnggotaAdapter(this,"anggota");
         updateAdapter();
         recyclerListView.setAdapter(myAdapter);
+
+        add = (FloatingActionButton) findViewById(R.id.add);
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intents = new Intent(PageAnggota.this, InputAnggota.class);
+                intents.putExtra("idGrup", getIntent().getStringExtra("idGrup").toString());
+                startActivity(intents);
+            }
+        });
     }
 //
     private void updateAdapter(){

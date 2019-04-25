@@ -22,10 +22,13 @@ import java.util.List;
 
 public class AnggotaAdapter extends RecyclerView.Adapter<AnggotaAdapter.MyViewHolder>{
     private final Context mContext;
+    String ket;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private List<Anggota> anggotaList = new ArrayList<>();
 
-    public AnggotaAdapter(Context context) {
+    public AnggotaAdapter(Context context, String ket)
+    {
+        this.ket=ket;
         mContext = context;
     }
 

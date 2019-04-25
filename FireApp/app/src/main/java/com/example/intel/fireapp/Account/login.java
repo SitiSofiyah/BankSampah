@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ public class login extends AppCompatActivity {
     private EditText username, password;
     private Button login;
     RelativeLayout loginForm;
+    ProgressBar prolog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,7 @@ public class login extends AppCompatActivity {
         password = (EditText) findViewById(R.id.password);
         login = (Button) findViewById(R.id.login);
         loginForm = findViewById(R.id.loginForm);
+        prolog = (ProgressBar) findViewById(R.id.prologin);
 
         // Check if UserResponse is Already Logged In
         if(SaveSharedPreference.getLoggedStatusPK(getApplicationContext())) {
@@ -66,6 +69,7 @@ public class login extends AppCompatActivity {
     }
 
     public void login(View view) {
+        prolog.setVisibility(View.VISIBLE);
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         String nama = username.getText().toString();
         final String pass = password.getText().toString();

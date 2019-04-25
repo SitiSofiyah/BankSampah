@@ -56,7 +56,6 @@ public class GrupAdapter extends RecyclerView.Adapter<GrupAdapter.MyViewHolder>{
                 Intent intent = new Intent(context,PageAnggota.class);
                 intent.putExtra("idGrup", ""+grup.getId_grup());
                 intent.putExtra("namaGrup", ""+grup.getNama_grup());
-                intent.putExtra("id", ""+idUser);
                 Toast.makeText(context, grup.getId_grup(), Toast.LENGTH_LONG).show();
                 context.startActivity(intent);
             }
