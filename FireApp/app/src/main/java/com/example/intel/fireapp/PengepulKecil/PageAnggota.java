@@ -62,7 +62,7 @@ public class PageAnggota extends AppCompatActivity {
 
         recyclerListView=(RecyclerView) findViewById(R.id.anggota_list);
         recyclerListView.setLayoutManager(new LinearLayoutManager(this));
-        myAdapter= new AnggotaAdapter(this,"anggota");
+        myAdapter= new AnggotaAdapter(this);
         updateAdapter();
         recyclerListView.setAdapter(myAdapter);
 
@@ -73,6 +73,7 @@ public class PageAnggota extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intents = new Intent(PageAnggota.this, InputAnggota.class);
                 intents.putExtra("idGrup", getIntent().getStringExtra("idGrup").toString());
+                intents.putExtra("namaGrup", getIntent().getStringExtra("namaGrup").toString());
                 startActivity(intents);
             }
         });

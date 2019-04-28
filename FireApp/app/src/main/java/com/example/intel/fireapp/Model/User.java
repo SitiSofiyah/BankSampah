@@ -4,9 +4,15 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class User {
+    private boolean isSelected;
    public String id, nama, alamat, telp, jeniskel, level, password;
 
-
+    public boolean isSelected() {
+        return isSelected;
+    }
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 
     public User() {
     }

@@ -2,6 +2,7 @@ package com.example.intel.fireapp.Model;
 
 public class TambahGrup {
     public  String id_grup, nama_grup, id;
+  public int jml;
 
     public TambahGrup(){
     }
@@ -10,6 +11,15 @@ public class TambahGrup {
         this.id_grup = id_grup;
         this.nama_grup = nama_grup;
         this.id = id;
+    }
+
+    public TambahGrup(String id_grup, int jml){
+        this.id_grup = id_grup;
+        this.jml = jml;
+    }
+
+    public int getJml() {
+        return jml;
     }
 
     public String getId_grup() {

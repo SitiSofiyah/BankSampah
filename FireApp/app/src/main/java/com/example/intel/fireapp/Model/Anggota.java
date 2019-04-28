@@ -1,6 +1,7 @@
 package com.example.intel.fireapp.Model;
 
 public class Anggota {
+
     public String id_grup ,user_id, nama,alamat;
 
     public Anggota() {
@@ -12,6 +13,8 @@ public class Anggota {
         this.nama = nama;
         this.alamat = alamat;
     }
+
+
 
     public String getId_grup() {
         return id_grup;

@@ -13,5 +13,10 @@
         <item name="cardViewStyle">@style/Base.CardView</item>
     </style>
 
+    <style name="WhiteCheck">
+        <item name="android:textColorSecondary">@color/green</item>
+        <item name="colorAccent">@color/green</item>
+    </style>
+
 
 </resources>

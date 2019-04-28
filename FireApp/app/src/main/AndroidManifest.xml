@@ -28,7 +28,12 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".PengepulKecil.InputAnggota" />
+        <activity android:name=".PengepulKecil.InputAnggota"  android:parentActivityName=".PengepulKecil.PageAnggota">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".PengepulKecil.PageAnggota"></meta-data>
+        </activity>
+
         <activity android:name=".PengepulKecil.PageAnggota"></activity>
         <activity android:name=".PengepulKecil.db_ReadAkun"
             android:parentActivityName=".PengepulKecil.HomePK">

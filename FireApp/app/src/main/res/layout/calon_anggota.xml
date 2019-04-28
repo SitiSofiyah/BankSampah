@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <TextView
+        android:id="@+id/namaAnggota"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textAllCaps="true"
+        android:textColorHint="@color/black"
+        android:text="Anggota 2"/>
+
+    <TextView
+        android:id="@+id/alamatAnggota"
+        android:layout_below="@+id/namaAnggota"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:textColorHint="@color/grey"
+        android:text="alamat 2"/>
+
+    <TextView
+        android:id="@+id/idAnggota"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:visibility="invisible"
+        android:textColorHint="@color/grey"
+        android:text="alamat 2"/>
+
+    <CheckBox
+        android:id="@+id/check"
+        android:theme="@style/WhiteCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"/>
+
+    <View
+        android:background="@color/green"
+        android:layout_below="@id/alamatAnggota"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"></View>
+
+</RelativeLayout>
