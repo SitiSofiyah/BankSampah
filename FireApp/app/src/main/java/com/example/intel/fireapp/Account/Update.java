@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -18,6 +19,7 @@ import com.example.intel.fireapp.Model.User;
 import com.example.intel.fireapp.PengepulKecil.HomePK;
 import com.example.intel.fireapp.R;
 import com.example.intel.fireapp.TukangRombeng.Home_tr;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -61,11 +63,12 @@ public class Update extends AppCompatActivity {
             bt_update.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    user.setNama(ed_Nama.getText().toString());
-//                    user.setPassword(etMerk.getText().toString());
-//                    user.setAlamat(etHarga.getText().toString());
-//
-//                    updateBarang(barang);
+                    user.setNama(ed_Nama.getText().toString());
+                    user.setPassword(ed_Password.getText().toString());
+                    user.setAlamat(ed_Alamat.getText().toString());
+                    user.setTelp(ed_Telp.getText().toString());
+
+                    updateAkun(user);
                 }
             });
             bt_update.setOnClickListener(new View.OnClickListener() {
@@ -83,8 +86,55 @@ public class Update extends AppCompatActivity {
                 }
             });
         }
+        private boolean isEmpty(String s){
+            // Cek apakah ada fields yang kosong, sebelum disubmit
+            return TextUtils.isEmpty(s);
+        }
+        private void updateAkun(User user) {
+            /**
+             * Baris kode yang digunakan untuk mengupdate data barang
+             * yang sudah dimasukkan di Firebase Realtime Database
+             */
+            mDatabase.child("users") //akses parent index, ibaratnya seperti nama tabel
+                    .child(user.getId()) //select barang berdasarkan key
+                    .setValue(user) //set value barang yang baru
+                    .addOnSuccessListener(this, new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+
+                            /**
+                             * Baris kode yang akan dipanggil apabila proses update barang sukses
+                             */
+                            Snackbar.make(findViewById(R.id.update), "Data berhasil diupdatekan", Snackbar.LENGTH_LONG).setAction("Oke", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    finish();
+                                }
+                            }).show();
+                        }
+                    });
+        }
+        private void submitBarang(User user) {
+            /**
+             * Ini adalah kode yang digunakan untuk mengirimkan data ke Firebase Realtime Database
+             * dan juga kita set onSuccessListener yang berisi kode yang akan dijalankan
+             * ketika data berhasil ditambahkan
+             */
+            mDatabase.child("users").push().setValue(user).addOnSuccessListener(this, new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    ed_Nama.setText("");
+                    ed_Password.setText("");
+                    ed_Alamat.setText("");
+                    ed_Telp.setText("");
+                    Snackbar.make(findViewById(R.id.update), "Data berhasil ditambahkan", Snackbar.LENGTH_LONG).show();
+                }
+            });
+        }
+
 
 
     }
+
 }
 
