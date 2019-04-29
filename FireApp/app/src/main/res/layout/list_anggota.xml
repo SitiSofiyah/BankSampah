@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/grey"
-    android:padding="15dp"
+    android:background="#f4efef"
+    android:padding="5dp"
     android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView

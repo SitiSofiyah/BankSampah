@@ -39,8 +39,6 @@ public class register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
 
-
-
         // Get reference of widgets from XML layout
         nama = (EditText) findViewById(R.id.nama) ;
         telp = (EditText) findViewById(R.id.telp) ;
@@ -110,7 +108,7 @@ public class register extends AppCompatActivity {
 
 
 
-        User user = new User(id, name,address, telpon, jk, level, pass);
+        User user = new User(id, name,address, telpon, jk, level, pass, "no");
 
         meDatabase.child(id).setValue(user);
 

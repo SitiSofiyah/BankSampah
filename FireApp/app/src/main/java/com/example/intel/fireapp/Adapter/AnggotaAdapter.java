@@ -1,6 +1,7 @@
 package com.example.intel.fireapp.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.intel.fireapp.Model.Anggota;
 import com.example.intel.fireapp.Model.User;
+import com.example.intel.fireapp.PengepulKecil.DetailAnggota;
 import com.example.intel.fireapp.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -52,16 +54,16 @@ public class AnggotaAdapter extends RecyclerView.Adapter<AnggotaAdapter.MyViewHo
         holder.nama.setText(anggota.getNama());
         holder.alamat.setText(anggota.getAlamat());
 
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Context context = view.getContext();
-//                Intent intent = new Intent(context,PageAnggota.class);
-//                intent.putExtra("idGrup", ""+grup.getId_grup());
-//                intent.putExtra("id", ""+idUser);
-//                context.startActivity(intent);
-//            }
-//        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Context context = view.getContext();
+                Intent intent = new Intent(context,DetailAnggota.class);
+                intent.putExtra("idGrup", ""+anggota.getId_grup());
+                intent.putExtra("id", ""+anggota.getId_user());
+                context.startActivity(intent);
+            }
+        });
 
 
     }

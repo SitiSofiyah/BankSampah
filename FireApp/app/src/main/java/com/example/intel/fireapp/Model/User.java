@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 public class User {
     private boolean isSelected;
-   public String id, nama, alamat, telp, jeniskel, level, password;
+   public String id, nama, alamat, telp, jeniskel, level, password, grup;
 
     public boolean isSelected() {
         return isSelected;
@@ -17,10 +17,7 @@ public class User {
     public User() {
     }
 
-
-
-
-    public User(String id, String nama, String alamat, String telp, String jeniskel, String level, String password) {
+    public User(String id, String nama, String alamat, String telp, String jeniskel, String level, String password, String grup) {
         this.id = id;
         this.nama = nama;
         this.alamat = alamat;
@@ -28,6 +25,7 @@ public class User {
         this.jeniskel = jeniskel;
         this.level = level;
         this.password = password;
+        this.grup = grup;
     }
 
     public String getId() {

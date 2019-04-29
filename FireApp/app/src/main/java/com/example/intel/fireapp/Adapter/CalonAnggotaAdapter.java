@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,36 +61,27 @@ public class CalonAnggotaAdapter extends RecyclerView.Adapter<CalonAnggotaAdapte
         holder.id_anggota.setText(anggota.getId());
         holder.nama.setText(anggota.getNama());
         holder.alamat.setText(anggota.getAlamat());
-
+        holder.anggota.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(holder.anggota.isChecked()) {
+                    checkedAnggota.add(anggotaList.get(position));
+                }
+                else if(!holder.anggota.isChecked()) {
+                    checkedAnggota.remove(anggotaList.get(position));
+                }
+            }
+        });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(holder.anggota.isChecked()) {
                     holder.anggota.setChecked(false);
                     checkedAnggota.remove(anggotaList.get(position));
-                    Toast.makeText(mContext, "Ada " + checkedAnggota.size(), Toast.LENGTH_SHORT).show();
-                    sb = new StringBuilder();
-                    int i = 0;
-                    for (i = 0; i < checkedAnggota.size(); i++) {
-
-                        User anggota = checkedAnggota.get(i);
-                        sb.append(anggota.getNama() + "\n");
-                    }
-                    Toast.makeText(mContext, "Ada " + sb.toString(), Toast.LENGTH_SHORT).show();
-
                 }
                 else if(!holder.anggota.isChecked()) {
                     holder.anggota.setChecked(true);
                     checkedAnggota.add(anggotaList.get(position));
-                    Toast.makeText(mContext, "Ada " + checkedAnggota.size(), Toast.LENGTH_SHORT).show();
-                    sb = new StringBuilder();
-                    int i = 0;
-                    for (i = 0; i < checkedAnggota.size(); i++) {
-
-                        User anggota = checkedAnggota.get(i);
-                        sb.append(anggota.getNama() + "\n");
-                    }
-                    Toast.makeText(mContext, "Ada " + sb.toString(), Toast.LENGTH_SHORT).show();
                 }
             }
         });

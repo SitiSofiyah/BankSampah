@@ -68,41 +68,59 @@ public class InputAnggota extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(InputAnggota.this, "Ada " + myAdapter.getCheckedAnggota().size(), Toast.LENGTH_SHORT).show();
                 sb = new StringBuilder();
                 int i = 0;
-                for (i = 0; i < myAdapter.checkedAnggota.size(); i++) {
-                    ref = FirebaseDatabase.getInstance().getReference();
-                    User anggota = myAdapter.checkedAnggota.get(i);
+                if(myAdapter.checkedAnggota.size()>i){
+                    for (i = 0; i < myAdapter.checkedAnggota.size(); i++) {
+                        ref = FirebaseDatabase.getInstance().getReference();
+                        User anggota = myAdapter.checkedAnggota.get(i);
 
+                        ref = FirebaseDatabase.getInstance().getReference("anggota").child(getIntent().getStringExtra("idGrup"));
+                        user = FirebaseDatabase.getInstance().getReference("users").child(anggota.getId());
 
-                    ref = FirebaseDatabase.getInstance().getReference("anggota").child(getIntent().getStringExtra("idGrup"));
-                    user = FirebaseDatabase.getInstance().getReference("users").child(anggota.getId());
+                        Anggota tambahAnggota = new Anggota(getIntent().getStringExtra("idGrup"), anggota.getId(), anggota.getNama(), anggota.getAlamat(), 0);
 
-                    Anggota tambahAnggota = new Anggota(getIntent().getStringExtra("idGrup"), anggota.getId(),anggota.getNama(),anggota.getAlamat());
-
-                    ref.child(anggota.getId()).setValue(tambahAnggota);
-                    user.child("grup").setValue("yes");
-                    sb.append(anggota.getNama() + "\n");
+                        ref.child(anggota.getId()).setValue(tambahAnggota);
+                        user.child("grup").setValue(getIntent().getStringExtra("idGrup"));
+                        Intent intents = new Intent(InputAnggota.this, PageAnggota.class);
+                        intents.putExtra("idGrup", getIntent().getStringExtra("idGrup").toString());
+                        intents.putExtra("namaGrup", getIntent().getStringExtra("namaGrup").toString());
+                        startActivity(intents);
+                        finish();
+                    }
+                }else {
+                    Toast.makeText(InputAnggota.this, "Tidak ada Anggota yang ditambahkan", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(InputAnggota.this, PageAnggota.class);
+                    intent.putExtra("idGrup", getIntent().getStringExtra("idGrup").toString());
+                    intent.putExtra("namaGrup", getIntent().getStringExtra("namaGrup").toString());
+                    startActivity(intent);
+                    finish();
                 }
-                Toast.makeText(InputAnggota.this, "Ada " + sb.toString(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
 
-
     private void updateAdapter(){
-
         ref = FirebaseDatabase.getInstance().getInstance().getReference();
         final Query query = ref.child("users").orderByChild("grup").equalTo("no");
         query.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                User anggota = dataSnapshot.getValue(User.class);
-                if(anggota.getLevel().equals("Anggota")){
-                    listAnggota.add(anggota);
-                    displayUsers(listAnggota);
+                if(dataSnapshot.exists())
+                {
+                    User anggota = dataSnapshot.getValue(User.class);
+                    if(anggota.getLevel().equals("Anggota")){
+                        listAnggota.add(anggota);
+                        displayUsers(listAnggota);
+                    }
+                }else {
+                    Toast.makeText(InputAnggota.this, "Anggota tidak ada", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(InputAnggota.this, PageAnggota.class);
+                    intent.putExtra("idGrup", getIntent().getStringExtra("idGrup").toString());
+                    intent.putExtra("namaGrup", getIntent().getStringExtra("namaGrup").toString());
+                    startActivity(intent);
+                    finish();
                 }
             }
 

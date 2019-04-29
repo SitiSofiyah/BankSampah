@@ -3,18 +3,34 @@ package com.example.intel.fireapp.Model;
 public class Anggota {
 
     public String id_grup ,user_id, nama,alamat;
+    public int saldo;
 
     public Anggota() {
     }
 
-    public Anggota(String id_grup, String id_user, String nama, String alamat) {
+    public Anggota(String id_grup, String id_user, String nama, String alamat, int saldo) {
         this.id_grup = id_grup;
         this.user_id = id_user;
         this.nama = nama;
         this.alamat = alamat;
+        this.saldo = saldo;
     }
 
+    public String getUser_id() {
+        return user_id;
+    }
 
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
+    }
+
+    public int getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(int saldo) {
+        this.saldo = saldo;
+    }
 
     public String getId_grup() {
         return id_grup;

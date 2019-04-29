@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PengepulKecil.DetailAnggota">
+
+    <LinearLayout
+        android:id="@+id/app"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/green">
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/app_bar"></include>
+
+        </android.support.design.widget.AppBarLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <TextView
+        android:padding="2dp"
+        android:id="@+id/judnama"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="79dp"
+        android:text="Nama "
+        android:textColor="@color/black" />
+    <TextView
+        android:padding="2dp"
+        android:id="@+id/nama"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_below="@id/judnama"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <View
+        android:padding="2dp"
+        android:id="@+id/garis1"
+        android:layout_below="@id/nama"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/green"></View>
+    <TextView
+        android:padding="2dp"
+        android:id="@+id/judJeniskel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/garis1"
+        android:text="Jenis Kelamin "
+        android:textColor="@color/black" />
+    <TextView
+        android:padding="2dp"
+        android:id="@+id/jeniskel"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_below="@id/judJeniskel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <View
+        android:padding="2dp"
+        android:id="@+id/garis2"
+        android:layout_below="@id/jeniskel"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/green"></View>
+
+    <TextView
+        android:padding="2dp"
+        android:id="@+id/judAlamat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/garis2"
+        android:text="Alamat "
+        android:textColor="@color/black" />
+    <TextView
+        android:padding="2dp"
+        android:id="@+id/alamat"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_below="@id/judAlamat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <View
+        android:padding="2dp"
+        android:id="@+id/garis3"
+        android:layout_below="@id/alamat"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/green"></View>
+    <TextView
+        android:padding="2dp"
+        android:id="@+id/judSaldo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/garis3"
+        android:text="Saldo "
+        android:textColor="@color/black" />
+    <TextView
+        android:padding="2dp"
+        android:id="@+id/saldo"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_below="@id/judSaldo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <View
+        android:padding="2dp"
+        android:id="@+id/garis4"
+        android:layout_below="@id/saldo"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/green"></View>
+
+    </RelativeLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="221dp"
+        android:padding="10dp"
+        android:layout_marginStart="30dp"
+        android:onClick="tambahTransaksi"
+        android:background="@color/green"
+        android:text="Tambah Transaksi"
+        android:textColor="@color/white" />
+
+    <Button
+        android:padding="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/green"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="221dp"
+        android:onClick="lihatTransaksi"
+        android:layout_marginStart="210dp"
+        android:text="Lihat Transaksi"
+        android:textColor="@color/white" />
+</RelativeLayout>

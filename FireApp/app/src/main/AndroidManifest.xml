@@ -12,10 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" />
-        <activity android:name=".Account.register"/>
-
-        <activity android:name=".Account.login"/>
-
+        <activity android:name=".Account.register" />
+        <activity android:name=".Account.login" />
         <activity android:name=".PengepulKecil.HomePK" />
         <activity android:name=".TukangRombeng.Home_tr" />
         <activity android:name=".Anggota.Home_Anggota" />
@@ -27,22 +25,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".PengepulKecil.InputAnggota"  android:parentActivityName=".PengepulKecil.PageAnggota">
+        <activity
+            android:name=".PengepulKecil.InputAnggota"
+            android:parentActivityName=".PengepulKecil.PageAnggota">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".PengepulKecil.PageAnggota"></meta-data>
+                android:value=".PengepulKecil.PageAnggota" />
         </activity>
-
-        <activity android:name=".PengepulKecil.PageAnggota"></activity>
-        <activity android:name=".PengepulKecil.db_ReadAkun"
+        <activity android:name=".PengepulKecil.PageAnggota" />
+        <activity
+            android:name=".PengepulKecil.db_ReadAkun"
             android:parentActivityName=".PengepulKecil.HomePK">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".PengepulKecil.HomePK"></meta-data>
+                android:value=".PengepulKecil.HomePK" />
         </activity>
-
-        <activity android:name=".Anggota.Infoamasi"></activity>
+        <activity android:name=".Anggota.Infoamasi" />
+        <activity android:name=".PengepulKecil.TransaksiAnggota" />
+        <activity android:name=".PengepulKecil.DetailAnggota" />
     </application>
 
 </manifest>

@@ -71,13 +71,10 @@ public class HomePK extends AppCompatActivity {
     }
     public void grup(View view) {
         Intent intent = new Intent(HomePK.this,tambahgrup.class);
-        intent.putExtra("id", SaveSharedPreference.getId(getApplicationContext()));
         startActivity(intent);
     }
 
     public void order(View view) {
     }
 
-    public void transaksi(View view) {
-    }
 }
