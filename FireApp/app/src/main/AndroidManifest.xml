@@ -43,6 +43,7 @@
         <activity android:name=".Anggota.Infoamasi" />
         <activity android:name=".PengepulKecil.TransaksiAnggota" />
         <activity android:name=".PengepulKecil.DetailAnggota" />
+        <activity android:name=".PengepulKecil.transaksikeTR"></activity>
     </application>
 
 </manifest>
