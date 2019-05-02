@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.intel.fireapp.Model.TransaksiKeTR;
 import com.example.intel.fireapp.Model.User;
 import com.example.intel.fireapp.R;
 import com.google.firebase.database.DataSnapshot;
@@ -64,12 +65,12 @@ public class transaksikeTR extends AppCompatActivity {
 
     private void CreateTransaksiTR() {
 
-        final String plastik = plastik.getText().toString();
-        final String kertas = kertas.getText().toString();
-        final String logam  = logam.getText().toString();
-        final String kaca = kaca.getText().toString();
-        final String lainnya = lainnya.getSelectedItem().toString();
-        final String total = total.getText().toString();
+        final String plastikss = plastik.getText().toString();
+        final String kertass = kertas.getText().toString();
+        final String logams = logam.getText().toString();
+        final String kacas = kaca.getText().toString();
+        final String lainnyas = lainnya.getText().toString();
+        final String totals = total.getText().toString();
 
         menDatabase = FirebaseDatabase.getInstance().getReference("transaksiTR");
 
@@ -77,8 +78,8 @@ public class transaksikeTR extends AppCompatActivity {
 
 
 
-        User user = new User(id, name,address, telpon, jk, level, pass, "no");
+        TransaksiKeTR transaksiKeTR = new TransaksiKeTR(id_ordersampah, plastikss,kertass, logams, kacas, lainnyas, totals);
 
-        meDatabase.child(id).setValue(user);
+        menDatabase.child(id_ordersampah).setValue(transaksiKeTR);
     }
 }

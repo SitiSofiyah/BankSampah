@@ -34,7 +34,7 @@ public class Update extends AppCompatActivity {
 
     private EditText ed_Nama, ed_Alamat, ed_Telp, ed_Password;
     private Button bt_update;
-    private DatabaseReference mDatabase;
+    private DatabaseReference mDatabase,profil;
 
 
     @Override
@@ -78,9 +78,11 @@ public class Update extends AppCompatActivity {
                 public void onClick(View v) {
                     if (!isEmpty(ed_Nama.getText().toString()) && !isEmpty(ed_Password.getText().toString()) && !isEmpty(ed_Alamat.getText().toString()) && !isEmpty(ed_Telp.getText().toString()))
 
-                    submitUser(new user(ed_Nama.getText().toString(), ed_Password.getText().toString(), ed_Alamat.getText().toString(), ed_Telp.getText().toString()));
+                        profil = FirebaseDatabase.getInstance().getReference("users").child(SaveSharedPreference.getId(getApplicationContext()));
+                    profil.child("nama").setValue(getIntent().getStringExtra("idGrup"));
+                    //submitUser(new user(ed_Nama.getText().toString(), ed_Password.getText().toString(), ed_Alamat.getText().toString(), ed_Telp.getText().toString()));
                  else
-                        Snackbar.make(findViewById(R.id.update), "Data barang tidak boleh kosong", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(R.id.update), "Data barang tidak boleh kosong", Snackbar.LENGTH_LONG).show();
 
                     InputMethodManager imm = (InputMethodManager)
                             getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -89,6 +91,7 @@ public class Update extends AppCompatActivity {
                 }
             });
         }
+    }
 //        private boolean isEmpty(String s){
 //            // Cek apakah ada fields yang kosong, sebelum disubmit
 //            return TextUtils.isEmpty(s);
