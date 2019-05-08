@@ -80,29 +80,17 @@ public class PageAnggota extends AppCompatActivity {
     }
 //
     private void updateAdapter(){
-        final List<Anggota> listAnggota= new ArrayList<>();
+        final List<User> listAnggota= new ArrayList<>();
         ref = FirebaseDatabase.getInstance().getInstance().getReference();
-        final Query query = ref.child("anggota").child(getIntent().getStringExtra("idGrup"));
-        query.addChildEventListener(new ChildEventListener() {
+        final Query query = ref.child("anggota").child(getIntent().getStringExtra("idGrup")).equalTo("users").orderByChild("id");
+
+
+//        final Query query = ref.child("anggota").child(getIntent().getStringExtra("idGrup")).equalTo("users").orderByChild("id").equalTo("id_user");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                listAnggota.add(dataSnapshot.getValue(Anggota.class));
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                listAnggota.add(dataSnapshot.getValue(User.class));
                 displayUsers(listAnggota);
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
             }
 
             @Override
@@ -110,12 +98,38 @@ public class PageAnggota extends AppCompatActivity {
 
             }
         });
+//        query.addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//
+//            }
+//
+//            @Override
+//            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
 
 
     }
 
 
-    public void displayUsers(List<Anggota> ls){
+    public void displayUsers(List<User> ls){
         myAdapter.setData(ls);
         myAdapter.notifyDataSetChanged();
     }

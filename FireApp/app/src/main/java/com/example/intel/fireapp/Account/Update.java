@@ -74,10 +74,11 @@ public class Update extends AppCompatActivity {
             bt_update.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (!isEmpty(ed_Nama.getText().toString()) && !isEmpty(ed_Password.getText().toString()) && !isEmpty(ed_Alamat.getText().toString()) && !isEmpty(ed_Telp.getText().toString()));
+                    if (!isEmpty(ed_Nama.getText().toString()) && !isEmpty(ed_Password.getText().toString()) && !isEmpty(ed_Alamat.getText().toString()) && !isEmpty(ed_Telp.getText().toString()))
+                        ;
 //                        submitUsers(new users(ed_Nama.getText().toString(), ed_Password.getText().toString(), ed_Alamat.getText().toString(), ed_Telp.getText().toString()));
                     else
-                    Snackbar.make(findViewById(R.id.update), "Data barang tidak boleh kosong", Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(findViewById(R.id.update), "Data barang tidak boleh kosong", Snackbar.LENGTH_LONG).show();
 
                     InputMethodManager imm = (InputMethodManager)
                             getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -86,10 +87,8 @@ public class Update extends AppCompatActivity {
                 }
             });
         }
-        private boolean isEmpty(String s){
-            // Cek apakah ada fields yang kosong, sebelum disubmit
-            return TextUtils.isEmpty(s);
-        }
+    }
+
         private void updateAkun(User user) {
             /**
              * Baris kode yang digunakan untuk mengupdate data barang
@@ -136,5 +135,5 @@ public class Update extends AppCompatActivity {
 
     }
 
-}
+
 

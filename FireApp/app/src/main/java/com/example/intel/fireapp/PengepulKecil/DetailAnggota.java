@@ -22,6 +22,8 @@ import com.google.firebase.database.ValueEventListener;
 public class DetailAnggota extends AppCompatActivity {
 
     public TextView nama, jeniskel, alamat, saldo;
+    public int saldoo;
+    DatabaseReference mdatabaseReference = FirebaseDatabase.getInstance().getReference();;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,16 +61,11 @@ public class DetailAnggota extends AppCompatActivity {
             }
         });
 
-        final Query query2 = databaseReference.child("anggota").child(getIntent().getStringExtra("idGrup")).child(getIntent().getStringExtra("id"));
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-
+        mdatabaseReference.child("anggota").child(getIntent().getStringExtra("idGrup")).child(getIntent().getStringExtra("id")).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                    Anggota anggota = userSnapshot.getValue(Anggota.class);
-
-                    saldo.setText(""+anggota.getSaldo());
-                }
+                saldoo = dataSnapshot.child("saldo").getValue(Integer.class);
+                saldo.setText(""+saldoo);
             }
 
             @Override
@@ -82,10 +79,15 @@ public class DetailAnggota extends AppCompatActivity {
         Intent intents = new Intent(DetailAnggota.this, TransaksiAnggota.class);
         intents.putExtra("idGrup", getIntent().getStringExtra("idGrup").toString());
         intents.putExtra("id", getIntent().getStringExtra("id").toString());
+        intents.putExtra("saldo", saldoo);
         startActivity(intents);
     }
 
     public void lihatTransaksi(View view) {
-
+        Intent intents = new Intent(DetailAnggota.this, ListTransaksiAnggota.class);
+        intents.putExtra("idGrup", getIntent().getStringExtra("idGrup").toString());
+        intents.putExtra("id", getIntent().getStringExtra("id").toString());
+        intents.putExtra("saldo", saldoo);
+        startActivity(intents);
     }
 }
