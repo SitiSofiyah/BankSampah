@@ -9,6 +9,23 @@
     android:orientation="vertical"
     tools:context=".Anggota.Home_Anggota">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/green">
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/app_bar"></include>
+
+        </android.support.design.widget.AppBarLayout>
+    </LinearLayout>
+
 
 
     <LinearLayout

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,17 +8,21 @@
     android:background="@color/white"
     tools:context=".TukangRombeng.Home_tr">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="207dp"
-        android:gravity="center"
-        android:text="TUKANG ROMBENG"
-        android:textColor="@color/red"
-        android:textSize="75dp"
-        tools:layout_editor_absoluteX="17dp"
-        tools:layout_editor_absoluteY="159dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-</RelativeLayout>
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/green">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/app_bar"></include>
+
+    </android.support.design.widget.AppBarLayout>
+
+    </LinearLayout>
+</LinearLayout>
