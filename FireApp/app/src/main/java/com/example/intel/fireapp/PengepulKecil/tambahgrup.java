@@ -57,6 +57,7 @@ public class tambahgrup extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Grup Tabungan Sampah");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //inisialisasi edit teks dan button
 
@@ -77,7 +78,7 @@ public class tambahgrup extends AppCompatActivity {
                       updateAdapter();
                   }
                    else{
-                      Snackbar.make(findViewById(R.id.tambahgrupbutton), "Data barang tidak boleh kosong",Snackbar.LENGTH_LONG).show();
+                      Snackbar.make(findViewById(R.id.tambahgrupbutton), "Isikan Nama Grup !",Snackbar.LENGTH_LONG).show();
                   }
 
 

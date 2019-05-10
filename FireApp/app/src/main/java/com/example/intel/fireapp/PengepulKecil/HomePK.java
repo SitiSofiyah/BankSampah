@@ -77,4 +77,11 @@ public class HomePK extends AppCompatActivity {
     public void order(View view) {
     }
 
+    public void transaksi(View view) {
+        Intent intentss = new Intent(HomePK.this,ListTransaksiAll.class);
+        startActivity(intentss);
+    }
+
+    public void penawaran(View view) {
+    }
 }
