@@ -6,11 +6,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.intel.fireapp.Model.Anggota;
 import com.example.intel.fireapp.Model.User;
 import com.example.intel.fireapp.PengepulKecil.DetailAnggota;
+import com.example.intel.fireapp.PengepulKecil.TransaksiAnggota;
 import com.example.intel.fireapp.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -65,6 +67,18 @@ public class AnggotaAdapter extends RecyclerView.Adapter<AnggotaAdapter.MyViewHo
             }
         });
 
+//        holder.tambah.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Context context = view.getContext();
+//                Intent intent = new Intent(context,TransaksiAnggota.class);
+//                intent.putExtra("idGrup", ""+anggota.getId_grup());
+//                intent.putExtra("id", ""+anggota.getId_user());
+//                intent.putExtra("saldo", ""+anggota.getSaldo());
+//                context.startActivity(intent);
+//            }
+//        });
+
 
     }
 
@@ -77,6 +91,7 @@ public class AnggotaAdapter extends RecyclerView.Adapter<AnggotaAdapter.MyViewHo
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         public TextView user_id,id_grup,nama, alamat;
+//        public Button detail, tambah;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -84,6 +99,8 @@ public class AnggotaAdapter extends RecyclerView.Adapter<AnggotaAdapter.MyViewHo
             id_grup = (TextView) itemView.findViewById(R.id.idGrup);
             nama = (TextView) itemView.findViewById(R.id.namaAnggota);
             alamat = (TextView) itemView.findViewById(R.id.alamatAnggota);
+//            detail = (Button) itemView.findViewById(R.id.detail);
+//            tambah = (Button) itemView.findViewById(R.id.tambah);
         }
     }
 }

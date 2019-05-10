@@ -29,14 +29,14 @@
                         android:textColorHint="@color/green"
                         android:textColor="@color/green"
                         android:textSize="20dp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:id="@+id/ket"
-                        android:text="110 Anggota"
-                        android:textColor="@color/green"
-                        android:textSize="12dp" />
+                    <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:gravity="center"-->
+                        <!--android:id="@+id/ket"-->
+                        <!--android:text="110 Anggota"-->
+                        <!--android:textColor="@color/green"-->
+                        <!--android:textSize="12dp" />-->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

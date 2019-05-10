@@ -29,12 +29,11 @@ import com.google.firebase.database.Query;
 
 import static android.text.TextUtils.isEmpty;
 
-@SuppressWarnings({"unused", "ControlFlowStatementWithoutBraces"})
 public class Update extends AppCompatActivity {
 
     private EditText ed_Nama, ed_Alamat, ed_Telp, ed_Password;
     private Button bt_update;
-    private DatabaseReference mDatabase,profil;
+    private DatabaseReference mDatabase;
 
 
     @Override
@@ -73,16 +72,13 @@ public class Update extends AppCompatActivity {
                 }
             });
             bt_update.setOnClickListener(new View.OnClickListener() {
-                @SuppressWarnings("ControlFlowStatementWithoutBraces")
                 @Override
                 public void onClick(View v) {
                     if (!isEmpty(ed_Nama.getText().toString()) && !isEmpty(ed_Password.getText().toString()) && !isEmpty(ed_Alamat.getText().toString()) && !isEmpty(ed_Telp.getText().toString()))
-
-                        profil = FirebaseDatabase.getInstance().getReference("users").child(SaveSharedPreference.getId(getApplicationContext()));
-                    profil.child("nama").setValue(getIntent().getStringExtra("idGrup"));
-                    //submitUser(new user(ed_Nama.getText().toString(), ed_Password.getText().toString(), ed_Alamat.getText().toString(), ed_Telp.getText().toString()));
-                 else
-                    Snackbar.make(findViewById(R.id.update), "Data barang tidak boleh kosong", Snackbar.LENGTH_LONG).show();
+                        ;
+//                        submitUsers(new users(ed_Nama.getText().toString(), ed_Password.getText().toString(), ed_Alamat.getText().toString(), ed_Telp.getText().toString()));
+                    else
+                        Snackbar.make(findViewById(R.id.update), "Data barang tidak boleh kosong", Snackbar.LENGTH_LONG).show();
 
                     InputMethodManager imm = (InputMethodManager)
                             getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -92,35 +88,32 @@ public class Update extends AppCompatActivity {
             });
         }
     }
-//        private boolean isEmpty(String s){
-//            // Cek apakah ada fields yang kosong, sebelum disubmit
-//            return TextUtils.isEmpty(s);
-//        }
-//        private void updateAkun(User user) {
-//            /**
-//             * Baris kode yang digunakan untuk mengupdate data barang
-//             * yang sudah dimasukkan di Firebase Realtime Database
-//             */
-//            mDatabase.child("users") //akses parent index, ibaratnya seperti nama tabel
-//                    .child(user.getId()) //select barang berdasarkan key
-//                    .setValue(user) //set value barang yang baru
-//                    .addOnSuccessListener(this, new OnSuccessListener<Void>() {
-//                        @Override
-//                        public void onSuccess(Void aVoid) {
-//
-//                            /**
-//                             * Baris kode yang akan dipanggil apabila proses update barang sukses
-//                             */
-//                            Snackbar.make(findViewById(R.id.update), "Data berhasil diupdatekan", Snackbar.LENGTH_LONG).setAction("Oke", new View.OnClickListener() {
-//                                @Override
-//                                public void onClick(View view) {
-//                                    finish();
-//                                }
-//                            }).show();
-//                        }
-//                    });
-//        }
-        private void submitUser(User user) {
+
+        private void updateAkun(User user) {
+            /**
+             * Baris kode yang digunakan untuk mengupdate data barang
+             * yang sudah dimasukkan di Firebase Realtime Database
+             */
+            mDatabase.child("users") //akses parent index, ibaratnya seperti nama tabel
+                    .child(user.getId()) //select barang berdasarkan key
+                    .setValue(user) //set value barang yang baru
+                    .addOnSuccessListener(this, new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+
+                            /**
+                             * Baris kode yang akan dipanggil apabila proses update barang sukses
+                             */
+                            Snackbar.make(findViewById(R.id.update), "Data berhasil diupdatekan", Snackbar.LENGTH_LONG).setAction("Oke", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    finish();
+                                }
+                            }).show();
+                        }
+                    });
+        }
+        private void submitBarang(User user) {
             /**
              * Ini adalah kode yang digunakan untuk mengirimkan data ke Firebase Realtime Database
              * dan juga kita set onSuccessListener yang berisi kode yang akan dijalankan
@@ -140,25 +133,6 @@ public class Update extends AppCompatActivity {
 
 
 
-    }
-
-    private void updateAkun(User user) {
-        /**
-         * Ini adalah kode yang digunakan untuk mengirimkan data ke Firebase Realtime Database
-         * dan juga kita set onSuccessListener yang berisi kode yang akan dijalankan
-         * ketika data berhasil ditambahkan
-         */
-        mDatabase.child("users").push().setValue(user).addOnSuccessListener(this, new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                ed_Nama.setText("");
-                ed_Password.setText("");
-                ed_Alamat.setText("");
-                ed_Telp.setText("");
-                Snackbar.make(findViewById(R.id.update), "Data berhasil ditambahkan", Snackbar.LENGTH_LONG).show();
-            }
-        });
-    }
     }
 
 
