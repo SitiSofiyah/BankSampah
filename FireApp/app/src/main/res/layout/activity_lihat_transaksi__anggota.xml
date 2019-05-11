@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:background="@drawable/hijau"
+    >
+
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="400dp"
+    android:layout_marginLeft="30dp"
+    android:layout_marginRight="30dp"
+    android:layout_marginTop="75dp"
+    android:background="#fff"
+    android:elevation="4dp"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:id="@+id/relativeLAyout3">
+    <TextView
+        android:id="@+id/tv_nama"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="okee"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+    <TextView
+        android:id="@+id/tv_JK"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="okee"
+        android:layout_below="@+id/tv_nama"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+    <TextView
+        android:id="@+id/tv_Alamat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="okee"
+        android:layout_below="@+id/tv_JK"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+    <TextView
+        android:id="@+id/tv_Telepon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="okee"
+        android:layout_below="@+id/tv_Alamat"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+    <Button
+        android:id="@+id/editAkun"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:onClick="edit"
+        android:text="EDIT AKUN "/>
+</RelativeLayout>
+</RelativeLayout>
