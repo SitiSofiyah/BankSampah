@@ -2,13 +2,16 @@ package com.example.intel.fireapp.Model;
 
 public class TransaksiKeTR {
     public String id_ordersampah, plastik_pk, kertas_pk, logam_pk, kaca_pk, lainnya_pk, total;
+    public String id_user;
+    public String tanggal;
 
 
     public TransaksiKeTR() {
 
     }
-    public TransaksiKeTR (String id_ordersampah, String plastik_pk, String kertas_pk, String logam_pk, String kaca_pk, String lainnya_pk,
-    String total) {
+    public TransaksiKeTR (String id_ordersampah, String id_user, String plastik_pk, String kertas_pk, String logam_pk, String kaca_pk, String lainnya_pk,
+    String total, String tanggal) {
+        this.id_user = id_user;
         this.id_ordersampah = id_ordersampah;
         this.plastik_pk = plastik_pk;
         this.kertas_pk = kertas_pk;
@@ -16,6 +19,7 @@ public class TransaksiKeTR {
         this.kaca_pk = kaca_pk;
         this.lainnya_pk = lainnya_pk;
         this.total = total;
+        this.tanggal = tanggal;
 
     }
 
@@ -25,6 +29,22 @@ public class TransaksiKeTR {
 
     public void setId_ordersampah(String id_ordersampah) {
         this.id_ordersampah = id_ordersampah;
+    }
+
+    public String getId_user() {
+        return id_user;
+    }
+
+    public void setId_user(String id_user) {
+        this.id_user = id_user;
+    }
+
+    public String getTanggal() {
+        return tanggal;
+    }
+
+    public void setTanggal(String tanggal) {
+        this.tanggal = tanggal;
     }
 
     public String getPlastik_pk() {
