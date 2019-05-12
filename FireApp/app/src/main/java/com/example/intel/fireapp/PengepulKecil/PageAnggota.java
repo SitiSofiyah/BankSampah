@@ -38,12 +38,6 @@ import java.util.List;
 public class PageAnggota extends AppCompatActivity {
 
     DatabaseReference ref;
-    ArrayAdapter<Anggota> adapter;
-    ArrayList<Anggota> list;
-    ArrayAdapter<User> userAdapter;
-    ArrayList<User> userArray;
-    Anggota anggota;
-    User user;
     public RecyclerView recyclerListView;
     public AnggotaAdapter myAdapter;
     public FloatingActionButton add;
@@ -59,6 +53,7 @@ public class PageAnggota extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Anggota Grup "+getIntent().getStringExtra("namaGrup"));
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recyclerListView=(RecyclerView) findViewById(R.id.anggota_list);
         recyclerListView.setLayoutManager(new LinearLayoutManager(this));
@@ -80,43 +75,18 @@ public class PageAnggota extends AppCompatActivity {
     }
 //
     private void updateAdapter(){
-        final List<User> listAnggota= new ArrayList<>();
+        final List<Anggota> listAnggota= new ArrayList<>();
         ref = FirebaseDatabase.getInstance().getInstance().getReference();
-        final Query query = ref.child("anggota").child(getIntent().getStringExtra("idGrup")).equalTo("users").orderByChild("id");
-
-
-//        final Query query = ref.child("anggota").child(getIntent().getStringExtra("idGrup")).equalTo("users").orderByChild("id").equalTo("id_user");
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                listAnggota.add(dataSnapshot.getValue(User.class));
-                displayUsers(listAnggota);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-//        query.addChildEventListener(new ChildEventListener() {
+        final Query query = ref.child("anggota").child(getIntent().getStringExtra("idGrup"));
+//        final Query query = ref.child("anggota").child(getIntent().getStringExtra("idGrup")).equalTo("users").orderByChild("id");
+//
+//
+////        final Query query = ref.child("anggota").child(getIntent().getStringExtra("idGrup")).equalTo("users").orderByChild("id").equalTo("id_user");
+//        query.addListenerForSingleValueEvent(new ValueEventListener() {
 //            @Override
-//            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//
-//            }
-//
-//            @Override
-//            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//
-//            }
-//
-//            @Override
-//            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                listAnggota.add(dataSnapshot.getValue(Anggota.class));
+//                displayUsers(listAnggota);
 //            }
 //
 //            @Override
@@ -124,12 +94,39 @@ public class PageAnggota extends AppCompatActivity {
 //
 //            }
 //        });
+        query.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                listAnggota.add(dataSnapshot.getValue(Anggota.class));
+                displayUsers(listAnggota);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
 
     }
 
 
-    public void displayUsers(List<User> ls){
+    public void displayUsers(List<Anggota> ls){
         myAdapter.setData(ls);
         myAdapter.notifyDataSetChanged();
     }

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".PengepulKecil.EditTransaksi">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/green">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/app_bar"></include>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"></View>
+
+    <TextView
+        android:layout_marginStart="20dp"
+        android:text="Detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RadioGroup
+        android:id="@+id/status"
+        android:layout_marginStart="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/masuk"
+            android:buttonTint="@color/green"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Setor Sampah" />
+
+        <RadioButton
+            android:id="@+id/keluar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/green"
+            android:text="Ambil Uang" />
+    </RadioGroup>
+
+
+    <TextView
+        android:layout_marginStart="20dp"
+        android:text="Total Harga"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/harga"
+        android:textColor="@color/black"
+        android:layout_marginStart="20dp"
+        android:text="harga"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_marginStart="20dp"
+        android:text="Keteranggan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/ket"
+        android:textColor="@color/black"
+        android:layout_marginStart="20dp"
+        android:text="keterangan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"></View>
+
+    <Button
+        android:textColor="@color/white"
+        android:background="@color/green"
+        android:layout_gravity="center"
+        android:text="Simpan"
+        android:onClick="simpanTransaksi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

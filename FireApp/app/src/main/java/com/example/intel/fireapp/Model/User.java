@@ -17,6 +17,14 @@ public class User {
     public User() {
     }
 
+    public String getGrup() {
+        return grup;
+    }
+
+    public void setGrup(String grup) {
+        this.grup = grup;
+    }
+
     public User(String id, String nama, String alamat, String telp, String jeniskel, String level, String password, String grup) {
         this.id = id;
         this.nama = nama;

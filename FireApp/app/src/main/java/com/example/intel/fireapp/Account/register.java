@@ -3,6 +3,7 @@ package com.example.intel.fireapp.Account;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -63,10 +64,10 @@ public class register extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if(nama.getText().toString()==""||telp.getText().toString()==""||alamat.getText().toString()==""||password.getText().toString()=="")
                         {
-                            Toast.makeText(register.this, "Lengkapi Data diri Anda !", Toast.LENGTH_LONG).show();
+                            Snackbar.make(findViewById(R.id.tambahgrupbutton), "Lengkapi data diri anda !",Snackbar.LENGTH_LONG).show();
                         }
                         else if(dataSnapshot.exists()){
-                            Toast.makeText(register.this, "Username sudah tersedia", Toast.LENGTH_LONG).show();
+                            Snackbar.make(findViewById(R.id.tambahgrupbutton), "Username sudah tersedia !",Snackbar.LENGTH_LONG).show();
                         }else {
                             createAccount();
                             Toast.makeText(register.this, "Register Berhasil", Toast.LENGTH_LONG).show();

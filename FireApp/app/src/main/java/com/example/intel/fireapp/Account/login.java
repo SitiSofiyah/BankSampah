@@ -3,6 +3,7 @@ package com.example.intel.fireapp.Account;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -28,7 +29,6 @@ import com.google.firebase.database.ValueEventListener;
 
 public class login extends AppCompatActivity {
     private EditText username, password;
-    private Button login;
     RelativeLayout loginForm;
     ProgressBar prolog;
 
@@ -40,7 +40,6 @@ public class login extends AppCompatActivity {
 
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
-        login = (Button) findViewById(R.id.login);
         loginForm = findViewById(R.id.loginForm);
         prolog = (ProgressBar) findViewById(R.id.prologin);
 
@@ -69,53 +68,58 @@ public class login extends AppCompatActivity {
     }
 
     public void login(View view) {
-        prolog.setVisibility(View.VISIBLE);
-        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        String nama = username.getText().toString();
-        final String pass = password.getText().toString();
-        final Query query = databaseReference.child("users").orderByChild("nama").equalTo(nama);
+        if(username.getText().toString()=="" || password.getText().toString()==""){
+            Snackbar.make(findViewById(R.id.login), "Isikan username dan password anda !",Snackbar.LENGTH_LONG).show();
+        }else{
+            prolog.setVisibility(View.VISIBLE);
+            final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+            String nama = username.getText().toString();
+            final String pass = password.getText().toString();
+            final Query query = databaseReference.child("users").orderByChild("nama").equalTo(nama);
 
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
-                    for(DataSnapshot userSnapshot : dataSnapshot.getChildren()){
-                        User login = userSnapshot.getValue(User.class);
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.exists()){
+                        for(DataSnapshot userSnapshot : dataSnapshot.getChildren()){
+                            User login = userSnapshot.getValue(User.class);
 
-                        if(login.getPassword().equals(pass)){
-                            if(login.getLevel().equals("Tukang Rombeng")){
-                                SaveSharedPreference.setLoggedInTR(getApplicationContext(), true);
-                                SaveSharedPreference.setId(getApplicationContext(),login.getId());
-                                Intent i = new Intent(getApplicationContext(),Home_tr.class);
-                                startActivity(i);
-                                finish();
+                            if(login.getPassword().equals(pass)){
+                                if(login.getLevel().equals("Tukang Rombeng")){
+                                    SaveSharedPreference.setLoggedInTR(getApplicationContext(), true);
+                                    SaveSharedPreference.setId(getApplicationContext(),login.getId());
+                                    Intent i = new Intent(getApplicationContext(),Home_tr.class);
+                                    startActivity(i);
+                                    finish();
 
-                            }else if (login.getLevel().equals("Pengepul Kecil")){
-                                SaveSharedPreference.setLoggedInPK(getApplicationContext(), true);
-                                SaveSharedPreference.setId(getApplicationContext(),login.getId());
-                                Intent i = new Intent(getApplicationContext(),HomePK.class);
-                                startActivity(i);
-                                finish();
+                                }else if (login.getLevel().equals("Pengepul Kecil")){
+                                    SaveSharedPreference.setLoggedInPK(getApplicationContext(), true);
+                                    SaveSharedPreference.setId(getApplicationContext(),login.getId());
+                                    Intent i = new Intent(getApplicationContext(),HomePK.class);
+                                    startActivity(i);
+                                    finish();
+                                }else{
+                                    SaveSharedPreference.setLoggedInAnggota(getApplicationContext(), true);
+                                    SaveSharedPreference.setId(getApplicationContext(),login.getId());
+                                    Intent i = new Intent(getApplicationContext(),Home_Anggota.class);
+                                    startActivity(i);
+                                    finish();
+                                }
                             }else{
-                                SaveSharedPreference.setLoggedInAnggota(getApplicationContext(), true);
-                                SaveSharedPreference.setId(getApplicationContext(),login.getId());
-                                Intent i = new Intent(getApplicationContext(),Home_Anggota.class);
-                                startActivity(i);
-                                finish();
+                                Toast.makeText(login.this, "Akun tidak tersedia!", Toast.LENGTH_LONG).show();
                             }
-                        }else{
-                            Toast.makeText(login.this, "gaaadaaaa", Toast.LENGTH_LONG).show();
-                        }
 
-                        Toast.makeText(login.this, "nama anda : "+login.getNama(), Toast.LENGTH_LONG).show();
+                           // Toast.makeText(login.this, "nama anda : "+login.getNama(), Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
+        }
+
     }
 }
