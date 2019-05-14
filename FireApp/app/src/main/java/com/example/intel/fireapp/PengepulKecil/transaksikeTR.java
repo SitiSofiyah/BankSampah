@@ -42,7 +42,7 @@ public class transaksikeTR extends AppCompatActivity {
             public void onClick(View v) {
                 final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
                 String TransaksiTR = plastik.getText().toString();
-                final Query query = databaseReference.child("transaksiTR").orderByChild("plastik").equalTo(TransaksiTR);
+                final Query query = databaseReference.child("transaksiTR").orderByChild("ss1").equalTo(TransaksiTR);
 
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -78,8 +78,8 @@ public class transaksikeTR extends AppCompatActivity {
 
 
 
-        TransaksiKeTR transaksiKeTR = new TransaksiKeTR(id_ordersampah, plastikss,kertass, logams, kacas, lainnyas, totals);
+       // TransaksiKeTR transaksiKeTR = new TransaksiKeTR(id_ordersampah, plastikss,kertass, logams, kacas, lainnyas, totals,);
 
-        menDatabase.child(id_ordersampah).setValue(transaksiKeTR);
+       // menDatabase.child(id_ordersampah).setValue(transaksiKeTR);
     }
 }

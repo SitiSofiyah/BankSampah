@@ -65,7 +65,7 @@ public class TransaksiAnggota extends AppCompatActivity {
         anggota.child("saldo").setValue(saldoLama+totalHarga);
         String id = meDatabase.push().getKey();
 
-        transaksi_anggota ta = new transaksi_anggota(id,getIntent().getStringExtra("id"),0,keterangan,totalHarga,curdate );
+        transaksi_anggota ta = new transaksi_anggota(id,getIntent().getStringExtra("id"),SaveSharedPreference.getId(getApplicationContext()),0,keterangan,totalHarga,curdate );
 
         meDatabase.child(id).setValue(ta);
 

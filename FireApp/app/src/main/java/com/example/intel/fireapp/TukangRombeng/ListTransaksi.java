@@ -1,38 +1,32 @@
-package com.example.intel.fireapp.PengepulKecil;
+package com.example.intel.fireapp.TukangRombeng;
 
 import android.content.Intent;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.support.v7.widget.Toolbar;
 
 import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
 import com.example.intel.fireapp.Account.login;
 import com.example.intel.fireapp.R;
 
-public class HomePK extends AppCompatActivity {
-
-    private Button btgrup;
-
-
+public class ListTransaksi extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_pk);
+        setContentView(R.layout.activity_list_transaksi);
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Tabungan Sampah");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -45,8 +39,6 @@ public class HomePK extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.akun:
                 // User chose the "Settings" item, show the app settings UI...
-                Intent intents = new Intent(HomePK.this, db_ReadAkun.class);
-                startActivity(intents);
                 return true;
 
             case R.id.help:
@@ -57,7 +49,7 @@ public class HomePK extends AppCompatActivity {
             case R.id.out:
                 SaveSharedPreference.setLoggedInPK(getApplicationContext(), false);
                 SaveSharedPreference.setId(getApplicationContext(), null);
-                Intent intent = new Intent(HomePK.this, login.class);
+                Intent intent = new Intent(ListTransaksi.this, login.class);
                 startActivity(intent);
                 finish();
                 return true;
@@ -69,29 +61,14 @@ public class HomePK extends AppCompatActivity {
 
         }
     }
-    public void grup(View view) {
-        Intent intent = new Intent(HomePK.this,tambahgrup.class);
-        startActivity(intent);
-    }
-
-    public Button getBtgrup() {
-        return btgrup;
-    }
-
-    public void setBtgrup(Button btgrup) {
-        this.btgrup = btgrup;
-    }
-
-    public void order(View view) {
-        Intent intent = new Intent(HomePK.this,transaksikeTR.class);
-        startActivity(intent);
-    }
 
     public void transaksi(View view) {
-        Intent intentss = new Intent(HomePK.this,ListTransaksiAll.class);
-        startActivity(intentss);
+        Intent intent = new Intent(ListTransaksi.this,ListJualSampah.class);
+        startActivity(intent);
     }
 
-    public void penawaran(View view) {
+    public void sampah(View view) {
+        Intent intent = new Intent(ListTransaksi.this,ListTransaksi.class);
+        startActivity(intent);
     }
 }

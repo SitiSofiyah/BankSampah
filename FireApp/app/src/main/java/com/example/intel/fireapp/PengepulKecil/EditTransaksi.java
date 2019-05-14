@@ -107,7 +107,7 @@ public class EditTransaksi extends AppCompatActivity {
                 mask = danaint-hrg;
                 hasil = getIntent().getIntExtra("saldo",0) + mask;
             }
-            transaksi_anggota transag = new transaksi_anggota(getIntent().getStringExtra("trans"),getIntent().getStringExtra("id"),0,keterangan,danaint,curdate);
+            transaksi_anggota transag = new transaksi_anggota(getIntent().getStringExtra("trans"),getIntent().getStringExtra("id"),SaveSharedPreference.getId(getApplicationContext()),0,keterangan,danaint,curdate);
             mdatabaseReference.setValue(transag);
 
         } else if(selectedId==dakel.getId()){
@@ -120,7 +120,7 @@ public class EditTransaksi extends AppCompatActivity {
                 hasil = Integer.parseInt(getIntent().getStringExtra("saldo")) - keluar;
             }
 
-            transaksi_anggota transag = new transaksi_anggota(getIntent().getStringExtra("trans"),getIntent().getStringExtra("id"),danaint,keterangan,0,curdate);
+            transaksi_anggota transag = new transaksi_anggota(getIntent().getStringExtra("trans"),getIntent().getStringExtra("id"),SaveSharedPreference.getId(getApplicationContext()),danaint,keterangan,0,curdate);
             mdatabaseReference.setValue(transag);
 
         }

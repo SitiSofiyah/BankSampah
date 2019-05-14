@@ -1,9 +1,27 @@
 package com.example.intel.fireapp.Model;
 
+import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.widget.Toast;
+
+import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
+import com.example.intel.fireapp.Account.login;
+import com.example.intel.fireapp.Anggota.Home_Anggota;
+import com.example.intel.fireapp.PengepulKecil.HomePK;
+import com.example.intel.fireapp.TukangRombeng.Home_tr;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class transaksi_anggota {
-    public String id_trans,id_user, keterangan;
+    public String id_trans,id_user, keterangan, id_pk;
     public int masuk, keluar;
     public String tanggal;
 
@@ -35,13 +53,14 @@ public class transaksi_anggota {
 
     }
 
-    public transaksi_anggota(String id_trans,String id_user, int keluar, String keterangan, int masuk, String tanggal) {
+    public transaksi_anggota(String id_trans,String id_user,String id_pk, int keluar, String keterangan, int masuk, String tanggal) {
         this.id_trans = id_trans;
         this.id_user = id_user;
         this.keterangan = keterangan;
         this.tanggal = tanggal;
         this.keluar=keluar;
         this.masuk=masuk;
+        this.id_pk=id_pk;
     }
 
 

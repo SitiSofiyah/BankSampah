@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -41,6 +42,7 @@ public class ListTransaksiAll extends AppCompatActivity {
     private DatabaseReference grupDb, anggotaDb, transDB;
     public ArrayList<String> grup = new ArrayList<>();
     public ArrayList<String> anggota = new ArrayList<>();
+    FloatingActionButton add;
 
 
     @Override
@@ -54,86 +56,59 @@ public class ListTransaksiAll extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        add = (FloatingActionButton) findViewById(R.id.add);
+
         recyclerListView=(RecyclerView) findViewById(R.id.transaksiAnggota_list);
         recyclerListView.setLayoutManager(new LinearLayoutManager(this));
         myAdapter= new TransaksiAnggotaAllAdapter(this);
-        getGrup();
-        Toast.makeText(ListTransaksiAll.this,"ada "+grup.size(),Toast.LENGTH_LONG).show();
-//        getAnggota();
-//        updateAdapter();
+        getTrans();
+
         recyclerListView.setAdapter(myAdapter);
 
-    }
-
-    private void getGrup() {
-        grupDb = FirebaseDatabase.getInstance().getInstance().getReference();
-        final Query query = grupDb.child("grup").orderByChild("id").equalTo(SaveSharedPreference.getId(getApplicationContext()));
-        query.addValueEventListener(new ValueEventListener() {
+        add.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot grupSnapshot : dataSnapshot.getChildren()) {
-                    TambahGrup grups = grupSnapshot.getValue(TambahGrup.class);
-                    grup.add(grups.getId_grup());
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+            public void onClick(View v) {
+                Intent intent = new Intent(ListTransaksiAll.this, TambahTransaksiAll.class);
+                startActivity(intent);
             }
         });
+
     }
 
-    private void getAnggota(){
-        anggotaDb = FirebaseDatabase.getInstance().getInstance().getReference();
-        final Query query = grupDb.child("users");
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                    int i;
-                    User user = userSnapshot.getValue(User.class);
-                    for (i = 0; i < grup.size(); i++) {
-                        if(user.getGrup().equals(grup.get(i))){
-                            anggota.add(user.getId());
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void updateAdapter(){
+    private void getTrans() {
         final List<transaksi_anggota> listTransaksi= new ArrayList<>();
         transDB = FirebaseDatabase.getInstance().getInstance().getReference();
-        final Query query = transDB.child("transaksi_anggota");
-        query.addValueEventListener(new ValueEventListener() {
+        final Query query = transDB.child("transaksi_anggota").orderByChild("id_pk").equalTo(SaveSharedPreference.getId(getApplicationContext()));
+        query.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot transSnapshot : dataSnapshot.getChildren()) {
-                    transaksi_anggota trans = transSnapshot.getValue(transaksi_anggota.class);
-                    int i;
-                    for (i = 0; i < anggota.size(); i++) {
-                        if(trans.getId_user().equals(anggota.get(i))){
-                            listTransaksi.add(trans);
-                        }
-                    }
-                }
-
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                listTransaksi.add(dataSnapshot.getValue(transaksi_anggota.class));
                 displayUsers(listTransaksi);
             }
 
             @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
     }
+
+
 
     private boolean isEmpty(String s){
         //Cek apakah ada fields yang kosong, sebelum disubmit

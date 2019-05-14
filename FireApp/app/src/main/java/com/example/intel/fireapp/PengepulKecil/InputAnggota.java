@@ -78,7 +78,7 @@ public class InputAnggota extends AppCompatActivity {
                         ref = FirebaseDatabase.getInstance().getReference("anggota").child(getIntent().getStringExtra("idGrup"));
                         user = FirebaseDatabase.getInstance().getReference("users").child(anggota.getId());
 
-                        Anggota tambahAnggota = new Anggota(getIntent().getStringExtra("idGrup"), anggota.getId(), anggota.getNama(), anggota.getAlamat(), 0);
+                        Anggota tambahAnggota = new Anggota(getIntent().getStringExtra("idGrup"), anggota.getId(), anggota.getNama(), anggota.getAlamat(), 0, SaveSharedPreference.getId(getApplicationContext()));
 
                         ref.child(anggota.getId()).setValue(tambahAnggota);
                         user.child("grup").setValue(getIntent().getStringExtra("idGrup"));
