@@ -54,11 +54,10 @@
         </activity>
         <activity android:name=".Anggota.Infoamasi" />
         <activity android:name=".PengepulKecil.TransaksiAnggota" />
-<<<<<<< HEAD
-        <activity android:name=".PengepulKecil.DetailAnggota" />
+
+
         <activity android:name=".PengepulKecil.ListTransaksiAnggota" />
         <activity android:name=".Anggota.LihatTransaksi_Anggota"></activity>
-=======
         <activity
             android:name=".PengepulKecil.DetailAnggota"
             android:parentActivityName=".PengepulKecil.PageAnggota">
@@ -66,11 +65,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".PengepulKecil.PageAnggota" />
         </activity>
-        <activity android:name=".PengepulKecil.ListTransaksiAnggota" />
         <activity android:name=".PengepulKecil.ListTransaksiAll" />
         <activity android:name=".PengepulKecil.DetailTransaksi" />
         <activity android:name=".PengepulKecil.EditTransaksi"></activity>
->>>>>>> 771d341af3423b2b4e39f761710a7e3ea4c95ba5
+
     </application>
 
 </manifest>
