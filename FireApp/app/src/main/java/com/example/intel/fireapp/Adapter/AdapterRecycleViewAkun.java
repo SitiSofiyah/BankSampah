@@ -85,6 +85,7 @@ public class AdapterRecycleViewAkun extends RecyclerView.Adapter<AdapterRecycleV
         holder.tvJK.setText(user.getJeniskel());
         holder.tvAlamat.setText(user.getAlamat());
         holder.tvTelp.setText(user.getTelp());
+
     }
 
     @Override
