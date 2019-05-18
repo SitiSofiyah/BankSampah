@@ -1,13 +1,10 @@
 package com.example.intel.fireapp.PengepulKecil;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,8 +14,6 @@ import android.widget.TextView;
 import com.example.intel.fireapp.Account.Update;
 import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
 import com.example.intel.fireapp.Account.login;
-import com.example.intel.fireapp.Adapter.AdapterRecycleViewAkun;
-import com.example.intel.fireapp.Anggota.Home_Anggota;
 import com.example.intel.fireapp.Model.User;
 import com.example.intel.fireapp.R;
 import com.google.firebase.database.DataSnapshot;
@@ -27,8 +22,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-
 public class db_ReadAkun extends AppCompatActivity {
 
     /**
@@ -36,6 +29,7 @@ public class db_ReadAkun extends AppCompatActivity {
      */
     private DatabaseReference database;
     TextView tvNama, tvAlamat, tvPass, tvTelp;
+    String level;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,6 +67,7 @@ public class db_ReadAkun extends AppCompatActivity {
                     tvAlamat.setText(user.getAlamat());
                     tvTelp.setText(user.getTelp());
                     tvPass.setText(user.getPassword());
+                    level=user.getLevel().toString();
                 }
             }
 
@@ -103,7 +98,13 @@ public class db_ReadAkun extends AppCompatActivity {
                 return true;
 
             case R.id.out:
-                SaveSharedPreference.setLoggedInPK(getApplicationContext(), false);
+                if(level.equals("Pengepul Kecil")){
+                    SaveSharedPreference.setLoggedInPK(getApplicationContext(), false);
+                }else if(level.equals("Tukang Rombeng")){
+                    SaveSharedPreference.setLoggedInTR(getApplicationContext(), false);
+                }else if(level.equals("Anggota")){
+                    SaveSharedPreference.setLoggedInAnggota(getApplicationContext(), false);
+                }
                 SaveSharedPreference.setId(getApplicationContext(), null);
                 Intent intent = new Intent(db_ReadAkun.this, login.class);
                 startActivity(intent);

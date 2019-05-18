@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#f4efef"
+    android:padding="2dp"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        style="@style/Base.CardView"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/isi"
+            android:padding="15dp"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_below="@id/tanggal"
+                android:id="@+id/pesan"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textColorHint="@color/black"
+                android:text="Dana Masuk Rp. 30.000,-"/>
+
+            <TextView
+                android:id="@+id/tanggal"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:textColorHint="@color/grey"
+                android:text="Tanggal"/>
+
+            <View
+                android:layout_centerHorizontal="true"
+                android:layout_width="400dp"
+                android:background="@color/grey"
+                android:layout_below="@id/tanggal"
+                android:layout_height="1dp"></View>
+
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

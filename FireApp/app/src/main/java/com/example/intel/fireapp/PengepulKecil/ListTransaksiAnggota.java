@@ -2,6 +2,7 @@ package com.example.intel.fireapp.PengepulKecil;
 
 import android.content.Intent;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,6 +36,7 @@ public class ListTransaksiAnggota extends AppCompatActivity {
     public RecyclerView recyclerListView;
     public TransaksiAnggotaAdapter myAdapter;
     private DatabaseReference transDB;
+    FloatingActionButton add;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +49,24 @@ public class ListTransaksiAnggota extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Toast.makeText(getApplicationContext(),"Saldo "+getIntent().getIntExtra("saldo",0),Toast.LENGTH_SHORT).show();
-
         recyclerListView=(RecyclerView) findViewById(R.id.transaksiAnggota_list);
         recyclerListView.setLayoutManager(new LinearLayoutManager(this));
         myAdapter= new TransaksiAnggotaAdapter(this,getIntent().getIntExtra("saldo",0),getIntent().getStringExtra("idGrup"));
         updateAdapter();
         recyclerListView.setAdapter(myAdapter);
+
+        add = (FloatingActionButton) findViewById(R.id.add);
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intents = new Intent(ListTransaksiAnggota.this, TransaksiAnggota.class);
+                intents.putExtra("idGrup", getIntent().getStringExtra("idGrup").toString());
+                intents.putExtra("id", getIntent().getStringExtra("id").toString());
+                intents.putExtra("saldo", getIntent().getIntExtra("saldo",0));
+                startActivity(intents);
+            }
+        });
     }
 
     private void updateAdapter(){

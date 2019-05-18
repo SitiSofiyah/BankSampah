@@ -97,7 +97,7 @@ public class TambahTransaksiAll extends AppCompatActivity {
         }
 
         meDatabase.child(id).setValue(ta);
-        notif.child(idnotif).setValue(pemberitahuan);
+        notif.child(getIntent().getStringExtra("id")).child(idnotif).setValue(pemberitahuan);
 
         Intent intent = new Intent(TambahTransaksiAll.this,ListTransaksiAll.class);
         startActivity(intent);

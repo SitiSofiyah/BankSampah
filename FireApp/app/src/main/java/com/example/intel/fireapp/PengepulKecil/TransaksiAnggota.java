@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
 import com.example.intel.fireapp.Account.login;
@@ -33,6 +35,8 @@ public class TransaksiAnggota extends AppCompatActivity {
 
     public EditText harga, ket;
     DatabaseReference meDatabase;
+    RadioButton masuk, keluar;
+    RadioGroup jenis;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,11 +49,13 @@ public class TransaksiAnggota extends AppCompatActivity {
 
         harga = (EditText) findViewById(R.id.harga);
         ket = (EditText) findViewById(R.id.keterangan);
+        masuk = (RadioButton) findViewById(R.id.masuk);
+        keluar = (RadioButton) findViewById(R.id.keluar);
+        jenis = (RadioGroup) findViewById(R.id.jenis);
     }
 
     public void addTransaksi(View view) {
-
-
+        int selectedId = jenis.getCheckedRadioButtonId();
 
         java.text.SimpleDateFormat fomat = new java.text.SimpleDateFormat("dd-MM-yyyy");
         Date date = new Date();
@@ -57,8 +63,6 @@ public class TransaksiAnggota extends AppCompatActivity {
 
         final DatabaseReference anggota = FirebaseDatabase.getInstance().getReference("anggota").child(getIntent().getStringExtra("idGrup")).child(getIntent().getStringExtra("id"));
         final DatabaseReference notif = FirebaseDatabase.getInstance().getReference("pemberitahuan");
-
-
 
         final int totalHarga = Integer.parseInt(harga.getText().toString());
         final String keterangan = ket.getText().toString();
@@ -69,13 +73,23 @@ public class TransaksiAnggota extends AppCompatActivity {
         anggota.child("saldo").setValue(saldoLama+totalHarga);
         String id = meDatabase.push().getKey();
 
-        transaksi_anggota ta = new transaksi_anggota(id,getIntent().getStringExtra("id"),SaveSharedPreference.getId(getApplicationContext()),0,keterangan,totalHarga,curdate );
-
-        meDatabase.child(id).setValue(ta);
+        transaksi_anggota ta;
 
         String idnotif = notif.push().getKey();
-        Pemberitahuan pemberitahuan = new Pemberitahuan(idnotif, SaveSharedPreference.getId(getApplicationContext()),getIntent().getStringExtra("id"),curdate,"Saldo anda bertambah sebesar Rp. "+totalHarga, "send");
-        notif.child(idnotif).setValue(pemberitahuan);
+        Pemberitahuan pemberitahuan ;
+
+        if(selectedId == masuk.getId()){
+            anggota.child("saldo").setValue(saldoLama+totalHarga);
+            ta = new transaksi_anggota(id,getIntent().getStringExtra("id"),SaveSharedPreference.getId(getApplicationContext()),0,ket.getText().toString(),totalHarga,curdate );
+            pemberitahuan = new Pemberitahuan(idnotif, SaveSharedPreference.getId(getApplicationContext()),getIntent().getStringExtra("id"),curdate,"Saldo anda bertambah sebesar Rp. "+totalHarga, "send");
+        } else{
+            anggota.child("saldo").setValue(saldoLama-totalHarga);
+            ta = new transaksi_anggota(id,getIntent().getStringExtra("id"),SaveSharedPreference.getId(getApplicationContext()),totalHarga,ket.getText().toString(),0,curdate );
+            pemberitahuan = new Pemberitahuan(idnotif, SaveSharedPreference.getId(getApplicationContext()),getIntent().getStringExtra("id"),curdate,"Saldo anda berkurang sebesar Rp. "+totalHarga, "send");
+        }
+        meDatabase.child(id).setValue(ta);
+        notif.child(getIntent().getStringExtra("id")).child(idnotif).setValue(pemberitahuan);
+
         Intent intent = new Intent(TransaksiAnggota.this,DetailAnggota.class);
         intent.putExtra("idGrup", ""+getIntent().getStringExtra("idGrup"));
         intent.putExtra("id", ""+getIntent().getStringExtra("id"));

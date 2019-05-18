@@ -26,7 +26,7 @@ public class HomePK extends AppCompatActivity {
 
     private Button btgrup;
     NotificationBadge nBadge;
-    private DatabaseReference ref = FirebaseDatabase.getInstance().getReference("penawaran");
+    private DatabaseReference ref = FirebaseDatabase.getInstance().getReference("transaksiTR");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,7 @@ public class HomePK extends AppCompatActivity {
 
         nBadge  = (NotificationBadge) findViewById(R.id.badge);
 
-        ref.child(SaveSharedPreference.getId(getApplicationContext())).orderByChild("status").equalTo("dikirim").addValueEventListener(new ValueEventListener() {
+        ref.addValueEventListener(new ValueEventListener() {
 
 
             @Override
