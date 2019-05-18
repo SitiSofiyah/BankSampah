@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.intel.fireapp.Account.Update;
 import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
@@ -34,10 +35,7 @@ public class db_ReadAkun extends AppCompatActivity {
      * Mendefinisikan variable yang akan dipakai
      */
     private DatabaseReference database;
-    private RecyclerView rvViewAkun;
-    private RecyclerView.Adapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
-    private ArrayList<User> dataUser;
+    TextView tvNama, tvAlamat, tvPass, tvTelp;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,19 +53,14 @@ public class db_ReadAkun extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+            tvNama = (TextView) findViewById(R.id.tv_nama);
+            tvPass = (TextView) findViewById(R.id.tv_JK);
+            tvAlamat = (TextView) findViewById(R.id.tv_Alamat);
+            tvTelp = (TextView) findViewById(R.id.tv_Telepon);
 
 
-                /**
-                 * Inisialisasi RecyclerView & komponennya
-                 */
-        rvViewAkun = (RecyclerView) findViewById(R.id.db_Akun);
-        rvViewAkun.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
-        rvViewAkun.setLayoutManager(layoutManager);
 
-        /**
-         * Inisialisasi dan mengambil Firebase Database Reference
-         */
+
         database = FirebaseDatabase.getInstance().getReference();
 
         /**
@@ -80,29 +73,18 @@ public class db_ReadAkun extends AppCompatActivity {
                 /**
                  * Saat ada data baru, masukkan datanya ke ArrayList
                  */
-                dataUser = new ArrayList<>();
+
                 for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
-                    /**
-                     * Mapping data pada DataSnapshot ke dalam object Barang
-                     * Dan juga menyimpan primary key pada object Barang
-                     * untuk keperluan Edit dan Delete data
-                     */
-                    User uaer = noteDataSnapshot.getValue(User.class);
+                    User user = noteDataSnapshot.getValue(User.class);
                     //uaer.setKey(noteDataSnapshot.getKey());
+                    tvNama.setText(user.getNama());
+                    tvAlamat.setText(user.getAlamat());
+                    tvTelp.setText(user.getTelp());
+                    tvPass.setText(user.getPassword());
 
-                    /**
-                     * Menambahkan object Barang yang sudah dimapping
-                     * ke dalam ArrayList
-                     */
-                    dataUser.add(uaer);
+
+
                 }
-
-                /**
-                 * Inisialisasi adapter dan data barang dalam bentuk ArrayList
-                 * dan mengeset Adapter ke dalam RecyclerView
-                 */
-                adapter = new AdapterRecycleViewAkun(dataUser, db_ReadAkun.this);
-                rvViewAkun.setAdapter(adapter);
             }
 
             @Override
@@ -156,7 +138,7 @@ public class db_ReadAkun extends AppCompatActivity {
     }
 
     public void edit(View view) {
-        Intent i = new Intent(getApplicationContext(),Update.class);
+        Intent i = new Intent(db_ReadAkun.this,Update.class);
         startActivity(i);
     }
 }
