@@ -17,6 +17,7 @@ import com.example.intel.fireapp.Anggota.Home_Anggota;
 import com.example.intel.fireapp.Model.TambahGrup;
 import com.example.intel.fireapp.Model.User;
 import com.example.intel.fireapp.PengepulKecil.HomePK;
+import com.example.intel.fireapp.PengepulKecil.db_ReadAkun;
 import com.example.intel.fireapp.R;
 import com.example.intel.fireapp.TukangRombeng.Home_tr;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -35,6 +36,7 @@ public class Update extends AppCompatActivity {
     private EditText ed_Nama, ed_Alamat, ed_Telp, ed_Password;
     private Button bt_update;
     private DatabaseReference mDatabase,database;
+    String nama ;
 
 
     @Override
@@ -50,122 +52,65 @@ public class Update extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance().getReference();
 
-        /**
-         * Mengambil data barang dari Firebase Realtime DB
-         */
-        database.child("users").orderByChild("id").equalTo(SaveSharedPreference.getId(getApplicationContext())).addValueEventListener(new ValueEventListener() {
+        database.child("users").orderByChild("id").equalTo(SaveSharedPreference.getId(getApplicationContext())).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                /**
-                 * Saat ada data baru, masukkan datanya ke ArrayList
-                 */
-
                 for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
                     User user = noteDataSnapshot.getValue(User.class);
-                    //uaer.setKey(noteDataSnapshot.getKey());
                     ed_Nama.setText(user.getNama());
                     ed_Alamat.setText(user.getAlamat());
                     ed_Telp.setText(user.getTelp());
                     ed_Password.setText(user.getPassword());
-
-
-
+                    nama = user.getNama().toString();
                 }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                /**
-                 * Kode ini akan dipanggil ketika ada error dan
-                 * pengambilan data gagal dan memprint error nya
-                 * ke LogCat
-                 */
-                System.out.println(databaseError.getDetails()+" "+databaseError.getMessage());
+                System.out.println(databaseError.getDetails() + " " + databaseError.getMessage());
             }
         });
 
-
-
-//        final Query query = mDatabase.child("users").orderByChild("id").equalTo(SaveSharedPreference.getId(getApplicationContext()));
         mDatabase = FirebaseDatabase.getInstance().getInstance().getReference("users").child(SaveSharedPreference.getId(getApplicationContext()));
 
 
+        bt_update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                database.child("users").orderByChild("nama").equalTo(ed_Nama.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                            if(ed_Nama.getText().toString().isEmpty() || ed_Alamat.getText().toString().isEmpty() ||
+                                    ed_Password.getText().toString().isEmpty() || ed_Telp.getText().toString().isEmpty())
+                            {
+                                Toast.makeText(Update.this, "Lengkapi data diri anda", Toast.LENGTH_LONG).show();
+                            }else if(dataSnapshot.exists()&&!(ed_Nama.getText().toString().equals(nama))){
+                                Toast.makeText(Update.this, "Username sudah ada", Toast.LENGTH_LONG).show();
+                            }else{
+                                mDatabase.child("nama").setValue(ed_Nama.getText().toString());
+                                mDatabase.child("password").setValue(ed_Password.getText().toString());
+                                mDatabase.child("alamat").setValue(ed_Alamat.getText().toString());
+                                mDatabase.child("telp").setValue(ed_Telp.getText().toString());
 
+                                Toast.makeText(Update.this, "Data berhasil di Edit", Toast.LENGTH_LONG).show();
 
-            bt_update.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    User user = new User();
-                    user.setNama(ed_Nama.getText().toString());
-                    user.setPassword(ed_Password.getText().toString());
-                    user.setAlamat(ed_Alamat.getText().toString());
-                    user.setTelp(ed_Telp.getText().toString());
+                                Intent intent = new Intent(Update.this, db_ReadAkun.class);
+                                startActivity(intent);
+                            }
 
-                    updateAkun(user);
-                }
-            });
-//            bt_update.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    if (!isEmpty(ed_Nama.getText().toString()) && !isEmpty(ed_Password.getText().toString()) && !isEmpty(ed_Alamat.getText().toString()) && !isEmpty(ed_Telp.getText().toString()))
-//                        ;
-//
-//                    else
-//                        Snackbar.make(findViewById(R.id.update), "Data barang tidak boleh kosong", Snackbar.LENGTH_LONG).show();
-//
-//                    InputMethodManager imm = (InputMethodManager)
-//                            getSystemService(Context.INPUT_METHOD_SERVICE);
-//                    imm.hideSoftInputFromWindow(
-//                            ed_Nama.getWindowToken(), 0);
-//                }
-//            });
-        }
+                    }
 
-
-        private void updateAkun(User user) {
-            /**
-             * Baris kode yang digunakan untuk mengupdate data barang
-             * yang sudah dimasukkan di Firebase Realtime Database
-             */
-            mDatabase.setValue(user) //set value barang yang baru
-                    .addOnSuccessListener(this, new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-
-                            /**
-                             * Baris kode yang akan dipanggil apabila proses update barang sukses
-                             */
-                            Snackbar.make(findViewById(R.id.update), "Data berhasil diupdatekan", Snackbar.LENGTH_LONG).setAction("Oke", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    finish();
-                                }
-                            }).show();
-                        }
-                    });
-        }
-        private void submitBarang(User user) {
-            /**
-             * Ini adalah kode yang digunakan untuk mengirimkan data ke Firebase Realtime Database
-             * dan juga kita set onSuccessListener yang berisi kode yang akan dijalankan
-             * ketika data berhasil ditambahkan
-             */
-            mDatabase.child("users").push().setValue(user).addOnSuccessListener(this, new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    ed_Nama.setText("");
-                    ed_Password.setText("");
-                    ed_Alamat.setText("");
-                    ed_Telp.setText("");
-                    Snackbar.make(findViewById(R.id.update), "Data berhasil ditambahkan", Snackbar.LENGTH_LONG).show();
-                }
-            });
-        }
-
-
-
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        System.out.println(databaseError.getDetails() + " " + databaseError.getMessage());
+                    }
+                });
+            }
+        });
     }
+
+}
 
 
 

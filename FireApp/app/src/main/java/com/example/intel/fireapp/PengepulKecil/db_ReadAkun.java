@@ -63,37 +63,21 @@ public class db_ReadAkun extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance().getReference();
 
-        /**
-         * Mengambil data barang dari Firebase Realtime DB
-         */
         database.child("users").orderByChild("id").equalTo(SaveSharedPreference.getId(getApplicationContext())).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                /**
-                 * Saat ada data baru, masukkan datanya ke ArrayList
-                 */
-
                 for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
                     User user = noteDataSnapshot.getValue(User.class);
-                    //uaer.setKey(noteDataSnapshot.getKey());
                     tvNama.setText(user.getNama());
                     tvAlamat.setText(user.getAlamat());
                     tvTelp.setText(user.getTelp());
                     tvPass.setText(user.getPassword());
-
-
-
                 }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                /**
-                 * Kode ini akan dipanggil ketika ada error dan
-                 * pengambilan data gagal dan memprint error nya
-                 * ke LogCat
-                 */
                 System.out.println(databaseError.getDetails()+" "+databaseError.getMessage());
             }
         });
@@ -110,15 +94,12 @@ public class db_ReadAkun extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.akun:
-                // User chose the "Settings" item, show the app settings UI...
                 Intent intents = new Intent(db_ReadAkun.this, db_ReadAkun.class);
                 startActivity(intents);
                 finish();
                 return true;
 
             case R.id.help:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
                 return true;
 
             case R.id.out:
@@ -130,8 +111,6 @@ public class db_ReadAkun extends AppCompatActivity {
                 return true;
 
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
 
         }
