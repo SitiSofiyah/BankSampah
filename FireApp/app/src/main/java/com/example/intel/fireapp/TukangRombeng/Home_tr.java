@@ -13,6 +13,7 @@ import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
 import com.example.intel.fireapp.Account.login;
 import com.example.intel.fireapp.PengepulKecil.HomePK;
 import com.example.intel.fireapp.PengepulKecil.ListTransaksiAll;
+import com.example.intel.fireapp.PengepulKecil.db_ReadAkun;
 import com.example.intel.fireapp.PengepulKecil.tambahgrup;
 import com.example.intel.fireapp.R;
 
@@ -27,7 +28,6 @@ public class Home_tr extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Tabungan Sampah");
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
     }
@@ -42,7 +42,8 @@ public class Home_tr extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.akun:
-                // User chose the "Settings" item, show the app settings UI...
+                Intent intents = new Intent(Home_tr.this, db_ReadAkun.class);
+                startActivity(intents);
                 return true;
 
             case R.id.help:
@@ -51,7 +52,7 @@ public class Home_tr extends AppCompatActivity {
                 return true;
 
             case R.id.out:
-                SaveSharedPreference.setLoggedInPK(getApplicationContext(), false);
+                SaveSharedPreference.setLoggedInTR(getApplicationContext(), false);
                 SaveSharedPreference.setId(getApplicationContext(), null);
                 Intent intent = new Intent(Home_tr.this, login.class);
                 startActivity(intent);
@@ -66,12 +67,12 @@ public class Home_tr extends AppCompatActivity {
         }
     }
 
-    public void transaksi(View view) {
+    public void sampah(View view) {
         Intent intent = new Intent(Home_tr.this,ListJualSampah.class);
         startActivity(intent);
     }
 
-    public void sampah(View view) {
+    public void transaksi(View view) {
         Intent intent = new Intent(Home_tr.this,ListTransaksi.class);
         startActivity(intent);
     }

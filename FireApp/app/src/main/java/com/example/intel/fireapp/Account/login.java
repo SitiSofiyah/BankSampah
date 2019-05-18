@@ -68,7 +68,7 @@ public class login extends AppCompatActivity {
     }
 
     public void login(View view) {
-        if(username.getText().toString()=="" || password.getText().toString()==""){
+        if(username.getText().toString().isEmpty() || password.getText().toString().isEmpty()){
             Snackbar.make(findViewById(R.id.login), "Isikan username dan password anda !",Snackbar.LENGTH_LONG).show();
         }else{
             prolog.setVisibility(View.VISIBLE);

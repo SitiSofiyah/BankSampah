@@ -64,7 +64,7 @@ public class AdapterJualSampah extends RecyclerView.Adapter<AdapterJualSampah.My
         holder.total.setText("Total Sampah : "+trans.getTotal()+" Kg");
 
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        final Query query = databaseReference.child("users").orderByChild("id").equalTo(trans.getId_pk());
+        final Query query = databaseReference.child("users").orderByChild("id").equalTo(trans.getId_user());
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

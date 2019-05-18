@@ -2,13 +2,20 @@ package com.example.intel.fireapp.PengepulKecil;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
+import com.example.intel.fireapp.Account.login;
 import com.example.intel.fireapp.Model.TransaksiKeTR;
 import com.example.intel.fireapp.Model.User;
 import com.example.intel.fireapp.R;
@@ -19,6 +26,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Date;
+
 public class transaksikeTR extends AppCompatActivity {
     private Button order;
     private EditText plastik, kertas, logam, kaca, lainnya, total;
@@ -28,6 +37,12 @@ public class transaksikeTR extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaksike_tr);
+
+        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Jual Sampah");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         plastik = (EditText) findViewById(R.id.plastik);
         kertas = (EditText) findViewById(R.id.kertas_pk);
@@ -40,27 +55,54 @@ public class transaksikeTR extends AppCompatActivity {
         order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-                String TransaksiTR = plastik.getText().toString();
-                final Query query = databaseReference.child("transaksiTR").orderByChild("ss1").equalTo(TransaksiTR);
-
-                query.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        CreateTransaksiTR();
-                        Toast.makeText(transaksikeTR.this, "Berhasil", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(transaksikeTR.this, HomePK.class);
-                        startActivity(intent);
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
+                if(plastik.getText().toString().isEmpty()||kertas.getText().toString().isEmpty()||
+                        logam.getText().toString().isEmpty()||kaca.getText().toString().isEmpty()||lainnya.getText().toString().isEmpty()
+                        || total.getText().toString().isEmpty()){
+                    Snackbar.make(findViewById(R.id.login), "Lengkapi data sampah anda !",Snackbar.LENGTH_LONG).show();
+                }else{
+                    CreateTransaksiTR();
+                    Toast.makeText(transaksikeTR.this, "Berhasil", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(transaksikeTR.this, HomePK.class);
+                    startActivity(intent);
+                }
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.akun:
+                // User chose the "Settings" item, show the app settings UI...
+                Intent intents = new Intent(transaksikeTR.this, db_ReadAkun.class);
+                startActivity(intents);
+                return true;
+
+            case R.id.help:
+                // User chose the "Favorite" action, mark the current item
+                // as a favorite...
+                return true;
+
+            case R.id.out:
+                SaveSharedPreference.setLoggedInPK(getApplicationContext(), false);
+                SaveSharedPreference.setId(getApplicationContext(), null);
+                Intent intent = new Intent(transaksikeTR.this, login.class);
+                startActivity(intent);
+                finish();
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 
     private void CreateTransaksiTR() {
@@ -76,10 +118,12 @@ public class transaksikeTR extends AppCompatActivity {
 
         String id_ordersampah = menDatabase.push().getKey();
 
+        java.text.SimpleDateFormat fomat = new java.text.SimpleDateFormat("dd-MM-yyyy");
+        Date date = new Date();
+        String curdate =  fomat.format(date).toString();
 
+        TransaksiKeTR transaksiKeTR = new TransaksiKeTR(id_ordersampah, SaveSharedPreference.getId(getApplicationContext()),"", plastikss,kertass, logams, kacas, lainnyas, totals,curdate,"belum");
 
-       // TransaksiKeTR transaksiKeTR = new TransaksiKeTR(id_ordersampah, plastikss,kertass, logams, kacas, lainnyas, totals,);
-
-       // menDatabase.child(id_ordersampah).setValue(transaksiKeTR);
+        menDatabase.child(id_ordersampah).setValue(transaksiKeTR);
     }
 }

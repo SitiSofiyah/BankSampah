@@ -1,6 +1,7 @@
 package com.example.intel.fireapp.PengepulKecil;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,13 +13,20 @@ import android.support.v7.widget.Toolbar;
 
 import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
 import com.example.intel.fireapp.Account.login;
+import com.example.intel.fireapp.Model.Tawaran;
 import com.example.intel.fireapp.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.nex3z.notificationbadge.NotificationBadge;
 
 public class HomePK extends AppCompatActivity {
 
     private Button btgrup;
-
-
+    NotificationBadge nBadge;
+    private DatabaseReference ref = FirebaseDatabase.getInstance().getReference("penawaran");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +37,23 @@ public class HomePK extends AppCompatActivity {
         toolbar.setTitle("Tabungan Sampah");
         setSupportActionBar(toolbar);
 
+        nBadge  = (NotificationBadge) findViewById(R.id.badge);
+
+        ref.child(SaveSharedPreference.getId(getApplicationContext())).orderByChild("status").equalTo("dikirim").addValueEventListener(new ValueEventListener() {
+
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                   nBadge.setNumber((int) dataSnapshot.getChildrenCount());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
@@ -74,14 +99,6 @@ public class HomePK extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public Button getBtgrup() {
-        return btgrup;
-    }
-
-    public void setBtgrup(Button btgrup) {
-        this.btgrup = btgrup;
-    }
-
     public void order(View view) {
         Intent intent = new Intent(HomePK.this,transaksikeTR.class);
         startActivity(intent);
@@ -93,5 +110,7 @@ public class HomePK extends AppCompatActivity {
     }
 
     public void penawaran(View view) {
+        Intent intentss = new Intent(HomePK.this,ListTransaksiJualSampah.class);
+        startActivity(intentss);
     }
 }

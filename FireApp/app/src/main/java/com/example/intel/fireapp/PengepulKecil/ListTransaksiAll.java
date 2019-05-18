@@ -68,7 +68,7 @@ public class ListTransaksiAll extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ListTransaksiAll.this, TambahTransaksiAll.class);
+                Intent intent = new Intent(ListTransaksiAll.this, PilihAnggota.class);
                 startActivity(intent);
             }
         });
@@ -131,7 +131,8 @@ public class ListTransaksiAll extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.akun:
-                // User chose the "Settings" item, show the app settings UI...
+                Intent intent = new Intent(ListTransaksiAll.this, db_ReadAkun.class);
+                startActivity(intent);
                 return true;
 
             case R.id.help:
@@ -142,8 +143,8 @@ public class ListTransaksiAll extends AppCompatActivity {
             case R.id.out:
                 SaveSharedPreference.setLoggedInPK(getApplicationContext(), false);
                 SaveSharedPreference.setId(getApplicationContext(), null);
-                Intent intent = new Intent(ListTransaksiAll.this, login.class);
-                startActivity(intent);
+                Intent intents = new Intent(ListTransaksiAll.this, login.class);
+                startActivity(intents);
                 finish();
                 return true;
 

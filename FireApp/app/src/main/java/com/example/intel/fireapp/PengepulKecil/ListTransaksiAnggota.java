@@ -56,40 +56,6 @@ public class ListTransaksiAnggota extends AppCompatActivity {
         recyclerListView.setAdapter(myAdapter);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.akun:
-                // User chose the "Settings" item, show the app settings UI...
-                return true;
-
-            case R.id.help:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
-                return true;
-
-            case R.id.out:
-                SaveSharedPreference.setLoggedInPK(getApplicationContext(), false);
-                SaveSharedPreference.setId(getApplicationContext(), null);
-                Intent intent = new Intent(ListTransaksiAnggota.this, login.class);
-                startActivity(intent);
-                finish();
-                return true;
-
-            default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
-                return super.onOptionsItemSelected(item);
-
-        }
-    }
-
     private void updateAdapter(){
         final List<transaksi_anggota> listTransaksi= new ArrayList<>();
         transDB = FirebaseDatabase.getInstance().getInstance().getReference();
@@ -136,6 +102,39 @@ public class ListTransaksiAnggota extends AppCompatActivity {
         myAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.akun:
+                Intent intent = new Intent(ListTransaksiAnggota.this, db_ReadAkun.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.help:
+                // User chose the "Favorite" action, mark the current item
+                // as a favorite...
+                return true;
+
+            case R.id.out:
+                SaveSharedPreference.setLoggedInPK(getApplicationContext(), false);
+                SaveSharedPreference.setId(getApplicationContext(), null);
+                Intent intents = new Intent(ListTransaksiAnggota.this, login.class);
+                startActivity(intents);
+                finish();
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
 
 }

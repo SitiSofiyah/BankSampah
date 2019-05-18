@@ -29,15 +29,13 @@ import java.util.List;
 
 public class GrupAdapter extends RecyclerView.Adapter<GrupAdapter.MyViewHolder>{
     private final Context mContext;
-    private final String idUser;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     DatabaseReference ref;
     private List<TambahGrup> grupList = new ArrayList<>();
     private String hasil;
 
-    public GrupAdapter(Context context, String id) {
+    public GrupAdapter(Context context) {
         mContext = context;
-        idUser = id;
     }
 
     public void setData(List<TambahGrup> users) {

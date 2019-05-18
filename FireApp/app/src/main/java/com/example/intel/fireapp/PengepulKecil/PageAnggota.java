@@ -47,8 +47,6 @@ public class PageAnggota extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anggota);
 
-
-
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Anggota Grup "+getIntent().getStringExtra("namaGrup"));
@@ -57,7 +55,7 @@ public class PageAnggota extends AppCompatActivity {
 
         recyclerListView=(RecyclerView) findViewById(R.id.anggota_list);
         recyclerListView.setLayoutManager(new LinearLayoutManager(this));
-        myAdapter= new AnggotaAdapter(this);
+        myAdapter= new AnggotaAdapter(this, "grup");
         updateAdapter();
         recyclerListView.setAdapter(myAdapter);
 
@@ -131,7 +129,6 @@ public class PageAnggota extends AppCompatActivity {
         myAdapter.notifyDataSetChanged();
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
@@ -142,7 +139,8 @@ public class PageAnggota extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.akun:
-                // User chose the "Settings" item, show the app settings UI...
+                Intent intent = new Intent(PageAnggota.this, db_ReadAkun.class);
+                startActivity(intent);
                 return true;
 
             case R.id.help:
@@ -153,8 +151,8 @@ public class PageAnggota extends AppCompatActivity {
             case R.id.out:
                 SaveSharedPreference.setLoggedInPK(getApplicationContext(), false);
                 SaveSharedPreference.setId(getApplicationContext(), null);
-                Intent intent = new Intent(PageAnggota.this, login.class);
-                startActivity(intent);
+                Intent intents = new Intent(PageAnggota.this, login.class);
+                startActivity(intents);
                 finish();
                 return true;
 

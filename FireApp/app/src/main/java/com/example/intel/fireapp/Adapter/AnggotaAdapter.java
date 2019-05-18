@@ -2,16 +2,20 @@ package com.example.intel.fireapp.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.intel.fireapp.Model.Anggota;
 import com.example.intel.fireapp.Model.User;
 import com.example.intel.fireapp.PengepulKecil.DetailAnggota;
+import com.example.intel.fireapp.PengepulKecil.PilihAnggota;
+import com.example.intel.fireapp.PengepulKecil.TambahTransaksiAll;
 import com.example.intel.fireapp.PengepulKecil.TransaksiAnggota;
 import com.example.intel.fireapp.R;
 import com.google.firebase.database.DatabaseReference;
@@ -22,12 +26,13 @@ import java.util.List;
 
 public class AnggotaAdapter extends RecyclerView.Adapter<AnggotaAdapter.MyViewHolder>{
     private final Context mContext;
-    String ket;
+    String jenis;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private List<Anggota> anggotaList = new ArrayList<>();
 
-    public AnggotaAdapter(Context context)
+    public AnggotaAdapter(Context context, String jenis)
     {
+        this.jenis=jenis;
         mContext = context;
     }
 
@@ -60,10 +65,21 @@ public class AnggotaAdapter extends RecyclerView.Adapter<AnggotaAdapter.MyViewHo
             @Override
             public void onClick(View view) {
                 Context context = view.getContext();
-                Intent intent = new Intent(context,DetailAnggota.class);
-                intent.putExtra("idGrup", ""+anggota.getId_grup());
-                intent.putExtra("id", ""+anggota.getId_user());
-                context.startActivity(intent);
+                if(jenis.equals("trans")){
+                    Intent intents = new Intent(context,TambahTransaksiAll.class);
+                    intents.putExtra("id", ""+anggota.getId_user());
+                    intents.putExtra("alamat", ""+anggota.getAlamat());
+                    intents.putExtra("nama", ""+anggota.getNama());
+                    intents.putExtra("idGrup", ""+anggota.getId_grup());
+                    intents.putExtra("saldo",anggota.getSaldo());
+                    context.startActivity(intents);
+                }else{
+                    Intent intent = new Intent(context,DetailAnggota.class);
+                    intent.putExtra("idGrup", ""+anggota.getId_grup());
+                    intent.putExtra("id", ""+anggota.getId_user());
+                    context.startActivity(intent);
+                }
+
             }
         });
 
