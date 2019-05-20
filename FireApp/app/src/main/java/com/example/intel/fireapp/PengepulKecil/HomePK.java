@@ -10,11 +10,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.support.v7.widget.Toolbar;
+import android.widget.TextView;
 
 import com.example.intel.fireapp.Account.Bantuan;
 import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
 import com.example.intel.fireapp.Account.login;
 import com.example.intel.fireapp.Model.Tawaran;
+import com.example.intel.fireapp.Model.User;
 import com.example.intel.fireapp.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,13 +28,33 @@ import com.nex3z.notificationbadge.NotificationBadge;
 public class HomePK extends AppCompatActivity {
 
     NotificationBadge nBadge;
+    TextView nama;
     private DatabaseReference ref = FirebaseDatabase.getInstance().getReference("transaksiTR");
-
+    private DatabaseReference database;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_pk);
 
+        nama = (TextView) findViewById(R.id.nama);
+
+        database = FirebaseDatabase.getInstance().getReference();
+
+        database.child("users").orderByChild("id").equalTo(SaveSharedPreference.getId(getApplicationContext())).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
+                    User user = noteDataSnapshot.getValue(User.class);
+                    nama.setText(user.getNama()+", "+user.getLevel());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println(databaseError.getDetails()+" "+databaseError.getMessage());
+            }
+        });
     }
 
 
