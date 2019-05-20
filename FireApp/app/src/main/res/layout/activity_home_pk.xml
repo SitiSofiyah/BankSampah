@@ -1,226 +1,270 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f4efef"
-    android:orientation="vertical"
+    android:background="@drawable/backg"
     tools:context=".PengepulKecil.HomePK">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/appbar"
+        <RelativeLayout
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/green">
-
-            <include
-                android:id="@+id/toolbar"
-                layout="@layout/app_bar"></include>
-
-        </android.support.design.widget.AppBarLayout>
-
-    </LinearLayout>
-
-
-
-
-    <LinearLayout
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:clipToPadding="false"
-        android:orientation="horizontal">
-
-        <android.support.v7.widget.CardView
-            style="@style/Base.CardView"
-            android:layout_width="160dp"
-            android:layout_height="135dp"
-            android:layout_marginTop="10dp"
-            android:onClick="grup">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="90dp"
-                    android:layout_height="90dp"
-                    android:background="@drawable/edittext"
-                    android:src="@drawable/group" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="5dp"></View>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Grup"
-                    android:textColor="@color/green"
-                    android:textSize="20dp" />
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            style="@style/Base.CardView"
-            android:layout_width="160dp"
-            android:layout_height="135dp"
-            android:layout_margin="10dp"
-            android:onClick="order">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="90dp"
-                    android:layout_height="90dp"
-                    android:background="@drawable/edittext"
-                    android:src="@drawable/order" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="5dp"></View>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Jual Sampah"
-                    android:textColor="@color/green"
-                    android:textSize="20dp" />
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="vertical"
             android:layout_height="wrap_content">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/textdahs"
+                android:textSize="24sp"
+                android:textColor="@color/white"
+                android:text="Tabungan Sampah"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/logout"
+                android:src="@drawable/logout"
+                android:onClick="logout"
+                android:layout_alignParentRight="true"
+                android:layout_width="25dp"
+                android:layout_height="25dp" />
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:clipToPadding="false"
-                android:orientation="horizontal">
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/logout"
+                android:onClick="logout"
+                android:text="Keluar"
+                android:textColor="@color/white" />
 
-                <android.support.v7.widget.CardView
-                    style="@style/Base.CardView"
-                    android:layout_width="160dp"
-                    android:layout_height="135dp"
-                    android:layout_marginTop="10dp"
-                    android:onClick="transaksi">
+            <TextView
+                android:id="@+id/nama"
+                android:layout_below="@id/textdahs"
+                android:textSize="14sp"
+                android:textColor="#aff5cf"
+                android:text="Sinta, Pengepul Kecil"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@color/white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+        </RelativeLayout>
 
-                        <ImageView
-                            android:layout_width="90dp"
-                            android:layout_height="90dp"
-                            android:background="@drawable/edittext"
-                            android:src="@drawable/transaction" />
+        <GridLayout
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alignmentMode="alignMargins"
+            android:columnCount="2"
+            android:columnOrderPreserved="false"
+            android:rowCount="3">
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="5dp"></View>
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:onClick="grup"
+                android:layout_margin="12dp"
+                android:layout_rowWeight="1"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="Transaksi"
-                            android:textColor="@color/green"
-                            android:textSize="20dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-                    </LinearLayout>
+                    <ImageView
+                        android:id="@+id/grup"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/group" />
 
-                </android.support.v7.widget.CardView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Grup" />
 
-                <android.support.v7.widget.CardView
-                    android:id="@+id/penawaran"
-                    style="@style/Base.CardView"
-                    android:layout_width="160dp"
-                    android:layout_height="135dp"
-                    android:layout_margin="10dp"
-                    android:onClick="penawaran">
+                </LinearLayout>
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@color/white"
-                        android:gravity="center"
-                        android:orientation="vertical">
+            </android.support.v7.widget.CardView>
 
-                        <ImageView
-                            android:id="@+id/icon"
-                            android:layout_width="90dp"
-                            android:layout_height="90dp"
-                            android:layout_centerHorizontal="true"
-                            android:background="@drawable/edittext"
-                            android:src="@drawable/penawaran" />
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="order"
+                android:layout_columnWeight="1"
+                android:layout_margin="12dp"
+                android:layout_rowWeight="1"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp">
 
-                        <!--<View-->
-                            <!--android:id="@+id/space"-->
-                            <!--android:layout_below="@+id/icon"-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="5dp"></View>-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/icon"
-                            android:layout_centerHorizontal="true"
-                            android:gravity="center"
-                            android:text="Penawaran"
-                            android:textColor="@color/green"
-                            android:textSize="20dp" />
+                    <ImageView
+                        android:id="@+id/jualSampah"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/order" />
 
-                        <com.nex3z.notificationbadge.NotificationBadge
-                            android:id="@+id/badge"
-                            android:layout_toRightOf="@+id/icon"
-                            android:layout_alignTop="@id/icon"
-                            android:layout_marginLeft="-16dp"
-                            android:layout_marginTop="-8dp"
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            app:badgeBackground="@drawable/badge"
-                            app:maxTextLength="2"
-                            tools:ignore="NotSibling"></com.nex3z.notificationbadge.NotificationBadge>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Jual Sampah" />
 
-                    </RelativeLayout>
+                </LinearLayout>
 
-                </android.support.v7.widget.CardView>
+            </android.support.v7.widget.CardView>
 
-            </LinearLayout>
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="12dp"
+                android:layout_rowWeight="1"
+                android:onClick="transaksi"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:id="@+id/transaksi"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/transaction" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Transaksi Anggota" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="12dp"
+                android:layout_rowWeight="1"
+                android:onClick="penawaran"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:id="@+id/penawaran"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/penawaran" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Penawaran" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="12dp"
+                android:layout_rowWeight="1"
+                android:onClick="bantuan"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:id="@+id/bantuan"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/bantuan" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bantuan" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="12dp"
+                android:layout_rowWeight="1"
+                android:onClick="akun"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:id="@+id/akun"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/akun" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Akun" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </GridLayout>
 
     </LinearLayout>
-    </LinearLayout>
-</LinearLayout>
+
+
+</ScrollView>
