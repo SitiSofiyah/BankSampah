@@ -6,6 +6,7 @@
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
     <color name="grey">#bab4b4</color>
+    <color name="send">#f4f3f3</color>
     <color name="green">#145607</color>
     <color name="red">#801212</color>
 </resources>

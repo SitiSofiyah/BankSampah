@@ -64,7 +64,6 @@ public class TransaksiAnggotaAdapter extends RecyclerView.Adapter<TransaksiAnggo
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext,"Saldo "+a,Toast.LENGTH_SHORT).show();
 
                 Context context = view.getContext();
                 Intent intent = new Intent(context,DetailTransaksi.class);

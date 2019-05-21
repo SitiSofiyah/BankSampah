@@ -26,32 +26,46 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/identitas"
         android:layout_marginTop="25dp"
         android:layout_marginRight="5dp"
         android:layout_marginLeft="5dp"
-        android:text="Grup"
+        android:text="Nama, Alamat"
+        android:textSize="20dp"
         android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
-    <Spinner
-        android:id="@+id/grup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"></Spinner>
 
     <TextView
         android:layout_marginTop="25dp"
         android:layout_marginRight="5dp"
         android:layout_marginLeft="5dp"
-        android:text="User"
+        android:text="Jenis Transaksi"
         android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <Spinner
-        android:id="@+id/user"
+    <RadioGroup
+        android:id="@+id/jenis"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></Spinner>
+        android:layout_height="53dp"
+        android:checkedButton="@id/masuk"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/masuk"
+            android:buttonTint="@color/green"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Masuk" />
+
+        <RadioButton
+            android:id="@+id/keluar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/green"
+            android:text="Keluar" />
+    </RadioGroup>
 
     <TextView
         android:layout_marginTop="25dp"

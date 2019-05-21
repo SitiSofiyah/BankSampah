@@ -43,21 +43,15 @@ public class TransaksiAnggotaAllAdapter extends RecyclerView.Adapter<TransaksiAn
         notifyDataSetChanged();
     }
 
-
-
     @Override
     public TransaksiAnggotaAllAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_transaksiallanggota, parent, false);
         return new TransaksiAnggotaAllAdapter.MyViewHolder(v);
     }
 
-
-
     @Override
     public void onBindViewHolder(final TransaksiAnggotaAllAdapter.MyViewHolder holder, final int position) {
         final transaksi_anggota transaksi = transaksiAnggota.get(position);
-//        transaksi.setNamaAnggota(transaksi.getId_user());
-//        holder.nama.setText(transaksi.nama);
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         final Query query = databaseReference.child("users").orderByChild("id").equalTo(transaksi.getId_user());
         query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -82,25 +76,6 @@ public class TransaksiAnggotaAllAdapter extends RecyclerView.Adapter<TransaksiAn
         }else if(transaksi.getKeluar() > 0){
             holder.ket.setText("Dana Keluar Sebesar Rp. "+transaksi.getKeluar()+",-");
         }
-
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(mContext,"Saldo "+a,Toast.LENGTH_SHORT).show();
-//
-//                Context context = view.getContext();
-//                Intent intent = new Intent(context,DetailTransaksi.class);
-//                intent.putExtra("trans",transaksi.getId_trans());
-//                intent.putExtra("saldo",a);
-//                intent.putExtra("idGrup",b);
-//                intent.putExtra("id", transaksi.getId_user());
-//                context.startActivity(intent);
-//
-//            }
-//        });
-
-
-
     }
 
     @Override

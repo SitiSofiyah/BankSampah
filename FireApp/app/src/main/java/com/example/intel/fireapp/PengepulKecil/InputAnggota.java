@@ -165,7 +165,8 @@ public class InputAnggota extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.akun:
-                // User chose the "Settings" item, show the app settings UI...
+                Intent intent = new Intent(InputAnggota.this, db_ReadAkun.class);
+                startActivity(intent);
                 return true;
 
             case R.id.help:
@@ -176,8 +177,8 @@ public class InputAnggota extends AppCompatActivity {
             case R.id.out:
                 SaveSharedPreference.setLoggedInPK(getApplicationContext(), false);
                 SaveSharedPreference.setId(getApplicationContext(), null);
-                Intent intent = new Intent(InputAnggota.this, login.class);
-                startActivity(intent);
+                Intent intents = new Intent(InputAnggota.this, login.class);
+                startActivity(intents);
                 finish();
                 return true;
 

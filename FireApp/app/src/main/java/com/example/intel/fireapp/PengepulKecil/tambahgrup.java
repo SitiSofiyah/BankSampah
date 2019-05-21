@@ -39,12 +39,7 @@ import java.util.List;
 public class tambahgrup extends AppCompatActivity {
     private Button btTambahGrup;
     private EditText etTambahgrup;
-    SharedPreferences sharedPreferences;
     private DatabaseReference mDatabase,grupDB;
-    ListView listView;
-    ArrayList<String> list = new ArrayList<>();
-    ArrayAdapter<String> adapter;
-    TambahGrup tagrup;
     public RecyclerView recyclerListView;
     public GrupAdapter myAdapter;
 
@@ -66,7 +61,7 @@ public class tambahgrup extends AppCompatActivity {
 
         recyclerListView=(RecyclerView) findViewById(R.id.recylerview_list);
         recyclerListView.setLayoutManager(new LinearLayoutManager(this));
-        myAdapter= new GrupAdapter(this, getIntent().getStringExtra("id"));
+        myAdapter= new GrupAdapter(this);
         updateAdapter();
         recyclerListView.setAdapter(myAdapter);
 
@@ -80,8 +75,6 @@ public class tambahgrup extends AppCompatActivity {
                    else{
                       Snackbar.make(findViewById(R.id.tambahgrupbutton), "Isikan Nama Grup !",Snackbar.LENGTH_LONG).show();
                   }
-
-
             }
 
         });
@@ -97,7 +90,8 @@ public class tambahgrup extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.akun:
-                // User chose the "Settings" item, show the app settings UI...
+                Intent intent = new Intent(tambahgrup.this, db_ReadAkun.class);
+                startActivity(intent);
                 return true;
 
             case R.id.help:
@@ -108,8 +102,8 @@ public class tambahgrup extends AppCompatActivity {
             case R.id.out:
                 SaveSharedPreference.setLoggedInPK(getApplicationContext(), false);
                 SaveSharedPreference.setId(getApplicationContext(), null);
-                Intent intent = new Intent(tambahgrup.this, login.class);
-                startActivity(intent);
+                Intent intents = new Intent(tambahgrup.this, login.class);
+                startActivity(intents);
                 finish();
                 return true;
 

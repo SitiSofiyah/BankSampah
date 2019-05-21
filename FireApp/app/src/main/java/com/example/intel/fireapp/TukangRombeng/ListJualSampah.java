@@ -16,10 +16,12 @@ import android.widget.Toast;
 
 import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
 import com.example.intel.fireapp.Account.login;
-import com.example.intel.fireapp.Adapter.AdapterJualSampah;
-import com.example.intel.fireapp.Adapter.TransaksiAnggotaAllAdapter;
+import com.example.intel.fireapp.Adapter.AdapterTransaksiTR;
+import com.example.intel.fireapp.Model.Anggota;
+import com.example.intel.fireapp.Model.TambahGrup;
 import com.example.intel.fireapp.Model.TransaksiKeTR;
-import com.example.intel.fireapp.Model.transaksi_anggota;
+import com.example.intel.fireapp.Model.User;
+import com.example.intel.fireapp.PengepulKecil.db_ReadAkun;
 import com.example.intel.fireapp.R;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -27,6 +29,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +37,7 @@ import java.util.List;
 public class ListJualSampah extends AppCompatActivity {
 
     public RecyclerView recyclerListView;
-    public AdapterJualSampah myAdapter;
+    public AdapterTransaksiTR myAdapter;
     DatabaseReference transDB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +51,9 @@ public class ListJualSampah extends AppCompatActivity {
 
         recyclerListView=(RecyclerView) findViewById(R.id.jualList);
         recyclerListView.setLayoutManager(new LinearLayoutManager(this));
-        myAdapter= new AdapterJualSampah(this);
+        myAdapter= new AdapterTransaksiTR(this,"TRJS");
         viewTrans();
+        recyclerListView.setAdapter(myAdapter);
 
 
     }
@@ -58,30 +62,33 @@ public class ListJualSampah extends AppCompatActivity {
         final List<TransaksiKeTR> listTransaksi= new ArrayList<>();
         transDB = FirebaseDatabase.getInstance().getInstance().getReference();
         final Query query = transDB.child("transaksiTR").orderByChild("status").equalTo("belum");
-        query.addChildEventListener(new ChildEventListener() {
+        query.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if(dataSnapshot.exists()){
-                    listTransaksi.add(dataSnapshot.getValue(TransaksiKeTR.class));
-                    displayUsers(listTransaksi);
-                }else{
-                    Toast.makeText(ListJualSampah.this, "Tidak ada ",Toast.LENGTH_LONG).show();
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> getTrans = dataSnapshot.getChildren();
+                for (DataSnapshot data : getTrans){
+                    TransaksiKeTR trans = data.getValue(TransaksiKeTR.class);
+                    listTransaksi.add(trans);
                 }
 
-            }
+                for (int i = 0; i < listTransaksi.size(); i++) {
+                    final TransaksiKeTR tr = listTransaksi.get(i);
+                    transDB.child("penawaran").child(tr.getId_ordersampah()).child(SaveSharedPreference.getId(getApplicationContext())).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if(dataSnapshot.exists()){
+                                listTransaksi.remove(tr);
+                            }
+                            displayUsers(listTransaksi);
+                        }
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
+                        }
+                    });
 
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                }
 
             }
 
@@ -90,7 +97,6 @@ public class ListJualSampah extends AppCompatActivity {
 
             }
         });
-
     }
 
     public void displayUsers(List<TransaksiKeTR> ls){
@@ -109,7 +115,8 @@ public class ListJualSampah extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.akun:
-                // User chose the "Settings" item, show the app settings UI...
+                Intent intents = new Intent(ListJualSampah.this, db_ReadAkun.class);
+                startActivity(intents);
                 return true;
 
             case R.id.help:
@@ -118,7 +125,7 @@ public class ListJualSampah extends AppCompatActivity {
                 return true;
 
             case R.id.out:
-                SaveSharedPreference.setLoggedInPK(getApplicationContext(), false);
+                SaveSharedPreference.setLoggedInTR(getApplicationContext(), false);
                 SaveSharedPreference.setId(getApplicationContext(), null);
                 Intent intent = new Intent(ListJualSampah.this, login.class);
                 startActivity(intent);

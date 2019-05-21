@@ -7,6 +7,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyboardShortcutGroup;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +24,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.List;
 
 public class DetailAnggota extends AppCompatActivity {
 
@@ -106,13 +109,9 @@ public class DetailAnggota extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.homeAsUp:
-                Intent intent = new Intent();
-                intent.putExtra("idGrup",getIntent().getStringExtra("idGrup"));
-                startActivity(intent);
-                return true;
             case R.id.akun:
-                // User chose the "Settings" item, show the app settings UI...
+                Intent intent = new Intent(DetailAnggota.this, db_ReadAkun.class);
+                startActivity(intent);
                 return true;
 
             case R.id.help:

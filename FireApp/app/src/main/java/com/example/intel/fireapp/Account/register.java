@@ -54,6 +54,7 @@ public class register extends AppCompatActivity {
         regis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                regis.setClickable(false);
 
                 final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
                 String user = nama.getText().toString();
@@ -62,12 +63,14 @@ public class register extends AppCompatActivity {
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if(nama.getText().toString()==""||telp.getText().toString()==""||alamat.getText().toString()==""||password.getText().toString()=="")
+                        if(nama.getText().toString().isEmpty()||telp.getText().toString().isEmpty()||alamat.getText().toString().isEmpty()||password.getText().toString().isEmpty())
                         {
-                            Snackbar.make(findViewById(R.id.tambahgrupbutton), "Lengkapi data diri anda !",Snackbar.LENGTH_LONG).show();
+                            Toast.makeText(register.this, "Lengkapi data diri anda", Toast.LENGTH_LONG).show();
+                            regis.setClickable(true);
                         }
                         else if(dataSnapshot.exists()){
-                            Snackbar.make(findViewById(R.id.tambahgrupbutton), "Username sudah tersedia !",Snackbar.LENGTH_LONG).show();
+                            Toast.makeText(register.this, "Username sudah ada", Toast.LENGTH_LONG).show();
+                            regis.setClickable(true);
                         }else {
                             createAccount();
                             Toast.makeText(register.this, "Register Berhasil", Toast.LENGTH_LONG).show();

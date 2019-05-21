@@ -2,6 +2,7 @@ package com.example.intel.fireapp.PengepulKecil;
 
 import android.content.Intent;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,6 +36,7 @@ public class ListTransaksiAnggota extends AppCompatActivity {
     public RecyclerView recyclerListView;
     public TransaksiAnggotaAdapter myAdapter;
     private DatabaseReference transDB;
+    FloatingActionButton add;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,47 +49,24 @@ public class ListTransaksiAnggota extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Toast.makeText(getApplicationContext(),"Saldo "+getIntent().getIntExtra("saldo",0),Toast.LENGTH_SHORT).show();
-
         recyclerListView=(RecyclerView) findViewById(R.id.transaksiAnggota_list);
         recyclerListView.setLayoutManager(new LinearLayoutManager(this));
         myAdapter= new TransaksiAnggotaAdapter(this,getIntent().getIntExtra("saldo",0),getIntent().getStringExtra("idGrup"));
         updateAdapter();
         recyclerListView.setAdapter(myAdapter);
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
+        add = (FloatingActionButton) findViewById(R.id.add);
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.akun:
-                // User chose the "Settings" item, show the app settings UI...
-                return true;
-
-            case R.id.help:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
-                return true;
-
-            case R.id.out:
-                SaveSharedPreference.setLoggedInPK(getApplicationContext(), false);
-                SaveSharedPreference.setId(getApplicationContext(), null);
-                Intent intent = new Intent(ListTransaksiAnggota.this, login.class);
-                startActivity(intent);
-                finish();
-                return true;
-
-            default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
-                return super.onOptionsItemSelected(item);
-
-        }
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intents = new Intent(ListTransaksiAnggota.this, TransaksiAnggota.class);
+                intents.putExtra("idGrup", getIntent().getStringExtra("idGrup").toString());
+                intents.putExtra("id", getIntent().getStringExtra("id").toString());
+                intents.putExtra("saldo", getIntent().getIntExtra("saldo",0));
+                startActivity(intents);
+            }
+        });
     }
 
     private void updateAdapter(){
@@ -136,6 +115,39 @@ public class ListTransaksiAnggota extends AppCompatActivity {
         myAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.akun:
+                Intent intent = new Intent(ListTransaksiAnggota.this, db_ReadAkun.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.help:
+                // User chose the "Favorite" action, mark the current item
+                // as a favorite...
+                return true;
+
+            case R.id.out:
+                SaveSharedPreference.setLoggedInPK(getApplicationContext(), false);
+                SaveSharedPreference.setId(getApplicationContext(), null);
+                Intent intents = new Intent(ListTransaksiAnggota.this, login.class);
+                startActivity(intents);
+                finish();
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
 
 }
