@@ -28,7 +28,7 @@ public class db_ReadAkun extends AppCompatActivity {
      * Mendefinisikan variable yang akan dipakai
      */
     private DatabaseReference database;
-    TextView tvNama, tvAlamat, tvPass, tvTelp;
+    TextView tvNama, tvAlamat, tvPass, tvTelp, tvJK;
     String level;
 
     @Override
@@ -48,9 +48,11 @@ public class db_ReadAkun extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
             tvNama = (TextView) findViewById(R.id.tv_nama);
-            tvPass = (TextView) findViewById(R.id.tv_JK);
-            tvAlamat = (TextView) findViewById(R.id.tv_Alamat);
-            tvTelp = (TextView) findViewById(R.id.tv_Telepon);
+            tvAlamat = (TextView) findViewById(R.id.tv_alamat);
+            tvTelp = (TextView) findViewById(R.id.tv_notlp);
+            tvPass = (TextView) findViewById(R.id.tv_pass);
+            tvJK = (TextView) findViewById(R.id.tv_jk);
+
 
 
 
@@ -65,6 +67,7 @@ public class db_ReadAkun extends AppCompatActivity {
                     User user = noteDataSnapshot.getValue(User.class);
                     tvNama.setText(user.getNama());
                     tvAlamat.setText(user.getAlamat());
+                    tvJK.setText(user.getJeniskel());
                     tvTelp.setText(user.getTelp());
                     tvPass.setText(user.getPassword());
                     level=user.getLevel().toString();

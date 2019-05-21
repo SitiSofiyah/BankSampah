@@ -1,84 +1,259 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
-
-    <LinearLayout
-        android:id="@+id/app"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/appbar"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/green">
-
-            <include
-                android:id="@+id/toolbar"
-                layout="@layout/app_bar"></include>
-
-        </android.support.design.widget.AppBarLayout>
-    </LinearLayout>
+    android:layout_height="match_parent">
 
     <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="400dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="75dp"
-        android:background="#fff"
-        android:elevation="4dp"
-        android:orientation="vertical"
-        android:padding="20dp"
-        android:id="@+id/relativeLAyout3">
-        <TextView
-            android:id="@+id/tv_nama"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/layout">
+
+
+        <ImageView
+            android:id="@+id/header_cover_image"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:scaleType="centerCrop"
+
+            android:src="@drawable/hijau"
+            app:srcCompat="@drawable/hijau" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+
+            android:clickable="true"
+            app:civ_border_width="3dp"
+            app:civ_border_color="#FFFFFFFF"
+
+            android:id="@+id/profile"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_below="@+id/header_cover_image"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-130dp"
+            android:elevation="5dp"
+            android:padding="20dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/man" />
+
+        <RelativeLayout
+            android:id="@+id/profile_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:hint="okee"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
-        <TextView
-            android:id="@+id/tv_JK"
+            android:layout_below="@+id/header_cover_image"
+            android:background="@color/green"
+            android:elevation="4dp"
+            android:paddingBottom="24dp">
+
+
+            <ImageView
+                android:id="@+id/edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp"
+                android:clickable="true"
+
+                android:src="@android:drawable/ic_menu_edit" />
+
+            <TextView
+                android:id="@+id/nama1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="70dp"
+                android:text="Laxman Marothiya"
+                android:textColor="#fff"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/designation"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="Surat"
+                android:textColor="#fff"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/designation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/nama1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="(Adhyaksh)"
+                android:textColor="#fff"
+                android:textSize="18sp" />
+        </RelativeLayout>
+
+
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:hint="okee"
-            android:layout_below="@+id/tv_nama"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
-        <TextView
-            android:id="@+id/tv_Alamat"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:hint="okee"
-            android:layout_below="@+id/tv_JK"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
-        <TextView
-            android:id="@+id/tv_Telepon"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:hint="okee"
-            android:layout_below="@+id/tv_Alamat"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
-        <Button
-            android:id="@+id/editAkun"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:onClick="edit"
-            android:text="EDIT AKUN "/>
+            android:layout_height="match_parent"
+            android:layout_below="@+id/profile_layout"
+            android:layout_margin="5dp"
+            android:layout_marginTop="5dp"
+            android:background="#fff"
+            android:elevation="4dp"
+            android:orientation="vertical"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"
+
+            >
+
+            <TextView
+                android:id="@+id/nama2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:clickable="true"
+                android:text="Nama: "
+                android:textStyle="bold"
+                android:layout_marginLeft="25dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="8dp"></TextView>
+            <TextView
+                android:id="@+id/alamat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:clickable="true"
+                android:text="Alamat: "
+                android:textStyle="bold"
+                android:layout_marginLeft="25dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/nama2" />
+            <TextView
+                android:id="@+id/jk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:clickable="true"
+                android:text="Jenis Kelamin: "
+                android:textStyle="bold"
+                android:layout_marginLeft="25dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/alamat" />
+            <TextView
+                android:id="@+id/notlp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:clickable="true"
+                android:text="No Telepon: "
+                android:textStyle="bold"
+                android:layout_marginLeft="25dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/jk"
+                />
+            <TextView
+                android:id="@+id/pass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:clickable="true"
+                android:text="Password: "
+                android:textStyle="bold"
+                android:layout_marginLeft="25dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/notlp"
+                />
+            <TextView
+                android:id="@+id/tv_nama"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:clickable="true"
+                android:hint="nama"
+                android:textStyle="bold"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintLeft_toRightOf="@+id/nama2"
+                />
+            <TextView
+                android:id="@+id/tv_alamat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:clickable="true"
+                android:hint="alamat"
+                android:textStyle="bold"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/tv_nama"
+                app:layout_constraintLeft_toRightOf="@+id/alamat"
+                />
+            <TextView
+                android:id="@+id/tv_jk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:clickable="true"
+                android:hint="jenis kelamin"
+                android:textStyle="bold"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintLeft_toRightOf="@+id/jk"
+                app:layout_constraintTop_toBottomOf="@+id/tv_alamat"
+                />
+            <TextView
+                android:id="@+id/tv_notlp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:clickable="true"
+                android:hint="no telepon"
+                android:textStyle="bold"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintLeft_toRightOf="@+id/notlp"
+                app:layout_constraintTop_toBottomOf="@+id/tv_jk"
+                />
+            <TextView
+                android:id="@+id/tv_pass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:clickable="true"
+                android:hint="password"
+                android:textStyle="bold"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintLeft_toRightOf="@+id/pass"
+                app:layout_constraintTop_toBottomOf="@+id/tv_notlp"
+                />
+            <Button
+                android:id="@+id/editAkun"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:onClick="edit"
+                android:text="EDIT AKUN "
+                app:layout_constraintTop_toBottomOf="@+id/pass"/>
+
+
+
+
+        </android.support.constraint.ConstraintLayout>
     </RelativeLayout>
-</LinearLayout>
+</ScrollView>
 
 
 
