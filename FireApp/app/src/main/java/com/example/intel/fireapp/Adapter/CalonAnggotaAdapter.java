@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.intel.fireapp.Model.Anggota;
+import com.example.intel.fireapp.Model.TambahGrup;
 import com.example.intel.fireapp.Model.User;
 import com.example.intel.fireapp.PengepulKecil.InputAnggota;
 import com.example.intel.fireapp.R;
@@ -104,5 +105,11 @@ public class CalonAnggotaAdapter extends RecyclerView.Adapter<CalonAnggotaAdapte
             nama = (TextView) itemView.findViewById(R.id.namaAnggota);
             alamat = (TextView) itemView.findViewById(R.id.alamatAnggota);
         }
+    }
+
+    public void setFilter(ArrayList<User> filter){
+        anggotaList = new ArrayList<>();
+        anggotaList.addAll(filter);
+        notifyDataSetChanged();
     }
 }

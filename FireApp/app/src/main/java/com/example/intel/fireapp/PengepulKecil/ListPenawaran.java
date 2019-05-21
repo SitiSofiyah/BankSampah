@@ -72,12 +72,12 @@ public class ListPenawaran extends AppCompatActivity {
                 for (DataSnapshot data : dataSnapshot.getChildren()){
                     TransaksiKeTR trans = data.getValue(TransaksiKeTR.class);
                     tanggal.setText(trans.getTanggal().toString());
-                    plastik.setText(trans.getPlastik_pk().toString());
-                    logam.setText(trans.getLogam_pk().toString());
-                    kaca.setText(trans.getKaca_pk().toString());
-                    kertas.setText(trans.getKertas_pk().toString());
-                    lain.setText(trans.getLainnya_pk().toString());
-                    total.setText(trans.getTotal().toString());
+                    plastik.setText("Plastik : "+trans.getPlastik_pk().toString()+" Kg");
+                    logam.setText("Logam : "+trans.getLogam_pk().toString()+" Kg");
+                    kaca.setText("Kaca : "+trans.getKaca_pk().toString()+" Kg");
+                    kertas.setText("Kertas : "+trans.getKertas_pk().toString()+" Kg");
+                    lain.setText("Lainnya : "+trans.getLainnya_pk().toString()+" Kg");
+                    total.setText("Total : "+trans.getTotal().toString()+" Kg");
                 }
             }
 

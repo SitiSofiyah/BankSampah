@@ -1,6 +1,9 @@
 package com.example.intel.fireapp.PengepulKecil;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.Snackbar;
@@ -19,19 +22,24 @@ import com.example.intel.fireapp.Account.login;
 import com.example.intel.fireapp.Model.TransaksiKeTR;
 import com.example.intel.fireapp.Model.User;
 import com.example.intel.fireapp.R;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.Date;
 
 public class transaksikeTR extends AppCompatActivity {
-    private Button order;
+
+    private Button order,addpic;
+    private static final int RESULT_LOAD_IMAGE = 1;
     private EditText plastik, kertas, logam, kaca, lainnya, total;
     private DatabaseReference menDatabase;
+    private StorageReference mStorage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +59,18 @@ public class transaksikeTR extends AppCompatActivity {
         lainnya = (EditText) findViewById(R.id.lainnya_pk);
         total = (EditText) findViewById(R.id.total);
         order = (Button) findViewById(R.id.order);
+        addpic = (Button) findViewById(R.id.addPic);
+
+        addpic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent,"Select Picture"), RESULT_LOAD_IMAGE);
+            }
+        });
 
         order.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,4 +146,76 @@ public class transaksikeTR extends AppCompatActivity {
 
         menDatabase.child(id_ordersampah).setValue(transaksiKeTR);
     }
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//
+//        if(requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK){
+//
+//            if(data.getClipData() != null){
+//
+//                int totalItemsSelected = data.getClipData().getItemCount();
+//
+//                for(int i = 0; i < totalItemsSelected; i++){
+//
+//                    Uri fileUri = data.getClipData().getItemAt(i).getUri();
+//
+//                    String fileName = getFileName(fileUri);
+//
+//
+//                    StorageReference fileToUpload = mStorage.child("Images").child(fileName);
+//
+//                    final int finalI = i;
+//                    fileToUpload.putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                        @Override
+//                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//
+//                            fileDoneList.remove(finalI);
+//                            fileDoneList.add(finalI, "done");
+//
+//                            uploadListAdapter.notifyDataSetChanged();
+//
+//                        }
+//                    });
+//
+//                }
+//
+//                //Toast.makeText(MainActivity.this, "Selected Multiple Files", Toast.LENGTH_SHORT).show();
+//
+//            } else if (data.getData() != null){
+//
+//                Toast.makeText(MainActivity.this, "Selected Single File", Toast.LENGTH_SHORT).show();
+//
+//            }
+//
+//        }
+//
+//    }
+//
+//
+//
+//    public String getFileName(Uri uri) {
+//        String result = null;
+//        if (uri.getScheme().equals("content")) {
+//            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+//            try {
+//                if (cursor != null && cursor.moveToFirst()) {
+//                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+//                }
+//            } finally {
+//                cursor.close();
+//            }
+//        }
+//        if (result == null) {
+//            result = uri.getPath();
+//            int cut = result.lastIndexOf('/');
+//            if (cut != -1) {
+//                result = result.substring(cut + 1);
+//            }
+//        }
+//        return result;
+//    }
+
 }

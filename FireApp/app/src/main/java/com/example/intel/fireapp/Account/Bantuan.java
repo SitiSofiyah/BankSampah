@@ -20,15 +20,44 @@ public class Bantuan extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home__anggota);
+        setContentView(R.layout.activity_bantuan);
+
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Tabungan Sampah");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         bt_anggota = (Button) findViewById(R.id.untukanggota);
         bt_pk = (Button) findViewById(R.id.untukpengepul);
         bt_tr = (Button) findViewById(R.id.untuktukang);
+
+        bt_anggota.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Bantuan.this, tatacaraanggota_update.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        bt_pk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Bantuan.this, pk_bantuan.class);
+                startActivity(intent);
+                finish();
+            }
+
+        });
+        bt_tr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Bantuan.this, tr_bantuan.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
     }
 
@@ -65,32 +94,7 @@ public class Bantuan extends AppCompatActivity {
 
         }
 
-        bt_anggota.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Bantuan.this, tatacaraanggota_update.class);
-                startActivity(intent);
-                finish();
-                }
-        });
 
-        bt_pk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Bantuan.this, pk_bantuan.class);
-                startActivity(intent);
-                finish();
-            }
-
-        });
-        bt_tr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Bantuan.this, tr_bantuan.class);
-                startActivity(intent);
-                finish();
-            }
-        });
     }
 
 }

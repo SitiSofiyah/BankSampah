@@ -1,5 +1,7 @@
 package com.example.intel.fireapp.PengepulKecil;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -7,9 +9,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
+import com.example.intel.fireapp.Account.login;
 import com.example.intel.fireapp.Adapter.AnggotaAdapter;
 import com.example.intel.fireapp.Adapter.GrupAdapter;
 import com.example.intel.fireapp.Model.Anggota;
@@ -32,6 +38,8 @@ public class PilihAnggota extends AppCompatActivity {
     DatabaseReference ref;
     public RecyclerView recyclerListView;
     public AnggotaAdapter myAdapter;
+    List<TambahGrup> listGrup= new ArrayList<>();
+    List<Anggota> listUser= new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +61,6 @@ public class PilihAnggota extends AppCompatActivity {
     }
 
     private void grup(){
-        final List<TambahGrup> listGrup= new ArrayList<>();
-        final List<Anggota> listUser= new ArrayList<>();
         ref = FirebaseDatabase.getInstance().getInstance().getReference();
         final Query query = ref.child("grup").orderByChild("id").equalTo(SaveSharedPreference.getId(getApplicationContext()));
         query.addValueEventListener(new ValueEventListener() {
@@ -100,6 +106,40 @@ public class PilihAnggota extends AppCompatActivity {
     public void displayUsers(List<Anggota> ls){
         myAdapter.setData(ls);
         myAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.search_action);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setQueryHint("Cari sesuatu....");
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange( String s) {
+                ArrayList<Anggota> dataFilter= new ArrayList<>();
+                for( Anggota data : listUser){
+                    String nama = data.getNama().toLowerCase();
+                    String alamat = data.getAlamat().toLowerCase();
+                    if(nama.contains(s.toLowerCase())||alamat.contains(s.toLowerCase())){
+                        dataFilter.add(data);
+                    }
+
+                }
+                myAdapter.setFilter(dataFilter);
+                return true;
+            }
+        });
+        searchItem.setActionView(searchView);
+        return true;
     }
 
 }

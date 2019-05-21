@@ -165,5 +165,11 @@ public class AdapterTransaksiTR extends RecyclerView.Adapter<AdapterTransaksiTR.
 //            tambah = (Button) itemView.findViewById(R.id.tambah);
         }
     }
+
+    public void setFilter(ArrayList<TransaksiKeTR> filter){
+        transList = new ArrayList<>();
+        transList.addAll(filter);
+        notifyDataSetChanged();
+    }
 }
 

@@ -1,18 +1,25 @@
 package com.example.intel.fireapp.PengepulKecil;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
+import com.example.intel.fireapp.Account.login;
 import com.example.intel.fireapp.Adapter.AdapterTransaksiTR;
 import com.example.intel.fireapp.Adapter.TransaksiAnggotaAdapter;
+import com.example.intel.fireapp.Model.Anggota;
 import com.example.intel.fireapp.Model.TransaksiKeTR;
 import com.example.intel.fireapp.R;
 import com.google.firebase.database.DataSnapshot;
@@ -30,6 +37,7 @@ public class ListTransaksiJualSampah extends AppCompatActivity {
     public RecyclerView recyclerListView;
     public AdapterTransaksiTR myAdapter;
     private DatabaseReference transDB;
+    List<TransaksiKeTR> listTransaksi= new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +58,6 @@ public class ListTransaksiJualSampah extends AppCompatActivity {
     }
 
     public void viewTrans(){
-        final List<TransaksiKeTR> listTransaksi= new ArrayList<>();
         transDB = FirebaseDatabase.getInstance().getInstance().getReference();
         final Query query = transDB.child("transaksiTR").orderByChild("id_pk").equalTo(SaveSharedPreference.getId(getApplicationContext()));
         query.addValueEventListener(new ValueEventListener() {
@@ -75,5 +82,67 @@ public class ListTransaksiJualSampah extends AppCompatActivity {
         recyclerListView.setVisibility(View.VISIBLE);
         myAdapter.setData(ls);
         myAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_search, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.search_action);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setQueryHint("Cari sesuatu....");
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange( String s) {
+                ArrayList<TransaksiKeTR> dataFilter= new ArrayList<>();
+                for( TransaksiKeTR data : listTransaksi){
+                    String nama = data.getTanggal().toLowerCase();
+                    if(nama.contains(s.toLowerCase())){
+                        dataFilter.add(data);
+                    }
+
+                }
+                myAdapter.setFilter(dataFilter);
+                return true;
+            }
+        });
+        searchItem.setActionView(searchView);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.akun:
+                Intent intent = new Intent(ListTransaksiJualSampah.this, db_ReadAkun.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.help:
+                // User chose the "Favorite" action, mark the current item
+                // as a favorite...
+                return true;
+
+            case R.id.out:
+                SaveSharedPreference.setLoggedInPK(getApplicationContext(), false);
+                SaveSharedPreference.setId(getApplicationContext(), null);
+                Intent intents = new Intent(ListTransaksiJualSampah.this, login.class);
+                startActivity(intents);
+                finish();
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 }

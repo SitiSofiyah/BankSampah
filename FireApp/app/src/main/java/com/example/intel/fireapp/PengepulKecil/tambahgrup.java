@@ -1,5 +1,6 @@
 package com.example.intel.fireapp.PengepulKecil;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -25,6 +27,7 @@ import com.example.intel.fireapp.Account.login;
 import com.example.intel.fireapp.Adapter.GrupAdapter;
 import com.example.intel.fireapp.Model.Anggota;
 import com.example.intel.fireapp.Model.TambahGrup;
+import com.example.intel.fireapp.Model.transaksi_anggota;
 import com.example.intel.fireapp.R;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -42,6 +45,7 @@ public class tambahgrup extends AppCompatActivity {
     private DatabaseReference mDatabase,grupDB;
     public RecyclerView recyclerListView;
     public GrupAdapter myAdapter;
+    List<TambahGrup> listGrup= new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +86,33 @@ public class tambahgrup extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
+        getMenuInflater().inflate(R.menu.menu_search, menu);
+        MenuItem searchItem = menu.findItem(R.id.search_action);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setQueryHint("Cari sesuatu....");
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange( String s) {
+                ArrayList<TambahGrup> dataFilter= new ArrayList<>();
+                for( TambahGrup data : listGrup){
+                    String nama = data.getNama_grup().toLowerCase();
+                    if(nama.contains(s.toLowerCase())){
+                        dataFilter.add(data);
+                    }
+
+                }
+                myAdapter.setFilter(dataFilter);
+                return true;
+            }
+        });
+        searchItem.setActionView(searchView);
         return true;
     }
 
@@ -116,7 +146,6 @@ public class tambahgrup extends AppCompatActivity {
     }
 
     private void updateAdapter(){
-        final List<TambahGrup> listGrup= new ArrayList<>();
         grupDB = FirebaseDatabase.getInstance().getInstance().getReference();
         final Query query = grupDB.child("grup").orderByChild("id").equalTo(SaveSharedPreference.getId(getApplicationContext()));
         query.addChildEventListener(new ChildEventListener() {

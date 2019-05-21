@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.intel.fireapp.Account.login;
 import com.example.intel.fireapp.Model.Anggota;
+import com.example.intel.fireapp.Model.transaksi_anggota;
 import com.example.intel.fireapp.PengepulKecil.PageAnggota;
 import com.example.intel.fireapp.Model.TambahGrup;
 import com.example.intel.fireapp.R;
@@ -139,5 +140,11 @@ public class GrupAdapter extends RecyclerView.Adapter<GrupAdapter.MyViewHolder>{
             nama = (TextView) itemView.findViewById(R.id.nama);
             id = (TextView) itemView.findViewById(R.id.idAnggota);
         }
+    }
+
+    public void setFilter(ArrayList<TambahGrup> filter){
+        grupList = new ArrayList<>();
+        grupList.addAll(filter);
+        notifyDataSetChanged();
     }
 }

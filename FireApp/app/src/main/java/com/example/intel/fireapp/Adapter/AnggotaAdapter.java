@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.intel.fireapp.Model.Anggota;
 import com.example.intel.fireapp.Model.User;
+import com.example.intel.fireapp.Model.transaksi_anggota;
 import com.example.intel.fireapp.PengepulKecil.DetailAnggota;
 import com.example.intel.fireapp.PengepulKecil.PilihAnggota;
 import com.example.intel.fireapp.PengepulKecil.TambahTransaksiAll;
@@ -118,5 +119,11 @@ public class AnggotaAdapter extends RecyclerView.Adapter<AnggotaAdapter.MyViewHo
 //            detail = (Button) itemView.findViewById(R.id.detail);
 //            tambah = (Button) itemView.findViewById(R.id.tambah);
         }
+    }
+
+    public void setFilter(ArrayList<Anggota> filter){
+        anggotaList = new ArrayList<>();
+        anggotaList.addAll(filter);
+        notifyDataSetChanged();
     }
 }
