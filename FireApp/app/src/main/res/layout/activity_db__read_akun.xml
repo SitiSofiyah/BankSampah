@@ -15,7 +15,7 @@
         <ImageView
             android:id="@+id/header_cover_image"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="200dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:scaleType="centerCrop"
 
@@ -246,6 +246,8 @@
                 android:layout_alignParentBottom="true"
                 android:onClick="edit"
                 android:text="EDIT AKUN "
+                android:background="@color/red"
+                android:textColor="@color/white"
                 app:layout_constraintTop_toBottomOf="@+id/pass"/>
 
 
