@@ -9,26 +9,57 @@
     tools:context=".Account.Bantuan">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Select Company"
-            android:textColor="@color/colorPrimary" />
-
-
-        <android.support.v7.widget.AppCompatSpinner
-            android:id="@+id/sp_companies"
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/drop_down"
-            />
+            android:layout_height="50dp"
+            android:background="@color/green">
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/app_bar"></include>
+        </android.support.design.widget.AppBarLayout>
+    </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            >
+            <Button
+                android:id="@+id/untukanggota"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tata cara untuk anggota "
+                android:background="@color/red"
+                android:textColor="@color/white"
+
+                />
+            <Button
+                android:id="@+id/untukpengepul"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tata cara untuk Pengepul Kecil"
+                android:background="@color/red"
+                android:textColor="@color/white"
+
+                />
+            <Button
+                android:id="@+id/untuktukang"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tata cara untuk Tukang Rombeng  "
+                android:background="@color/red"
+                android:textColor="@color/white"/>
+        </LinearLayout>
     </LinearLayout>
 
 
-</LinearLayout>
+
+
+
+
+
+
