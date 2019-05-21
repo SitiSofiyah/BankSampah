@@ -38,11 +38,18 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+<<<<<<< HEAD
+                android:gravity="center"
+                android:text="Pemberitahuan"
+                android:textColor="@color/green"
+                android:textSize="20dp" />
+=======
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/logout"
                 android:onClick="logout"
                 android:text="Keluar"
                 android:textColor="@color/white" />
+>>>>>>> e48d5f402fe94bda8a04a38a0b9f2e566166527f
 
             <TextView
                 android:id="@+id/nama"

@@ -11,8 +11,8 @@
         android:id="@+id/relativeLayout2"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
         android:background="#fff"
         android:elevation="4dp"
         android:orientation="vertical"
@@ -38,33 +38,33 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:text="Nama "
-                android:textColor="@color/black"/>
+                android:textColor="@color/black" />
 
             <EditText
                 android:id="@+id/nama"
-                android:textColor="@color/black"
                 style="@android:style/Widget.EditText"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textColor="@color/black" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Alamat "
-                android:textColor="@color/black"/>
+                android:textColor="@color/black" />
 
             <EditText
                 android:id="@+id/alamat"
                 style="@android:style/Widget.EditText"
                 android:layout_width="match_parent"
-                android:textColor="@color/black"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textColor="@color/black" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:text="Jenis Kelamin"/>
+                android:text="Jenis Kelamin"
+                android:textColor="@color/black" />
 
             <RadioGroup
                 android:id="@+id/jk"
@@ -75,9 +75,9 @@
 
                 <RadioButton
                     android:id="@+id/lk"
-                    android:buttonTint="@color/green"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:buttonTint="@color/green"
                     android:text="Pria" />
 
                 <RadioButton
@@ -97,9 +97,9 @@
             <EditText
                 android:id="@+id/telp"
                 style="@android:style/Widget.EditText"
-                android:inputType="phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="phone"
                 android:textColor="@color/black" />
 
             <TextView

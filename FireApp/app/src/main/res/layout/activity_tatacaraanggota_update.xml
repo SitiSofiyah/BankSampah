@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/hijau"
+    android:orientation="vertical"
+    tools:context=".Account.tatacaraanggota_update">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/green">
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/app_bar"></include>
+
+        </android.support.design.widget.AppBarLayout>
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="#fff"
+        android:elevation="4dp"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textAlignment="center"
+                android:textColor="@color/green"
+                android:textSize="30dp"
+                android:text=" TATA CARA UNTUK ANGGOTA "/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textAlignment="center"
+                android:textColor="@color/green"
+                android:textSize="20dp"
+                android:text=" 1. Anggota melakukan login dengan melakuakn registrasi sebelumnya  "/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textAlignment="center"
+                android:textColor="@color/green"
+                android:textSize="20dp"
+                android:text=" 2. Untuk perubahan yang dilakukan oleh pengepul kecil kepada anggota, anggota menerima notiifkasi di akun   "/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textAlignment="center"
+                android:textColor="@color/green"
+                android:textSize="20dp"
+                android:text=" 3. Anggota dapat mengumpulkan sampah oada pengepul kecil yang telah tergabung sebelumnya   "/>
+
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>
