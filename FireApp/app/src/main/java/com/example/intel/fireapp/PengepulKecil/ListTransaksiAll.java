@@ -1,5 +1,6 @@
 package com.example.intel.fireapp.PengepulKecil;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,11 +10,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Toast;
 
 import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
@@ -39,11 +43,13 @@ public class ListTransaksiAll extends AppCompatActivity {
 
     public RecyclerView recyclerListView;
     public TransaksiAnggotaAllAdapter myAdapter;
-    private DatabaseReference grupDb, anggotaDb, transDB;
+    private DatabaseReference  transDB;
     public ArrayList<String> grup = new ArrayList<>();
     public ArrayList<String> anggota = new ArrayList<>();
     FloatingActionButton add;
-
+    String nama;
+    List<transaksi_anggota> listTransaksi = new ArrayList<>();
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,7 +82,6 @@ public class ListTransaksiAll extends AppCompatActivity {
     }
 
     private void getTrans() {
-        final List<transaksi_anggota> listTransaksi= new ArrayList<>();
         transDB = FirebaseDatabase.getInstance().getInstance().getReference();
         final Query query = transDB.child("transaksi_anggota").orderByChild("id_pk").equalTo(SaveSharedPreference.getId(getApplicationContext()));
         query.addChildEventListener(new ChildEventListener() {
@@ -123,7 +128,35 @@ public class ListTransaksiAll extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
+        getMenuInflater().inflate(R.menu.menu_search, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.search_action);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setQueryHint("Cari sesuatu....");
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange( String s) {
+                 ArrayList<transaksi_anggota> dataFilter= new ArrayList<>();
+                for( transaksi_anggota data : listTransaksi){
+                    String name = getName(data.getId_user());
+                    String nama = data.getTanggal().toLowerCase();
+                        if(nama.contains(s.toLowerCase())||name.contains(s.toLowerCase())){
+                            dataFilter.add(data);
+                        }
+
+                }
+                myAdapter.setFilter(dataFilter);
+                return true;
+            }
+        });
+        searchItem.setActionView(searchView);
         return true;
     }
 
@@ -154,5 +187,26 @@ public class ListTransaksiAll extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+    public String getName(String id){
+        final Query query = databaseReference.child("users").orderByChild("id").equalTo(id);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                        User login = userSnapshot.getValue(User.class);
+                        nama = login.getNama().toLowerCase();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        return nama;
     }
 }

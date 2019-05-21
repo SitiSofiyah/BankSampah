@@ -3,10 +3,14 @@ package com.example.intel.fireapp.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.constraint.Constraints;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +30,8 @@ import java.util.List;
 
 public class TransaksiAnggotaAllAdapter extends RecyclerView.Adapter<TransaksiAnggotaAllAdapter.MyViewHolder>{
     private final Context mContext;
-    String ket,b;
+    String ket,b, name;
+    boolean nama;
     int a;
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -52,7 +57,6 @@ public class TransaksiAnggotaAllAdapter extends RecyclerView.Adapter<TransaksiAn
     @Override
     public void onBindViewHolder(final TransaksiAnggotaAllAdapter.MyViewHolder holder, final int position) {
         final transaksi_anggota transaksi = transaksiAnggota.get(position);
-        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         final Query query = databaseReference.child("users").orderByChild("id").equalTo(transaksi.getId_user());
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -97,4 +101,11 @@ public class TransaksiAnggotaAllAdapter extends RecyclerView.Adapter<TransaksiAn
 
         }
     }
+
+    public void setFilter(ArrayList<transaksi_anggota> filter){
+        transaksiAnggota = new ArrayList<>();
+        transaksiAnggota.addAll(filter);
+        notifyDataSetChanged();
+    }
 }
+
