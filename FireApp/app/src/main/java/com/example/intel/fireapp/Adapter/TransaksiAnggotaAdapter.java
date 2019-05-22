@@ -20,17 +20,18 @@ import java.util.List;
 
 public class TransaksiAnggotaAdapter extends RecyclerView.Adapter<TransaksiAnggotaAdapter.MyViewHolder>{
     private final Context mContext;
-    String ket,b;
+    String ket,b,jenis;
     int a;
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private List<transaksi_anggota> transaksiAnggota = new ArrayList<>();
 
-    public TransaksiAnggotaAdapter(Context context, int a, String b)
+    public TransaksiAnggotaAdapter(Context context, int a, String b, String jenis)
     {
         mContext = context;
         this.a = a;
         this.b=b;
+        this.jenis=jenis;
 
     }
 
@@ -56,22 +57,37 @@ public class TransaksiAnggotaAdapter extends RecyclerView.Adapter<TransaksiAnggo
 
         holder.tanggal.setText(transaksi.getTanggal());
         if(transaksi.getMasuk()>0){
-            holder.ket.setText("Dana Masuk Sebesar Rp. "+transaksi.getMasuk()+",-");
+            if(jenis.equals("pk")){
+                holder.ket.setText("Dana Masuk Sebesar Rp. "+transaksi.getMasuk()+",-");
+            }else{
+                holder.ket.setText(transaksi.getKeterangan()+"\nDana Masuk Sebesar Rp. "+transaksi.getMasuk()+",-");
+            }
+
         }else{
-            holder.ket.setText("Dana Keluar Sebesar Rp. "+transaksi.getKeluar()+",-");
+            if(jenis.equals("pk")){
+                holder.ket.setText("Dana Masuk Sebesar Rp. "+transaksi.getKeluar()+",-");
+            }else{
+                holder.ket.setText(transaksi.getKeterangan()+"\nDana Masuk Sebesar Rp. "+transaksi.getKeluar()+",-");
+            }
+
         }
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Context context = view.getContext();
-                Intent intent = new Intent(context,DetailTransaksi.class);
-                intent.putExtra("trans",transaksi.getId_trans());
-                intent.putExtra("saldo",a);
-                intent.putExtra("idGrup",b);
-                intent.putExtra("id", transaksi.getId_user());
-                context.startActivity(intent);
+                if(jenis.equals("pk")) {
+                    Intent intent = new Intent(context, DetailTransaksi.class);
+                    intent.putExtra("trans", transaksi.getId_trans());
+                    intent.putExtra("saldo", a);
+                    intent.putExtra("idGrup", b);
+                    intent.putExtra("id", transaksi.getId_user());
+                    context.startActivity(intent);
+                }
+
+
 
             }
         });

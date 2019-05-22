@@ -3,6 +3,7 @@
     package="com.example.intel.fireapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -32,11 +33,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PengepulKecil.InputAnggota"
-            android:parentActivityName=".PengepulKecil.PageAnggota">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".PengepulKecil.PageAnggota" />
+            android:name=".PengepulKecil.InputAnggota">
         </activity>
         <activity
             android:name=".PengepulKecil.PageAnggota"
@@ -45,54 +42,78 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".PengepulKecil.tambahgrup" />
         </activity>
-        <activity android:name=".PengepulKecil.db_ReadAkun"/>
-        <activity android:name=".Anggota.Infoamasi" />
-        <activity android:name=".Account.Update" />
-        <activity android:name=".PengepulKecil.TransaksiAnggota" />
-        <activity android:name=".PengepulKecil.TambahTransaksiAll"
-            android:parentActivityName=".PengepulKecil.PilihAnggota">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".PengepulKecil.PilihAnggota" />
+        <activity android:name=".PengepulKecil.db_ReadAkun" >
+
         </activity>
-        <activity android:name=".PengepulKecil.PilihAnggota"
+        <activity android:name=".Anggota.Infoamasi"
+            android:parentActivityName=".Anggota.Home_Anggota">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Anggota.Home_Anggota" />
+        </activity>
+        <activity android:name=".Account.Update"
+            android:parentActivityName=".PengepulKecil.db_ReadAkun">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".PengepulKecil.db_ReadAkun" />
+        </activity>
+        <activity android:name=".PengepulKecil.TransaksiAnggota" />
+        <activity
+            android:name=".PengepulKecil.TambahTransaksiAll"
+            android:parentActivityName=".PengepulKecil.PilihAnggota">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".PengepulKecil.PilihAnggota" />
+        </activity>
+        <activity
+            android:name=".PengepulKecil.PilihAnggota"
             android:parentActivityName=".PengepulKecil.ListTransaksiAll">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".PengepulKecil.ListTransaksiAll" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".PengepulKecil.ListTransaksiAll" />
         </activity>
         <activity android:name=".PengepulKecil.ListTransaksiAnggota" />
-        <activity android:name=".TukangRombeng.ListTransaksi"
-            android:parentActivityName=".TukangRombeng.Home_tr">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".TukangRombeng.Home_tr" />
-        </activity>
-        <activity android:name=".PengepulKecil.ListTransaksiJualSampah"
-            android:parentActivityName=".PengepulKecil.HomePK">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".PengepulKecil.HomePK" />
-        </activity>
-        <activity android:name=".PengepulKecil.transaksikeTR"
-            android:parentActivityName=".PengepulKecil.HomePK">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".PengepulKecil.HomePK" />
-        </activity>
-        <activity android:name=".PengepulKecil.ListPenawaran"
-            android:parentActivityName=".PengepulKecil.ListTransaksiJualSampah">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".PengepulKecil.ListTransaksiJualSampah" />
-        </activity>
-        <activity android:name=".TukangRombeng.ListJualSampah"
+        <activity
+            android:name=".TukangRombeng.ListTransaksi"
             android:parentActivityName=".TukangRombeng.Home_tr">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".TukangRombeng.Home_tr" />
         </activity>
-        <activity android:name=".Anggota.LihatTransaksi_Anggota" />
+        <activity
+            android:name=".PengepulKecil.ListTransaksiJualSampah"
+            android:parentActivityName=".PengepulKecil.HomePK">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".PengepulKecil.HomePK" />
+        </activity>
+        <activity
+            android:name=".PengepulKecil.transaksikeTR"
+            android:parentActivityName=".PengepulKecil.HomePK">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".PengepulKecil.HomePK" />
+        </activity>
+        <activity
+            android:name=".PengepulKecil.ListPenawaran"
+            android:parentActivityName=".PengepulKecil.ListTransaksiJualSampah">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".PengepulKecil.ListTransaksiJualSampah" />
+        </activity>
+        <activity
+            android:name=".TukangRombeng.ListJualSampah"
+            android:parentActivityName=".TukangRombeng.Home_tr">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".TukangRombeng.Home_tr" />
+        </activity>
+        <activity android:name=".Anggota.LihatTransaksi_Anggota"
+            android:parentActivityName=".Anggota.Home_Anggota">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Anggota.Home_Anggota" />
+        </activity>
         <activity
             android:name=".PengepulKecil.DetailAnggota"
             android:parentActivityName=".PengepulKecil.PageAnggota">
@@ -100,18 +121,22 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".PengepulKecil.PageAnggota" />
         </activity>
-        <activity android:name=".PengepulKecil.ListTransaksiAll"
+        <activity
+            android:name=".PengepulKecil.ListTransaksiAll"
             android:parentActivityName=".PengepulKecil.HomePK">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".PengepulKecil.HomePK" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".PengepulKecil.HomePK" />
         </activity>
         <activity android:name=".PengepulKecil.DetailTransaksi" />
         <activity android:name=".PengepulKecil.EditTransaksi" />
         <activity android:name=".Account.Bantuan" />
         <activity android:name=".Account.tatacaraanggota_update" />
         <activity android:name=".Account.pk_bantuan" />
-        <activity android:name=".Account.tr_bantuan"></activity>
+        <activity android:name=".Account.tr_bantuan" />
+        <activity android:name=".cobagambar">
+
+                   </activity>
     </application>
 
 </manifest>

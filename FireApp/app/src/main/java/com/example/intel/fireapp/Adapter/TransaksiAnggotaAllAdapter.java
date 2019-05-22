@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.intel.fireapp.Model.Anggota;
 import com.example.intel.fireapp.Model.User;
 import com.example.intel.fireapp.Model.transaksi_anggota;
 import com.example.intel.fireapp.PengepulKecil.DetailTransaksi;
@@ -65,6 +66,7 @@ public class TransaksiAnggotaAllAdapter extends RecyclerView.Adapter<TransaksiAn
                     for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                         User login = userSnapshot.getValue(User.class);
                         holder.nama.setText(login.getNama().toString());
+                        b = login.getGrup().toString();
                     }
                 }
             }
@@ -74,6 +76,7 @@ public class TransaksiAnggotaAllAdapter extends RecyclerView.Adapter<TransaksiAn
 
             }
         });
+
         holder.tanggal.setText(transaksi.getTanggal());
         if(transaksi.getMasuk() > 0){
             holder.ket.setText("Dana Masuk Sebesar Rp. "+transaksi.getMasuk()+",-");

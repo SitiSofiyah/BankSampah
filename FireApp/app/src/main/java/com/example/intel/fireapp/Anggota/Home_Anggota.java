@@ -89,7 +89,6 @@ public class Home_Anggota extends AppCompatActivity {
     public void info(View view) {
         Intent intent = new Intent(Home_Anggota.this,Infoamasi.class);
         startActivity(intent);
-        finish();
     }
 
     public void bantuan(View view) {
@@ -111,5 +110,7 @@ public class Home_Anggota extends AppCompatActivity {
     }
 
     public void transaksi(View view) {
+        Intent intent = new Intent(Home_Anggota.this,LihatTransaksi_Anggota.class);
+        startActivity(intent);
     }
 }

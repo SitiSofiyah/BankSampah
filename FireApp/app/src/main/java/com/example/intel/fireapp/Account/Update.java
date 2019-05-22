@@ -2,9 +2,11 @@ package com.example.intel.fireapp.Account;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -43,6 +45,12 @@ public class Update extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update);
+
+        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Tabungan Sampah");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ed_Nama = (EditText) findViewById(R.id.ed_nama);
         ed_Alamat = (EditText) findViewById(R.id.ed_alamat);

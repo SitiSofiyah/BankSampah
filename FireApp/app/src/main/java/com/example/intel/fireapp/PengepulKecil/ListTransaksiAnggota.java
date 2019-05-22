@@ -51,7 +51,7 @@ public class ListTransaksiAnggota extends AppCompatActivity {
 
         recyclerListView=(RecyclerView) findViewById(R.id.transaksiAnggota_list);
         recyclerListView.setLayoutManager(new LinearLayoutManager(this));
-        myAdapter= new TransaksiAnggotaAdapter(this,getIntent().getIntExtra("saldo",0),getIntent().getStringExtra("idGrup"));
+        myAdapter= new TransaksiAnggotaAdapter(this,getIntent().getIntExtra("saldo",0),getIntent().getStringExtra("idGrup"),"pk");
         updateAdapter();
         recyclerListView.setAdapter(myAdapter);
 

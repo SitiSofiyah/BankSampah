@@ -248,7 +248,7 @@
                     android:padding="16dp">
 
                     <ImageView
-                        android:id="@+id/akun"
+                        android:id="@+id/account"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:src="@drawable/akun" />

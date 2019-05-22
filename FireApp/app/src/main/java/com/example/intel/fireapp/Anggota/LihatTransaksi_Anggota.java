@@ -16,6 +16,8 @@ import android.widget.Toast;
 import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
 import com.example.intel.fireapp.Account.login;
 import com.example.intel.fireapp.Adapter.TransaksiAnggotaAdapter;
+import com.example.intel.fireapp.Model.Anggota;
+import com.example.intel.fireapp.Model.User;
 import com.example.intel.fireapp.Model.transaksi_anggota;
 import com.example.intel.fireapp.PengepulKecil.ListTransaksiAnggota;
 import com.example.intel.fireapp.R;
@@ -25,6 +27,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +37,9 @@ public class LihatTransaksi_Anggota extends AppCompatActivity {
     public RecyclerView recyclerListView;
     public TransaksiAnggotaAdapter myAdapter;
     private DatabaseReference transDB;
+    private DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+    String grup;
+    int saldo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +52,49 @@ public class LihatTransaksi_Anggota extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Toast.makeText(getApplicationContext(),"Saldo "+getIntent().getIntExtra("saldo",0),Toast.LENGTH_SHORT).show();
+
+
+        database.child("users").orderByChild("id").equalTo(SaveSharedPreference.getId(getApplicationContext())).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
+                    User user = noteDataSnapshot.getValue(User.class);
+                    grup = user.getGrup().toString();
+                    setGrup(grup);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println(databaseError.getDetails()+" "+databaseError.getMessage());
+            }
+        });
 
         recyclerListView=(RecyclerView) findViewById(R.id.transaksiAnggota_list);
         recyclerListView.setLayoutManager(new LinearLayoutManager(this));
-        myAdapter= new TransaksiAnggotaAdapter(this,getIntent().getIntExtra("saldo",0),getIntent().getStringExtra("idGrup"));
+        myAdapter= new TransaksiAnggotaAdapter(this,saldo, grup,"anggota");
         updateAdapter();
         recyclerListView.setAdapter(myAdapter);
+    }
+
+    public void setGrup(String grup){
+        database.child("anggota").child(grup).orderByChild("id_user").equalTo(SaveSharedPreference.getId(getApplicationContext())).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
+                    Anggota user = noteDataSnapshot.getValue(Anggota.class);
+                    saldo = user.getSaldo();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println(databaseError.getDetails()+" "+databaseError.getMessage());
+            }
+        });
+
     }
 
     @Override
@@ -92,7 +134,7 @@ public class LihatTransaksi_Anggota extends AppCompatActivity {
     private void updateAdapter(){
         final List<transaksi_anggota> listTransaksi= new ArrayList<>();
         transDB = FirebaseDatabase.getInstance().getInstance().getReference();
-        final Query query = transDB.child("transaksi_anggota").orderByChild("id_user").equalTo(getIntent().getStringExtra("id"));
+        final Query query = transDB.child("transaksi_anggota").orderByChild("id_user").equalTo(SaveSharedPreference.getId(getApplicationContext()));
         query.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {

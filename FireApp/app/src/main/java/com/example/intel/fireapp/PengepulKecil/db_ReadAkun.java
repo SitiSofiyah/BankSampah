@@ -28,7 +28,7 @@ public class db_ReadAkun extends AppCompatActivity {
      * Mendefinisikan variable yang akan dipakai
      */
     private DatabaseReference database;
-    TextView tvNama, tvAlamat, tvPass, tvTelp, tvJK;
+    TextView tvNama, tvAlamat, tvPass, tvTelp, tvJK, tvName, tvDesign,tvLocation;
     String level;
 
     @Override
@@ -41,21 +41,20 @@ public class db_ReadAkun extends AppCompatActivity {
         setContentView(R.layout.activity_db__read_akun);
 
 
-        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Tabungan Sampah");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        toolbar.setTitle("Tabungan Sampah");
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
             tvNama = (TextView) findViewById(R.id.tv_nama);
             tvAlamat = (TextView) findViewById(R.id.tv_alamat);
             tvTelp = (TextView) findViewById(R.id.tv_notlp);
             tvPass = (TextView) findViewById(R.id.tv_pass);
             tvJK = (TextView) findViewById(R.id.tv_jk);
-
-
-
-
+            tvName = (TextView) findViewById(R.id.nama1);
+            tvDesign = (TextView) findViewById(R.id.designation);
+            tvLocation = (TextView) findViewById(R.id.location);
 
         database = FirebaseDatabase.getInstance().getReference();
 
@@ -71,7 +70,11 @@ public class db_ReadAkun extends AppCompatActivity {
                     tvTelp.setText(user.getTelp());
                     tvPass.setText(user.getPassword());
                     level=user.getLevel().toString();
+                    tvName.setText(user.getNama());
+                    tvDesign.setText(user.getLevel());
+                    tvLocation.setText(user.getAlamat().toString());
                 }
+
             }
 
             @Override
@@ -82,43 +85,43 @@ public class db_ReadAkun extends AppCompatActivity {
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.akun:
-                Intent intents = new Intent(db_ReadAkun.this, db_ReadAkun.class);
-                startActivity(intents);
-                finish();
-                return true;
-
-            case R.id.help:
-                return true;
-
-            case R.id.out:
-                if(level.equals("Pengepul Kecil")){
-                    SaveSharedPreference.setLoggedInPK(getApplicationContext(), false);
-                }else if(level.equals("Tukang Rombeng")){
-                    SaveSharedPreference.setLoggedInTR(getApplicationContext(), false);
-                }else if(level.equals("Anggota")){
-                    SaveSharedPreference.setLoggedInAnggota(getApplicationContext(), false);
-                }
-                SaveSharedPreference.setId(getApplicationContext(), null);
-                Intent intent = new Intent(db_ReadAkun.this, login.class);
-                startActivity(intent);
-                finish();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-
-        }
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.akun:
+//                Intent intents = new Intent(db_ReadAkun.this, db_ReadAkun.class);
+//                startActivity(intents);
+//                finish();
+//                return true;
+//
+//            case R.id.help:
+//                return true;
+//
+//            case R.id.out:
+//                if(level.equals("Pengepul Kecil")){
+//                    SaveSharedPreference.setLoggedInPK(getApplicationContext(), false);
+//                }else if(level.equals("Tukang Rombeng")){
+//                    SaveSharedPreference.setLoggedInTR(getApplicationContext(), false);
+//                }else if(level.equals("Anggota")){
+//                    SaveSharedPreference.setLoggedInAnggota(getApplicationContext(), false);
+//                }
+//                SaveSharedPreference.setId(getApplicationContext(), null);
+//                Intent intent = new Intent(db_ReadAkun.this, login.class);
+//                startActivity(intent);
+//                finish();
+//                return true;
+//
+//            default:
+//                return super.onOptionsItemSelected(item);
+//
+//        }
+//    }
 
     public void edit(View view) {
         Intent i = new Intent(db_ReadAkun.this,Update.class);

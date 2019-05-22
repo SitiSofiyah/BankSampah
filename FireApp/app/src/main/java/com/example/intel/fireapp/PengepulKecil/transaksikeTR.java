@@ -35,11 +35,9 @@ import java.util.Date;
 
 public class transaksikeTR extends AppCompatActivity {
 
-    private Button order,addpic;
-    private static final int RESULT_LOAD_IMAGE = 1;
+    private Button order;
     private EditText plastik, kertas, logam, kaca, lainnya, total;
     private DatabaseReference menDatabase;
-    private StorageReference mStorage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,18 +57,8 @@ public class transaksikeTR extends AppCompatActivity {
         lainnya = (EditText) findViewById(R.id.lainnya_pk);
         total = (EditText) findViewById(R.id.total);
         order = (Button) findViewById(R.id.order);
-        addpic = (Button) findViewById(R.id.addPic);
 
-        addpic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent,"Select Picture"), RESULT_LOAD_IMAGE);
-            }
-        });
+
 
         order.setOnClickListener(new View.OnClickListener() {
             @Override

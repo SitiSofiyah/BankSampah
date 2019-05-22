@@ -57,7 +57,6 @@ public class InputAnggota extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Pilih Anggota");
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recyclerListView = (RecyclerView) findViewById(R.id.listt);
         recyclerListView.setLayoutManager(new LinearLayoutManager(this));
@@ -189,34 +188,4 @@ public class InputAnggota extends AppCompatActivity {
         searchItem.setActionView(searchView);
         return true;
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.akun:
-                Intent intent = new Intent(InputAnggota.this, db_ReadAkun.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.help:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
-                return true;
-
-            case R.id.out:
-                SaveSharedPreference.setLoggedInPK(getApplicationContext(), false);
-                SaveSharedPreference.setId(getApplicationContext(), null);
-                Intent intents = new Intent(InputAnggota.this, login.class);
-                startActivity(intents);
-                finish();
-                return true;
-
-            default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
-                return super.onOptionsItemSelected(item);
-
-        }
-    }
-
 }

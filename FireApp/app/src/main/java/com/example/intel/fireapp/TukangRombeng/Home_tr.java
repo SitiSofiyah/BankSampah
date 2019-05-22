@@ -78,4 +78,9 @@ public class Home_tr extends AppCompatActivity {
         Intent intent = new Intent(Home_tr.this,ListTransaksi.class);
         startActivity(intent);
     }
+
+    public void akun(View view) {
+        Intent intent = new Intent(Home_tr.this,db_ReadAkun.class);
+        startActivity(intent);
+    }
 }
