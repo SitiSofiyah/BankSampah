@@ -53,6 +53,7 @@ public class login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        aut = FirebaseAuth.getInstance();
 
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
@@ -122,6 +123,8 @@ public class login extends AppCompatActivity {
                                         dialog.cancel();
                                     }
                                 });
+
+                                //081249752256
 
                                 builder.show();
                             }else{
@@ -194,17 +197,20 @@ public class login extends AppCompatActivity {
                                 SaveSharedPreference.setLoggedInPK(getApplicationContext(), true);
                                 SaveSharedPreference.setId(getApplicationContext(),id);
                                 Intent pk = new Intent(login.this, HomePK.class);
+                                startActivity(pk);
                             }else if(level.equals("Tukang Rombeng")){
                                 SaveSharedPreference.setLoggedInTR(getApplicationContext(), true);
                                 SaveSharedPreference.setId(getApplicationContext(),id);
-                                Intent pk = new Intent(login.this, Home_tr.class);
+                                Intent tr = new Intent(login.this, Home_tr.class);
+                                startActivity(tr);
                             }else{
                                 SaveSharedPreference.setLoggedInAnggota(getApplicationContext(), true);
                                 SaveSharedPreference.setId(getApplicationContext(),id);
-                                Intent pk = new Intent(login.this, Home_Anggota.class);
+                                Intent anggota = new Intent(login.this, Home_Anggota.class);
+                                startActivity(anggota);
                             }
                         }else{
-
+                            Toast.makeText(login.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();
                         }
                     }
                 });
