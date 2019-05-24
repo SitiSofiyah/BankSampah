@@ -12,7 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".PengepulKecil.MainActivity">
+
+        </activity>
         <activity android:name=".Account.register" />
         <activity android:name=".Account.login" />
         <activity android:name=".PengepulKecil.HomePK" />
@@ -32,9 +35,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".PengepulKecil.InputAnggota">
-        </activity>
+        <activity android:name=".PengepulKecil.InputAnggota" />
         <activity
             android:name=".PengepulKecil.PageAnggota"
             android:parentActivityName=".PengepulKecil.tambahgrup">
@@ -42,16 +43,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".PengepulKecil.tambahgrup" />
         </activity>
-        <activity android:name=".PengepulKecil.db_ReadAkun" >
-
-        </activity>
-        <activity android:name=".Anggota.Infoamasi"
+        <activity android:name=".PengepulKecil.db_ReadAkun" />
+        <activity
+            android:name=".Anggota.Infoamasi"
             android:parentActivityName=".Anggota.Home_Anggota">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Anggota.Home_Anggota" />
         </activity>
-        <activity android:name=".Account.Update"
+        <activity
+            android:name=".Account.Update"
             android:parentActivityName=".PengepulKecil.db_ReadAkun">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -108,7 +109,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".TukangRombeng.Home_tr" />
         </activity>
-        <activity android:name=".Anggota.LihatTransaksi_Anggota"
+        <activity
+            android:name=".Anggota.LihatTransaksi_Anggota"
             android:parentActivityName=".Anggota.Home_Anggota">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -134,9 +136,11 @@
         <activity android:name=".Account.tatacaraanggota_update" />
         <activity android:name=".Account.pk_bantuan" />
         <activity android:name=".Account.tr_bantuan" />
-        <activity android:name=".cobagambar">
-
-                   </activity>
+        <activity android:name=".cobagambar" />
+        <activity android:name=".MenuPenjualan" />
+        <activity android:name=".sampahMenunggu" />
+        <activity android:name=".selesaiSampah" />
+        <activity android:name=".otpActivity"></activity>
     </application>
 
 </manifest>

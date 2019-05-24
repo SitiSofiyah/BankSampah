@@ -241,15 +241,22 @@
                 app:layout_constraintLeft_toRightOf="@+id/pass"
                 app:layout_constraintTop_toBottomOf="@+id/tv_notlp" />
 
+            <View
+                android:id="@+id/space"
+                app:layout_constraintTop_toBottomOf="@id/pass"
+                android:layout_width="match_parent"
+                android:layout_height="12dp"></View>
+
             <Button
                 android:id="@+id/editAkun"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="58dp"
                 android:layout_alignParentBottom="true"
                 android:background="@color/red"
                 android:onClick="edit"
                 android:text="EDIT AKUN "
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/space"/>
 
 
         </android.support.constraint.ConstraintLayout>

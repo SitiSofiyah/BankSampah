@@ -9,4 +9,6 @@
     <color name="send">#f4f3f3</color>
     <color name="green">#145607</color>
     <color name="red">#801212</color>
+    <color name="pink">#9aefcf</color>
+    <color name="color_white_semitransparent">#99FFFFFF</color>
 </resources>

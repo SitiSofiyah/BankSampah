@@ -39,6 +39,8 @@ public class ListJualSampah extends AppCompatActivity {
     public RecyclerView recyclerListView;
     public AdapterTransaksiTR myAdapter;
     DatabaseReference transDB;
+    LinearLayoutManager mLayoutmanajer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +52,10 @@ public class ListJualSampah extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recyclerListView=(RecyclerView) findViewById(R.id.jualList);
-        recyclerListView.setLayoutManager(new LinearLayoutManager(this));
+        mLayoutmanajer = new LinearLayoutManager(this);
+        mLayoutmanajer.setReverseLayout(true);
+        mLayoutmanajer.setStackFromEnd(true);
+        recyclerListView.setLayoutManager(mLayoutmanajer);
         myAdapter= new AdapterTransaksiTR(this,"TRJS");
         viewTrans();
         recyclerListView.setAdapter(myAdapter);
@@ -61,14 +66,16 @@ public class ListJualSampah extends AppCompatActivity {
     public void viewTrans(){
         final List<TransaksiKeTR> listTransaksi= new ArrayList<>();
         transDB = FirebaseDatabase.getInstance().getInstance().getReference();
-        final Query query = transDB.child("transaksiTR").orderByChild("status").equalTo("belum");
+        final Query query = transDB.child("transaksiTR").orderByChild("tanggal");
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> getTrans = dataSnapshot.getChildren();
                 for (DataSnapshot data : getTrans){
                     TransaksiKeTR trans = data.getValue(TransaksiKeTR.class);
-                    listTransaksi.add(trans);
+                    if(trans.getStatus().equals("belum")){
+                        listTransaksi.add(trans);
+                    }
                 }
 
                 for (int i = 0; i < listTransaksi.size(); i++) {

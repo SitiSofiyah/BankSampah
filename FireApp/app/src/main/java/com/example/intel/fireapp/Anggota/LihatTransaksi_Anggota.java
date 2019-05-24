@@ -1,6 +1,7 @@
 package com.example.intel.fireapp.Anggota;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -38,6 +39,7 @@ public class LihatTransaksi_Anggota extends AppCompatActivity {
     public TransaksiAnggotaAdapter myAdapter;
     private DatabaseReference transDB;
     private DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+    LinearLayoutManager mLayoutmanajer;
     String grup;
     int saldo;
 
@@ -72,7 +74,10 @@ public class LihatTransaksi_Anggota extends AppCompatActivity {
         });
 
         recyclerListView=(RecyclerView) findViewById(R.id.transaksiAnggota_list);
-        recyclerListView.setLayoutManager(new LinearLayoutManager(this));
+        mLayoutmanajer = new LinearLayoutManager(this);
+        mLayoutmanajer.setReverseLayout(true);
+        mLayoutmanajer.setStackFromEnd(true);
+        recyclerListView.setLayoutManager(mLayoutmanajer);
         myAdapter= new TransaksiAnggotaAdapter(this,saldo, grup,"anggota");
         updateAdapter();
         recyclerListView.setAdapter(myAdapter);
@@ -134,36 +139,24 @@ public class LihatTransaksi_Anggota extends AppCompatActivity {
     private void updateAdapter(){
         final List<transaksi_anggota> listTransaksi= new ArrayList<>();
         transDB = FirebaseDatabase.getInstance().getInstance().getReference();
-        final Query query = transDB.child("transaksi_anggota").orderByChild("id_user").equalTo(SaveSharedPreference.getId(getApplicationContext()));
-        query.addChildEventListener(new ChildEventListener() {
+        final Query query = transDB.child("transaksi_anggota").orderByChild("tanggal");
+        query.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                listTransaksi.add(dataSnapshot.getValue(transaksi_anggota.class));
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot data : dataSnapshot.getChildren()){
+                    transaksi_anggota trans = data.getValue(transaksi_anggota.class);
+                    if(trans.getId_user().equals(SaveSharedPreference.getId(getApplicationContext()))){
+                        listTransaksi.add(trans);
+                    }
+                }
                 displayUsers(listTransaksi);
             }
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(getApplicationContext(),"Canceled",Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
 
     private boolean isEmpty(String s){

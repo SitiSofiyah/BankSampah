@@ -106,6 +106,7 @@ public class login extends AppCompatActivity {
                                     finish();
                                 }
                             }else{
+                                prolog.setVisibility(View.INVISIBLE);
                                 Toast.makeText(login.this, "Akun tidak tersedia!", Toast.LENGTH_LONG).show();
                             }
 

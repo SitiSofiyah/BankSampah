@@ -1,140 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back"
-    android:orientation="vertical"
-    android:scrollbarAlwaysDrawVerticalTrack="true">
+    android:padding="10dp"
+    tools:context=".PengepulKecil.MainActivity">
 
-   <!--<RelativeLayout-->
-   <!--android:id="@+id/relativeLayout"-->
-   <!--android:layout_width="358dp"-->
-   <!--android:layout_height="wrap_content"-->
-   <!--android:layout_alignParentTop="true"-->
-   <!--android:layout_centerHorizontal="true"-->
-   <!--android:layout_marginTop="21dp"-->
-   <!--android:background="#fff"-->
-   <!--android:elevation="4dp"-->
-   <!--android:orientation="vertical"-->
-   <!--android:padding="20dp">-->
+    <LinearLayout
+        android:id="@+id/isi"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="+62" />
 
+        <EditText
+            android:id="@+id/phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Phone Number" />
+    </LinearLayout>
 
-   <!--<TextView-->
-   <!--android:layout_width="match_parent"-->
-   <!--android:layout_height="wrap_content"-->
-   <!--android:text="REGISTRASI AKUN"-->
-   <!--android:textAlignment="center"-->
-   <!--android:textColor="@drawable/back" />-->
-
-
-   <!--</RelativeLayout>-->
-
-   <RelativeLayout
-       android:id="@+id/relativeLayout2"
-       android:layout_width="358dp"
-       android:layout_height="381dp"
-       android:layout_centerInParent="true"
-       android:background="#fff"
-       android:elevation="4dp"
-       android:orientation="vertical"
-       android:padding="20dp">
-
-      <LinearLayout
-          android:layout_width="fill_parent"
-          android:layout_height="wrap_content"
-          android:orientation="vertical"
-          android:paddingTop="20dp">
-
-         <TextView
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:layout_marginTop="25dp"
-             android:text="Nama "
-             android:textColor="@drawable/back" />
-
-         <EditText
-             android:id="@+id/nama"
-             android:layout_width="match_parent"
-             android:layout_height="32dp"
-             android:textColor="@drawable/back" />
-
-         <TextView
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:text="Alamat "
-             android:textColor="@drawable/back" />
-
-         <EditText
-             android:id="@+id/alamat"
-             android:layout_width="match_parent"
-             android:layout_height="32dp"
-             android:textColor="@drawable/back" />
-
-         <TextView
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:layout_marginTop="25dp"
-             android:text="Jenis Kelamin"
-             android:textColor="@drawable/back" />
-
-         <Spinner
-             android:id="@+id/jk"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"></Spinner>
-
-         <TextView
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:text="No Telp "
-             android:textColor="@drawable/back" />
-
-         <EditText
-             android:id="@+id/telp"
-             android:layout_width="match_parent"
-             android:layout_height="32dp"
-             android:textColor="@drawable/back" />
-
-         <TextView
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:text="Password"
-             android:textColor="@drawable/back" />
-
-         <EditText
-             android:id="@+id/password"
-             android:layout_width="match_parent"
-             android:layout_height="32dp"
-             android:textColor="@drawable/back" />
-
-         <TextView
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:text="Level"
-             android:textColor="@drawable/back" />
-
-         <Spinner
-             android:id="@+id/level"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"></Spinner>
-
-         <View
-             android:layout_width="match_parent"
-             android:layout_height="24dp"></View>
-
-         <Button
-             android:id="@+id/register"
-             android:layout_width="wrap_content"
-             android:layout_height="24dp"
-             android:layout_gravity="right"
-             android:background="@color/red"
-             android:onClick="regis"
-             android:text="Register"
-             android:textColor="@color/white" />
-
-
-      </LinearLayout>
-   </RelativeLayout>
-
+    <Button
+        android:onClick="regis"
+        android:id="@+id/register"
+        android:text="REGISTER"
+        android:background="@color/green"
+        android:textColor="@color/white"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/isi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 
 

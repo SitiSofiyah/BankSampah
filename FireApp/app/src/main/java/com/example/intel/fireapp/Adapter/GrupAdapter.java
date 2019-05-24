@@ -142,9 +142,5 @@ public class GrupAdapter extends RecyclerView.Adapter<GrupAdapter.MyViewHolder>{
         }
     }
 
-    public void setFilter(ArrayList<TambahGrup> filter){
-        grupList = new ArrayList<>();
-        grupList.addAll(filter);
-        notifyDataSetChanged();
-    }
+
 }

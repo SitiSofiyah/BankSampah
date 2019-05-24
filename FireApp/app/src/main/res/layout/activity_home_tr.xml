@@ -109,7 +109,7 @@
                 app:cardCornerRadius="12dp"
                 app:cardElevation="6dp">
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -117,17 +117,32 @@
                     android:padding="16dp">
 
                     <ImageView
+                        android:layout_centerHorizontal="true"
                         android:id="@+id/order"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:src="@drawable/order" />
 
+                    <com.nex3z.notificationbadge.NotificationBadge
+                        android:id="@+id/badge"
+                        android:layout_toRightOf="@+id/order"
+                        android:layout_alignTop="@id/order"
+                        android:layout_marginLeft="-16dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        app:badgeBackground="@drawable/badge"
+                        app:maxTextLength="2"
+                        tools:ignore="NotSibling"></com.nex3z.notificationbadge.NotificationBadge>
+
                     <TextView
+                        android:layout_centerHorizontal="true"
+                        android:layout_below="@id/order"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Sampah Dijual" />
 
-                </LinearLayout>
+                </RelativeLayout>
 
             </android.support.v7.widget.CardView>
 

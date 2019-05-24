@@ -26,8 +26,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class TransaksiAnggotaAllAdapter extends RecyclerView.Adapter<TransaksiAnggotaAllAdapter.MyViewHolder>{
     private final Context mContext;
@@ -58,6 +60,8 @@ public class TransaksiAnggotaAllAdapter extends RecyclerView.Adapter<TransaksiAn
     @Override
     public void onBindViewHolder(final TransaksiAnggotaAllAdapter.MyViewHolder holder, final int position) {
         final transaksi_anggota transaksi = transaksiAnggota.get(position);
+        Locale locale = new Locale("in","ID");
+        NumberFormat format = NumberFormat.getCurrencyInstance(locale);
         final Query query = databaseReference.child("users").orderByChild("id").equalTo(transaksi.getId_user());
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -77,11 +81,13 @@ public class TransaksiAnggotaAllAdapter extends RecyclerView.Adapter<TransaksiAn
             }
         });
 
+        NumberFormat nf = NumberFormat.getInstance();
+
         holder.tanggal.setText(transaksi.getTanggal());
         if(transaksi.getMasuk() > 0){
-            holder.ket.setText("Dana Masuk Sebesar Rp. "+transaksi.getMasuk()+",-");
+            holder.ket.setText("Sampah Masuk senilai Rp. "+nf.format(transaksi.getMasuk())+",-");
         }else if(transaksi.getKeluar() > 0){
-            holder.ket.setText("Dana Keluar Sebesar Rp. "+transaksi.getKeluar()+",-");
+            holder.ket.setText("Sampah Keluar Sebesar Rp. "+nf.format(transaksi.getKeluar())+",-");
         }
     }
 

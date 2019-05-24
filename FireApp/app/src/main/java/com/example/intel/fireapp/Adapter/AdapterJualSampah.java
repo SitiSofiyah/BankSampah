@@ -81,31 +81,6 @@ public class AdapterJualSampah extends RecyclerView.Adapter<AdapterJualSampah.My
 
             }
         });
-//
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Context context = view.getContext();
-//                Intent intent = new Intent(context,DetailAnggota.class);
-//                intent.putExtra("idGrup", ""+anggota.getId_grup());
-//                intent.putExtra("id", ""+anggota.getId_user());
-//                context.startActivity(intent);
-//            }
-//        });
-
-//        holder.tambah.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Context context = view.getContext();
-//                Intent intent = new Intent(context,TransaksiAnggota.class);
-//                intent.putExtra("idGrup", ""+anggota.getId_grup());
-//                intent.putExtra("id", ""+anggota.getId_user());
-//                intent.putExtra("saldo", ""+anggota.getSaldo());
-//                context.startActivity(intent);
-//            }
-//        });
-
-
     }
 
     @Override
@@ -117,7 +92,6 @@ public class AdapterJualSampah extends RecyclerView.Adapter<AdapterJualSampah.My
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         public TextView tanggal, kaca, plastik, logam,kertas, lain,total, user;
-//        public Button detail, tambah;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -128,9 +102,7 @@ public class AdapterJualSampah extends RecyclerView.Adapter<AdapterJualSampah.My
             logam = (TextView) itemView.findViewById(R.id.logam);
             kertas = (TextView) itemView.findViewById(R.id.kertas);
             lain = (TextView) itemView.findViewById(R.id.lain);
-            total = (TextView) itemView.findViewById(R.id.total);
-//            detail = (Button) itemView.findViewById(R.id.detail);
-//            tambah = (Button) itemView.findViewById(R.id.tambah);
+            total = (TextView) itemView.findViewById(R.id.ket);
         }
     }
 }

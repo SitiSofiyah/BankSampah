@@ -70,9 +70,8 @@ public class AdapterTransaksiTR extends RecyclerView.Adapter<AdapterTransaksiTR.
         holder.logam.setText("Sampah Logam : "+trans.getLogam_pk().toString()+" Kg");
         holder.kertas.setText("Sampah Kertas : "+trans.getKertas_pk().toString()+" Kg");
         holder.lain.setText("Sampah Lainnya : "+trans.getLainnya_pk().toString()+" Kg");
-
+        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         if(jenis.equals("TRtrans")){
-            final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
             final Query query = databaseReference.child("users").orderByChild("id").equalTo(trans.getId_pk());
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -94,6 +93,23 @@ public class AdapterTransaksiTR extends RecyclerView.Adapter<AdapterTransaksiTR.
             holder.tawar.setText("Status Pengambilan : "+trans.getStatus().toString());
         }else if(jenis.equals("PKJS")){
             holder.tawar.setText("Lihat Penawaran -->");
+            holder.jml.setVisibility(View.VISIBLE);
+            final Query query2 = databaseReference.child("penawaran").child(trans.getId_ordersampah());
+            query2.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.exists()){
+                        holder.jml.setText((int)dataSnapshot.getChildrenCount()+" Penawaran");
+                    }else{
+                        holder.jml.setText("0 Penawaran");
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
             holder.tawar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -134,7 +150,12 @@ public class AdapterTransaksiTR extends RecyclerView.Adapter<AdapterTransaksiTR.
                     builder.show();
                 }
             });
-        }    }
+        } else if(jenis.equals("PKtunggu")){
+            holder.tawar.setText("Batalkan Penjualan");
+        }else if(jenis.equals("PKselesai")){
+            holder.tawar.setVisibility(View.INVISIBLE);
+        }
+    }
 
     @Override
     public int getItemCount() {
@@ -144,7 +165,7 @@ public class AdapterTransaksiTR extends RecyclerView.Adapter<AdapterTransaksiTR.
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView tanggal, kaca, plastik, logam,kertas, lain,total, user,tawar;
+        public TextView tanggal, kaca, plastik, logam,kertas, lain,total, user,tawar, jml;
 //        public Button detail, tambah;
 
         public MyViewHolder(View itemView) {
@@ -161,6 +182,7 @@ public class AdapterTransaksiTR extends RecyclerView.Adapter<AdapterTransaksiTR.
             lain = (TextView) itemView.findViewById(R.id.lain);
             total = (TextView) itemView.findViewById(R.id.ket);
             tawar=(TextView) itemView.findViewById(R.id.status);
+            jml=(TextView) itemView.findViewById(R.id.jml);
 //            detail = (Button) itemView.findViewById(R.id.detail);
 //            tambah = (Button) itemView.findViewById(R.id.tambah);
         }

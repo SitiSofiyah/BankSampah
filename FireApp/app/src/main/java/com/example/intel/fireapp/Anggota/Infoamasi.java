@@ -40,6 +40,8 @@ public class Infoamasi extends AppCompatActivity {
     public RecyclerView recyclerListView;
     public PemberitahuanAdapter myAdapter;
     private DatabaseReference transDB;
+    LinearLayoutManager mLayoutmanajer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +54,10 @@ public class Infoamasi extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recyclerListView=(RecyclerView) findViewById(R.id.pemberitahuan_list);
-        recyclerListView.setLayoutManager(new LinearLayoutManager(this));
+        mLayoutmanajer = new LinearLayoutManager(this);
+        mLayoutmanajer.setReverseLayout(true);
+        mLayoutmanajer.setStackFromEnd(true);
+        recyclerListView.setLayoutManager(mLayoutmanajer);
         myAdapter= new PemberitahuanAdapter(this);
         updateAdapter();
         recyclerListView.setAdapter(myAdapter);
@@ -62,7 +67,7 @@ public class Infoamasi extends AppCompatActivity {
         final List<Pemberitahuan> infolist= new ArrayList<>();
         transDB = FirebaseDatabase.getInstance().getReference();
 
-        final Query query = transDB.child("pemberitahuan").child(SaveSharedPreference.getId(getApplicationContext()));
+        final Query query = transDB.child("pemberitahuan").child(SaveSharedPreference.getId(getApplicationContext())).orderByChild("tanggal");
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

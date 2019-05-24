@@ -1,6 +1,7 @@
 package com.example.intel.fireapp.TukangRombeng;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 import com.example.intel.fireapp.Account.Bantuan;
 import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
 import com.example.intel.fireapp.Account.login;
+import com.example.intel.fireapp.Model.Pemberitahuan;
+import com.example.intel.fireapp.Model.TransaksiKeTR;
 import com.example.intel.fireapp.Model.User;
 import com.example.intel.fireapp.PengepulKecil.HomePK;
 import com.example.intel.fireapp.PengepulKecil.ListTransaksiAll;
@@ -24,11 +27,17 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.nex3z.notificationbadge.NotificationBadge;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Home_tr extends AppCompatActivity {
 
     private DatabaseReference database;
     TextView nama;
+    NotificationBadge nBadge;
+    int a=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +61,23 @@ public class Home_tr extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println(databaseError.getDetails()+" "+databaseError.getMessage());
+            }
+        });
+
+        nBadge  = (NotificationBadge) findViewById(R.id.badge);
+        database.child("transaksiTR").orderByChild("status").equalTo("belum").addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.exists()){
+                    nBadge.setNumber((int) dataSnapshot.getChildrenCount());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
     }

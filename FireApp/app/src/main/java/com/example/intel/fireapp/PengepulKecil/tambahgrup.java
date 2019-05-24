@@ -74,7 +74,6 @@ public class tambahgrup extends AppCompatActivity {
             public void onClick(View v) {
                   if (!isEmpty(etTambahgrup.getText().toString())){
                       TambahGrup();
-                      updateAdapter();
                   }
                    else{
                       Snackbar.make(findViewById(R.id.tambahgrupbutton), "Isikan Nama Grup !",Snackbar.LENGTH_LONG).show();
@@ -86,33 +85,7 @@ public class tambahgrup extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_search, menu);
-        MenuItem searchItem = menu.findItem(R.id.search_action);
-        SearchView searchView = (SearchView) searchItem.getActionView();
-        searchView.setQueryHint("Cari sesuatu....");
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange( String s) {
-                ArrayList<TambahGrup> dataFilter= new ArrayList<>();
-                for( TambahGrup data : listGrup){
-                    String nama = data.getNama_grup().toLowerCase();
-                    if(nama.contains(s.toLowerCase())){
-                        dataFilter.add(data);
-                    }
-
-                }
-                myAdapter.setFilter(dataFilter);
-                return true;
-            }
-        });
-        searchItem.setActionView(searchView);
+        getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
 
@@ -146,7 +119,7 @@ public class tambahgrup extends AppCompatActivity {
     }
 
     private void updateAdapter(){
-        grupDB = FirebaseDatabase.getInstance().getInstance().getReference();
+        grupDB = FirebaseDatabase.getInstance().getReference();
         final Query query = grupDB.child("grup").orderByChild("id").equalTo(SaveSharedPreference.getId(getApplicationContext()));
         query.addChildEventListener(new ChildEventListener() {
             @Override
@@ -200,7 +173,6 @@ public class tambahgrup extends AppCompatActivity {
 
         final String nama_grup = etTambahgrup.getText().toString();
 
-        String id_user = getIntent().getStringExtra("id");
 
         String id_grup = mDatabase.push().getKey();
 
@@ -209,7 +181,7 @@ public class tambahgrup extends AppCompatActivity {
 
 
 
-        TambahGrup tambahGrup = new TambahGrup(id_grup, nama_grup, id_user);
+        TambahGrup tambahGrup = new TambahGrup(id_grup, nama_grup,SaveSharedPreference.getId(getApplicationContext()));
 
         mDatabase.child(id_grup).setValue(tambahGrup);
     }

@@ -15,8 +15,10 @@ import com.example.intel.fireapp.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class TransaksiAnggotaAdapter extends RecyclerView.Adapter<TransaksiAnggotaAdapter.MyViewHolder>{
     private final Context mContext;
@@ -54,20 +56,21 @@ public class TransaksiAnggotaAdapter extends RecyclerView.Adapter<TransaksiAnggo
     @Override
     public void onBindViewHolder(final TransaksiAnggotaAdapter.MyViewHolder holder, final int position) {
         final transaksi_anggota transaksi = transaksiAnggota.get(position);
+        NumberFormat nf = NumberFormat.getInstance();
 
         holder.tanggal.setText(transaksi.getTanggal());
         if(transaksi.getMasuk()>0){
             if(jenis.equals("pk")){
-                holder.ket.setText("Dana Masuk Sebesar Rp. "+transaksi.getMasuk()+",-");
+                holder.ket.setText("Dana Masuk Sebesar Rp. "+nf.format(transaksi.getMasuk())+",-");
             }else{
-                holder.ket.setText(transaksi.getKeterangan()+"\nDana Masuk Sebesar Rp. "+transaksi.getMasuk()+",-");
+                holder.ket.setText(transaksi.getKeterangan()+"\nDana Masuk Sebesar Rp. "+nf.format(transaksi.getMasuk())+",-");
             }
 
         }else{
             if(jenis.equals("pk")){
-                holder.ket.setText("Dana Masuk Sebesar Rp. "+transaksi.getKeluar()+",-");
+                holder.ket.setText("Dana Masuk Sebesar "+nf.format(transaksi.getKeluar())+",-");
             }else{
-                holder.ket.setText(transaksi.getKeterangan()+"\nDana Masuk Sebesar Rp. "+transaksi.getKeluar()+",-");
+                holder.ket.setText(transaksi.getKeterangan()+"\nDana Masuk Sebesar Rp. "+nf.format(transaksi.getKeluar())+",-");
             }
 
         }

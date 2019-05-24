@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.intel.fireapp.Account.Bantuan;
 import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
 import com.example.intel.fireapp.Account.login;
+import com.example.intel.fireapp.MenuPenjualan;
 import com.example.intel.fireapp.Model.Tawaran;
 import com.example.intel.fireapp.Model.User;
 import com.example.intel.fireapp.R;
@@ -92,7 +93,7 @@ public class HomePK extends AppCompatActivity {
     }
 
     public void penawaran(View view) {
-        Intent intentss = new Intent(HomePK.this,ListTransaksiJualSampah.class);
+        Intent intentss = new Intent(HomePK.this,MenuPenjualan.class);
         startActivity(intentss);
     }
 }

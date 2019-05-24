@@ -53,7 +53,15 @@ public class transaksi_anggota {
 
     }
 
-    public transaksi_anggota(String id_trans,String id_user,String id_pk, int keluar, String keterangan, int masuk, String tanggal) {
+    public String getId_pk() {
+        return id_pk;
+    }
+
+    public void setId_pk(String id_pk) {
+        this.id_pk = id_pk;
+    }
+
+    public transaksi_anggota(String id_trans, String id_user, String id_pk, int keluar, String keterangan, int masuk, String tanggal) {
         this.id_trans = id_trans;
         this.id_user = id_user;
         this.keterangan = keterangan;

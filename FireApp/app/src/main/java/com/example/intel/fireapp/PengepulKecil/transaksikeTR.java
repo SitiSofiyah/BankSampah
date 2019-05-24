@@ -1,5 +1,6 @@
 package com.example.intel.fireapp.PengepulKecil;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -7,6 +8,7 @@ import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -38,6 +40,7 @@ public class transaksikeTR extends AppCompatActivity {
     private Button order;
     private EditText plastik, kertas, logam, kaca, lainnya, total;
     private DatabaseReference menDatabase;
+    int totalSampah;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +58,6 @@ public class transaksikeTR extends AppCompatActivity {
         logam = (EditText) findViewById(R.id.logam_pk);
         kaca = (EditText) findViewById(R.id.kaca_pk);
         lainnya = (EditText) findViewById(R.id.lainnya_pk);
-        total = (EditText) findViewById(R.id.total);
         order = (Button) findViewById(R.id.order);
 
 
@@ -64,14 +66,34 @@ public class transaksikeTR extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(plastik.getText().toString().isEmpty()||kertas.getText().toString().isEmpty()||
-                        logam.getText().toString().isEmpty()||kaca.getText().toString().isEmpty()||lainnya.getText().toString().isEmpty()
-                        || total.getText().toString().isEmpty()){
-                    Snackbar.make(findViewById(R.id.login), "Lengkapi data sampah anda !",Snackbar.LENGTH_LONG).show();
+                        logam.getText().toString().isEmpty()||kaca.getText().toString().isEmpty()||lainnya.getText().toString().isEmpty()){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(transaksikeTR.this);
+                    builder.setMessage("Lengkapi data diri anda !");
+
+                    // add a button
+                    builder.setPositiveButton("OK",null);
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+
                 }else{
                     CreateTransaksiTR();
-                    Toast.makeText(transaksikeTR.this, "Berhasil", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(transaksikeTR.this, HomePK.class);
-                    startActivity(intent);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(transaksikeTR.this);
+                    builder.setTitle("Jual Sampah");
+                    builder.setMessage("Sampah anda dijual sebesar "+totalSampah+" Kg");
+
+                    // add a button
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(transaksikeTR.this, HomePK.class);
+                            startActivity(intent);
+                        }
+                    });
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+
                 }
             }
         });
@@ -120,8 +142,8 @@ public class transaksikeTR extends AppCompatActivity {
         final String logams = logam.getText().toString();
         final String kacas = kaca.getText().toString();
         final String lainnyas = lainnya.getText().toString();
-        final String totals = total.getText().toString();
-
+        int total = Integer.parseInt(plastikss)+Integer.parseInt(kertass)+Integer.parseInt(logams)+Integer.parseInt(kacas)+Integer.parseInt(lainnyas) ;
+        totalSampah=total;
         menDatabase = FirebaseDatabase.getInstance().getReference("transaksiTR");
 
         String id_ordersampah = menDatabase.push().getKey();
@@ -130,7 +152,7 @@ public class transaksikeTR extends AppCompatActivity {
         Date date = new Date();
         String curdate =  fomat.format(date).toString();
 
-        TransaksiKeTR transaksiKeTR = new TransaksiKeTR(id_ordersampah, SaveSharedPreference.getId(getApplicationContext()),"", plastikss,kertass, logams, kacas, lainnyas, totals,curdate,"belum");
+        TransaksiKeTR transaksiKeTR = new TransaksiKeTR(id_ordersampah, SaveSharedPreference.getId(getApplicationContext()),"", plastikss,kertass, logams, kacas, lainnyas, String.valueOf(total),curdate,"belum");
 
         menDatabase.child(id_ordersampah).setValue(transaksiKeTR);
     }

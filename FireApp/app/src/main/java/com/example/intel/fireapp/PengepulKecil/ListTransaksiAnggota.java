@@ -1,6 +1,7 @@
 package com.example.intel.fireapp.PengepulKecil;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,7 @@ import com.example.intel.fireapp.Account.login;
 import com.example.intel.fireapp.Adapter.GrupAdapter;
 import com.example.intel.fireapp.Adapter.TransaksiAnggotaAdapter;
 import com.example.intel.fireapp.Model.TambahGrup;
+import com.example.intel.fireapp.Model.Tawaran;
 import com.example.intel.fireapp.Model.transaksi_anggota;
 import com.example.intel.fireapp.R;
 import com.google.firebase.database.ChildEventListener;
@@ -27,6 +29,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +39,7 @@ public class ListTransaksiAnggota extends AppCompatActivity {
     public RecyclerView recyclerListView;
     public TransaksiAnggotaAdapter myAdapter;
     private DatabaseReference transDB;
+    LinearLayoutManager mLayoutmanajer;
     FloatingActionButton add;
 
     @Override
@@ -50,7 +54,10 @@ public class ListTransaksiAnggota extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recyclerListView=(RecyclerView) findViewById(R.id.transaksiAnggota_list);
-        recyclerListView.setLayoutManager(new LinearLayoutManager(this));
+        mLayoutmanajer = new LinearLayoutManager(this);
+        mLayoutmanajer.setReverseLayout(true);
+        mLayoutmanajer.setStackFromEnd(true);
+        recyclerListView.setLayoutManager(mLayoutmanajer);
         myAdapter= new TransaksiAnggotaAdapter(this,getIntent().getIntExtra("saldo",0),getIntent().getStringExtra("idGrup"),"pk");
         updateAdapter();
         recyclerListView.setAdapter(myAdapter);
@@ -72,32 +79,22 @@ public class ListTransaksiAnggota extends AppCompatActivity {
     private void updateAdapter(){
         final List<transaksi_anggota> listTransaksi= new ArrayList<>();
         transDB = FirebaseDatabase.getInstance().getInstance().getReference();
-        final Query query = transDB.child("transaksi_anggota").orderByChild("id_user").equalTo(getIntent().getStringExtra("id"));
-        query.addChildEventListener(new ChildEventListener() {
+        final Query query = transDB.child("transaksi_anggota").orderByChild("tanggal");
+        query.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                listTransaksi.add(dataSnapshot.getValue(transaksi_anggota.class));
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot data : dataSnapshot.getChildren()){
+                    transaksi_anggota trans = data.getValue(transaksi_anggota.class);
+                    if(trans.getId_user().equals(getIntent().getStringExtra("id"))){
+                        listTransaksi.add(trans);
+                    }
+                }
                 displayUsers(listTransaksi);
             }
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(getApplicationContext(),"Canceled",Toast.LENGTH_SHORT).show();
             }
         });
 

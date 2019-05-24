@@ -57,13 +57,15 @@ public class ListTransaksi extends AppCompatActivity {
     public void viewTrans(){
         final List<TransaksiKeTR> listTransaksi= new ArrayList<>();
         transDB = FirebaseDatabase.getInstance().getInstance().getReference();
-        final Query query = transDB.child("transaksiTR").orderByChild("id_tr").equalTo(SaveSharedPreference.getId(getApplicationContext()));
+        final Query query = transDB.child("transaksiTR").orderByChild("tanggal");
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot data : dataSnapshot.getChildren()){
                     TransaksiKeTR trans = data.getValue(TransaksiKeTR.class);
-                    listTransaksi.add(trans);
+                    if(trans.getId_tr().equals(SaveSharedPreference.getId(getApplicationContext()))){
+                        listTransaksi.add(trans);
+                    }
                 }
                 displayUsers(listTransaksi);
             }
