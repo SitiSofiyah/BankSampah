@@ -12,7 +12,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class User {
-   public String id, nama, alamat, telp, jeniskel, level, password, grup;
+   public String id, nama, alamat, telp, level, password, grup;
 
 
 
@@ -29,12 +29,11 @@ public class User {
         this.grup = grup;
     }
 
-    public User(String id, String nama, String alamat, String telp, String jeniskel, String level, String password, String grup) {
+    public User(String id, String nama, String alamat, String telp, String level, String password, String grup) {
         this.id = id;
         this.nama = nama;
         this.alamat = alamat;
         this.telp = telp;
-        this.jeniskel = jeniskel;
         this.level = level;
         this.password = password;
         this.grup = grup;
@@ -54,10 +53,6 @@ public class User {
 
     public String getTelp() {
         return telp;
-    }
-
-    public String getJeniskel() {
-        return jeniskel;
     }
 
     public String getLevel() {
@@ -82,10 +77,6 @@ public class User {
 
     public void setTelp(String telp) {
         this.telp = telp;
-    }
-
-    public void setJeniskel(String jeniskel) {
-        this.jeniskel = jeniskel;
     }
 
     public void setLevel(String level) {

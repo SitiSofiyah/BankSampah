@@ -11,8 +11,7 @@
         android:id="@+id/relativeLayout2"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
         android:background="#fff"
         android:elevation="4dp"
         android:orientation="vertical"
@@ -63,44 +62,30 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Jenis Kelamin"
-                android:textColor="@color/black" />
-
-            <RadioGroup
-                android:id="@+id/jk"
-                android:layout_width="match_parent"
-                android:layout_height="53dp"
-                android:checkedButton="@id/lk"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/lk"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:buttonTint="@color/green"
-                    android:text="Pria" />
-
-                <RadioButton
-                    android:id="@+id/pr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:buttonTint="@color/green"
-                    android:text="Wanita" />
-            </RadioGroup>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:text="No Telp "
                 android:textColor="@color/black" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/telp"
-                style="@android:style/Widget.EditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="phone"
-                android:textColor="@color/black" />
+                <TextView
+                    android:text="+62"
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:id="@+id/telp"
+                    style="@android:style/Widget.EditText"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:hint="Your Number"
+                    android:textColor="@color/black" />
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"

@@ -35,6 +35,7 @@ public class AdapterTransaksiTR extends RecyclerView.Adapter<AdapterTransaksiTR.
     private final Context mContext;
     private static String jenis;
     String m_Text;
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private List<TransaksiKeTR> transList = new ArrayList<>();
 
     public AdapterTransaksiTR(Context context, String jenis)
@@ -70,7 +71,6 @@ public class AdapterTransaksiTR extends RecyclerView.Adapter<AdapterTransaksiTR.
         holder.logam.setText("Sampah Logam : "+trans.getLogam_pk().toString()+" Kg");
         holder.kertas.setText("Sampah Kertas : "+trans.getKertas_pk().toString()+" Kg");
         holder.lain.setText("Sampah Lainnya : "+trans.getLainnya_pk().toString()+" Kg");
-        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         if(jenis.equals("TRtrans")){
             final Query query = databaseReference.child("users").orderByChild("id").equalTo(trans.getId_pk());
             query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -151,7 +151,65 @@ public class AdapterTransaksiTR extends RecyclerView.Adapter<AdapterTransaksiTR.
                 }
             });
         } else if(jenis.equals("PKtunggu")){
+            holder.jml.setVisibility(View.VISIBLE);
+            holder.jml.setText("Tandai Selesai");
+            holder.jml.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final Query getSelesai = databaseReference.child("transaksiTR").child(trans.getId_ordersampah());
+                    getSelesai.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if(dataSnapshot.exists()){
+                                databaseReference.child("transaksiTR").child(trans.getId_ordersampah()).child("status").setValue("selesai");
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            });
             holder.tawar.setText("Batalkan Penjualan");
+            holder.tawar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final Query getBatal = databaseReference.child("transaksiTR").child(trans.getId_ordersampah());
+                    getBatal.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if(dataSnapshot.exists()){
+                                databaseReference.child("transaksiTR").child(trans.getId_ordersampah()).child("status").setValue("belum");
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+                    final Query getKembali = databaseReference.child("penawaran").child(trans.getId_ordersampah());
+                    getKembali.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if(dataSnapshot.exists()){
+                                for(DataSnapshot data : dataSnapshot.getChildren()){
+                                    Tawaran tawar = data.getValue(Tawaran.class);
+                                    tawar.setStatus("menunggu");
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            });
         }else if(jenis.equals("PKselesai")){
             holder.tawar.setVisibility(View.INVISIBLE);
         }

@@ -66,7 +66,6 @@ public class db_ReadAkun extends AppCompatActivity {
                     User user = noteDataSnapshot.getValue(User.class);
                     tvNama.setText(user.getNama());
                     tvAlamat.setText(user.getAlamat());
-                    tvJK.setText(user.getJeniskel());
                     tvTelp.setText(user.getTelp());
                     tvPass.setText(user.getPassword());
                     level=user.getLevel().toString();

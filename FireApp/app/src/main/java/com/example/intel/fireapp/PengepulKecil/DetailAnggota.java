@@ -29,7 +29,7 @@ import java.util.List;
 
 public class DetailAnggota extends AppCompatActivity {
 
-    public TextView nama, jeniskel, alamat, saldo;
+    public TextView nama, alamat, saldo;
     public int saldoo;
     DatabaseReference mdatabaseReference = FirebaseDatabase.getInstance().getReference();;
 
@@ -46,7 +46,6 @@ public class DetailAnggota extends AppCompatActivity {
 
         nama = (TextView) findViewById(R.id.nama);
         alamat = (TextView) findViewById(R.id.alamat);
-        jeniskel = (TextView) findViewById(R.id.jeniskel);
         saldo = (TextView) findViewById(R.id.saldo);
 
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -60,7 +59,6 @@ public class DetailAnggota extends AppCompatActivity {
 
                     nama.setText(user.getNama().toString());
                     alamat.setText(user.getAlamat().toString());
-                    jeniskel.setText(user.getJeniskel().toString());
                 }
             }
 

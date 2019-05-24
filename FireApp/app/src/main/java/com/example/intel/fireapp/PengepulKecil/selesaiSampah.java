@@ -1,4 +1,4 @@
-package com.example.intel.fireapp;
+package com.example.intel.fireapp.PengepulKecil;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -18,8 +18,7 @@ import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
 import com.example.intel.fireapp.Account.login;
 import com.example.intel.fireapp.Adapter.AdapterTransaksiTR;
 import com.example.intel.fireapp.Model.TransaksiKeTR;
-import com.example.intel.fireapp.PengepulKecil.ListTransaksiJualSampah;
-import com.example.intel.fireapp.PengepulKecil.db_ReadAkun;
+import com.example.intel.fireapp.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,7 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class sampahMenunggu extends AppCompatActivity {
+public class selesaiSampah extends AppCompatActivity {
 
     public RecyclerView recyclerListView;
     public AdapterTransaksiTR myAdapter;
@@ -54,7 +53,7 @@ public class sampahMenunggu extends AppCompatActivity {
         mLayoutmanajer.setReverseLayout(true);
         mLayoutmanajer.setStackFromEnd(true);
         recyclerListView.setLayoutManager(mLayoutmanajer);
-        myAdapter = new AdapterTransaksiTR(this, "PKtunggu");
+        myAdapter = new AdapterTransaksiTR(this, "PKselesai");
         viewTrans();
         recyclerListView.setAdapter(myAdapter);
     }
@@ -68,7 +67,7 @@ public class sampahMenunggu extends AppCompatActivity {
                 Iterable<DataSnapshot> getTrans = dataSnapshot.getChildren();
                 for (DataSnapshot data : getTrans){
                     TransaksiKeTR trans = data.getValue(TransaksiKeTR.class);
-                    if(trans.getId_pk().equals(SaveSharedPreference.getId(getApplicationContext()))&&trans.getStatus().equals("terima")){
+                    if(trans.getId_pk().equals(SaveSharedPreference.getId(getApplicationContext()))&&trans.getStatus().equals("selesai")){
                         listTransaksi.add(trans);
                     }
                 }
@@ -125,7 +124,7 @@ public class sampahMenunggu extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.akun:
-                Intent intent = new Intent(sampahMenunggu.this, db_ReadAkun.class);
+                Intent intent = new Intent(selesaiSampah.this, db_ReadAkun.class);
                 startActivity(intent);
                 return true;
 
@@ -137,7 +136,7 @@ public class sampahMenunggu extends AppCompatActivity {
             case R.id.out:
                 SaveSharedPreference.setLoggedInPK(getApplicationContext(), false);
                 SaveSharedPreference.setId(getApplicationContext(), null);
-                Intent intents = new Intent(sampahMenunggu.this, login.class);
+                Intent intents = new Intent(selesaiSampah.this, login.class);
                 startActivity(intents);
                 finish();
                 return true;
@@ -150,3 +149,4 @@ public class sampahMenunggu extends AppCompatActivity {
         }
     }
 }
+

@@ -137,9 +137,9 @@
         <activity android:name=".Account.pk_bantuan" />
         <activity android:name=".Account.tr_bantuan" />
         <activity android:name=".cobagambar" />
-        <activity android:name=".MenuPenjualan" />
-        <activity android:name=".sampahMenunggu" />
-        <activity android:name=".selesaiSampah" />
+        <activity android:name=".PengepulKecil.MenuPenjualan" />
+        <activity android:name=".PengepulKecil.sampahMenunggu" />
+        <activity android:name=".PengepulKecil.selesaiSampah" />
         <activity android:name=".otpActivity"></activity>
     </application>
 

@@ -1,4 +1,4 @@
-package com.example.intel.fireapp;
+package com.example.intel.fireapp.PengepulKecil;
 
 import android.content.Intent;
 import android.support.design.widget.AppBarLayout;
@@ -8,9 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.example.intel.fireapp.PengepulKecil.ListPenawaran;
-import com.example.intel.fireapp.PengepulKecil.ListTransaksiJualSampah;
-import com.example.intel.fireapp.TukangRombeng.ListJualSampah;
+import com.example.intel.fireapp.R;
 
 public class MenuPenjualan extends AppCompatActivity {
 

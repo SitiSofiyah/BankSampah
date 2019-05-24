@@ -1,11 +1,14 @@
 package com.example.intel.fireapp.Account;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -15,8 +18,22 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
+import com.example.intel.fireapp.Anggota.Home_Anggota;
+import com.example.intel.fireapp.Model.Tawaran;
 import com.example.intel.fireapp.Model.User;
+import com.example.intel.fireapp.PengepulKecil.HomePK;
 import com.example.intel.fireapp.R;
+import com.example.intel.fireapp.TukangRombeng.Home_tr;
+import com.example.intel.fireapp.otpActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskExecutors;
+import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,15 +41,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.concurrent.TimeUnit;
+
 public class register extends AppCompatActivity {
 
      private Button regis;
-     private RadioGroup jekel;
      private Spinner levell;
-     private RadioButton lk, pr;
      private EditText nama, telp, alamat, password;
      private DatabaseReference meDatabase;
-     private String jenisKel;
+    FirebaseAuth auth;
+    String verificationid, kode;
 
 
     @Override
@@ -40,83 +58,150 @@ public class register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
 
+        auth = FirebaseAuth.getInstance();
+
         // Get reference of widgets from XML layout
         nama = (EditText) findViewById(R.id.nama) ;
         telp = (EditText) findViewById(R.id.telp) ;
         alamat = (EditText) findViewById(R.id.alamat) ;
         password = (EditText) findViewById(R.id.password) ;
          levell = (Spinner) findViewById(R.id.level);
-         jekel = (RadioGroup) findViewById(R.id.jk);
         regis = (Button) findViewById(R.id.register);
-        lk = (RadioButton) findViewById(R.id.lk);
-        pr = (RadioButton) findViewById(R.id.pr);
 
         regis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                regis.setClickable(false);
+                if(nama.getText().toString().isEmpty()||telp.getText().toString().isEmpty()||alamat.getText().toString().isEmpty()||password.getText().toString().isEmpty())
+                {
+                    Toast.makeText(register.this, "Lengkapi data diri anda", Toast.LENGTH_LONG).show();
+                }else{
+                    final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+                    String user = telp.getText().toString();
+                    final Query query = databaseReference.child("users").orderByChild("telp").equalTo(user);
 
-                final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-                String user = nama.getText().toString();
-                final Query query = databaseReference.child("users").orderByChild("nama").equalTo(user);
+                    query.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                query.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if(nama.getText().toString().isEmpty()||telp.getText().toString().isEmpty()||alamat.getText().toString().isEmpty()||password.getText().toString().isEmpty())
-                        {
-                            Toast.makeText(register.this, "Lengkapi data diri anda", Toast.LENGTH_LONG).show();
-                            regis.setClickable(true);
-                        }
-                        else if(dataSnapshot.exists()){
-                            Toast.makeText(register.this, "Username sudah ada", Toast.LENGTH_LONG).show();
-                            regis.setClickable(true);
+                        if(dataSnapshot.exists()){
+                                Toast.makeText(register.this, "No telp sudah terdaftar", Toast.LENGTH_LONG).show();
                         }else {
-                            createAccount();
-                            Toast.makeText(register.this, "Register Berhasil", Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(register.this,login.class);
-                            startActivity(intent);
-                            finish();
+                            String phonenumber = "+62"+telp.getText().toString().trim();
+                            sendVerification(phonenumber);
+                            AlertDialog.Builder builder = new AlertDialog.Builder(register.this);
+                            builder.setTitle("Masukkan kode verifikasi !");
+
+                            final EditText input = new EditText(register.this);
+                            input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                            builder.setView(input);
+                            builder.setPositiveButton("Verifikasi", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    kode = input.getText().toString();
+                                    verifyCode(kode);
+                                }
+                            });
+                            builder.setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                            builder.show();
                         }
-                    }
+                        }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    }
-                });
+                        }
+                    });
+                }
+
             }
         });
     }
 
-    public void createAccount(){
+    private void sendVerification(String number) {
+        PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                number,
+                60,
+                TimeUnit.SECONDS,
+                TaskExecutors.MAIN_THREAD,
+                mCallBack
+        );
+    }
 
-        int selectedId = jekel.getCheckedRadioButtonId();
+    private PhoneAuthProvider.OnVerificationStateChangedCallbacks
+            mCallBack = new PhoneAuthProvider.OnVerificationStateChangedCallbacks(){
 
-        if(selectedId == pr.getId()){
-            jenisKel = "pria";
-        } else{
-            jenisKel = "wanita";
+        @Override
+        public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+            super.onCodeSent(s, forceResendingToken);
+            verificationid=s;
         }
 
+        @Override
+        public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
+            String code = phoneAuthCredential.getSmsCode();
+            if(code != null){
+                verifyCode(code);
+            }
+        }
+
+        @Override
+        public void onVerificationFailed(FirebaseException e) {
+            Toast.makeText(register.this,e.getMessage(),Toast.LENGTH_LONG).show();
+        }
+    };
+
+    private void verifyCode(String code) {
+        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationid,code);
+        signInWithCredential(credential);
+    }
+
+    private void signInWithCredential(PhoneAuthCredential credential) {
+        auth.signInWithCredential(credential)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            createAccount();
+                            String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                            if(levell.getSelectedItem().toString().equals("Pengepul Kecil")){
+                                SaveSharedPreference.setLoggedInPK(getApplicationContext(), true);
+                                SaveSharedPreference.setId(getApplicationContext(),id);
+                                Intent pk = new Intent(register.this, HomePK.class);
+                                startActivity(pk);
+                            }else if(levell.getSelectedItem().toString().equals("Tukang Rombeng")){
+                                SaveSharedPreference.setLoggedInTR(getApplicationContext(), true);
+                                SaveSharedPreference.setId(getApplicationContext(),id);
+                                Intent tr = new Intent(register.this, Home_tr.class);
+                                startActivity(tr);
+                            }else{
+                                SaveSharedPreference.setLoggedInAnggota(getApplicationContext(), true);
+                                SaveSharedPreference.setId(getApplicationContext(),id);
+                                Intent anggota = new Intent(register.this, Home_Anggota.class);
+                                startActivity(anggota);
+                            }
+                        }else{
+
+                        }
+                    }
+                });
+    }
+
+    public void createAccount(){
         final String name = nama.getText().toString();
         final String address = alamat.getText().toString();
-        final String telpon = telp.getText().toString();
+        final String telpon = "+62"+telp.getText().toString();
         final String pass = password.getText().toString();
         final String level = levell.getSelectedItem().toString();
-        final String jk = jenisKel;
-
         meDatabase = FirebaseDatabase.getInstance().getReference("users");
-
-        String id = meDatabase.push().getKey();
-
-
-
-        User user = new User(id, name,address, telpon, jk, level, pass, "no");
-
+        String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        User user = new User(id, name,address, telpon, level, pass, "no");
         meDatabase.child(id).setValue(user);
-
-
     }
 }
 
