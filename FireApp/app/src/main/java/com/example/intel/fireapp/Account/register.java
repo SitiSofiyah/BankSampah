@@ -174,16 +174,19 @@ public class register extends AppCompatActivity {
                                 SaveSharedPreference.setId(getApplicationContext(),id);
                                 Intent pk = new Intent(register.this, HomePK.class);
                                 startActivity(pk);
+                                finish();
                             }else if(levell.getSelectedItem().toString().equals("Tukang Rombeng")){
                                 SaveSharedPreference.setLoggedInTR(getApplicationContext(), true);
                                 SaveSharedPreference.setId(getApplicationContext(),id);
                                 Intent tr = new Intent(register.this, Home_tr.class);
                                 startActivity(tr);
+                                finish();
                             }else{
                                 SaveSharedPreference.setLoggedInAnggota(getApplicationContext(), true);
                                 SaveSharedPreference.setId(getApplicationContext(),id);
                                 Intent anggota = new Intent(register.this, Home_Anggota.class);
                                 startActivity(anggota);
+                                finish();
                             }
                         }else{
 
