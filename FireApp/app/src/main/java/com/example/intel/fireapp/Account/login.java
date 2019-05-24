@@ -53,7 +53,7 @@ public class login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        aut = FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
 
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
@@ -198,16 +198,19 @@ public class login extends AppCompatActivity {
                                 SaveSharedPreference.setId(getApplicationContext(),id);
                                 Intent pk = new Intent(login.this, HomePK.class);
                                 startActivity(pk);
+                                finish();
                             }else if(level.equals("Tukang Rombeng")){
                                 SaveSharedPreference.setLoggedInTR(getApplicationContext(), true);
                                 SaveSharedPreference.setId(getApplicationContext(),id);
                                 Intent tr = new Intent(login.this, Home_tr.class);
                                 startActivity(tr);
+                                finish();
                             }else{
                                 SaveSharedPreference.setLoggedInAnggota(getApplicationContext(), true);
                                 SaveSharedPreference.setId(getApplicationContext(),id);
                                 Intent anggota = new Intent(login.this, Home_Anggota.class);
                                 startActivity(anggota);
+                                finish();
                             }
                         }else{
                             Toast.makeText(login.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();
