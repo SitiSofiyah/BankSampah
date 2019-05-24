@@ -139,30 +139,17 @@
                 app:layout_constraintTop_toBottomOf="@+id/nama2" />
 
             <TextView
-                android:id="@+id/jk"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="8dp"
-                android:clickable="true"
-                android:text="Jenis Kelamin: "
-                android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/alamat" />
-
-            <TextView
+                app:layout_constraintTop_toBottomOf="@+id/alamat"
                 android:id="@+id/notlp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_marginLeft="25dp"
-                android:layout_marginTop="8dp"
                 android:clickable="true"
                 android:text="No Telepon: "
                 android:textStyle="bold"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/jk" />
+                tools:layout_editor_absoluteY="91dp" />
 
             <TextView
                 android:id="@+id/pass"
@@ -203,30 +190,17 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_nama" />
 
             <TextView
-                android:id="@+id/tv_jk"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="8dp"
-                android:clickable="true"
-                android:hint="jenis kelamin"
-                android:textStyle="bold"
-                app:layout_constraintLeft_toRightOf="@+id/jk"
-                app:layout_constraintTop_toBottomOf="@+id/tv_alamat" />
-
-            <TextView
                 android:id="@+id/tv_notlp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_marginLeft="25dp"
-                android:layout_marginTop="8dp"
                 android:clickable="true"
                 android:hint="no telepon"
                 android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/tv_alamat"
                 app:layout_constraintLeft_toRightOf="@+id/notlp"
-                app:layout_constraintTop_toBottomOf="@+id/tv_jk" />
+                tools:layout_editor_absoluteY="90dp" />
 
             <TextView
                 android:id="@+id/tv_pass"

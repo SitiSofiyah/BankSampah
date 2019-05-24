@@ -28,7 +28,7 @@ public class db_ReadAkun extends AppCompatActivity {
      * Mendefinisikan variable yang akan dipakai
      */
     private DatabaseReference database;
-    TextView tvNama, tvAlamat, tvPass, tvTelp, tvJK, tvName, tvDesign,tvLocation;
+    TextView tvNama, tvAlamat, tvPass, tvTelp, tvName, tvDesign,tvLocation;
     String level;
 
     @Override
@@ -51,7 +51,6 @@ public class db_ReadAkun extends AppCompatActivity {
             tvAlamat = (TextView) findViewById(R.id.tv_alamat);
             tvTelp = (TextView) findViewById(R.id.tv_notlp);
             tvPass = (TextView) findViewById(R.id.tv_pass);
-            tvJK = (TextView) findViewById(R.id.tv_jk);
             tvName = (TextView) findViewById(R.id.nama1);
             tvDesign = (TextView) findViewById(R.id.designation);
             tvLocation = (TextView) findViewById(R.id.location);
