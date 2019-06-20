@@ -4,28 +4,22 @@ package com.example.intel.fireapp.Account;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
 import com.example.intel.fireapp.Anggota.Home_Anggota;
-import com.example.intel.fireapp.Model.Tawaran;
 import com.example.intel.fireapp.Model.User;
 import com.example.intel.fireapp.PengepulKecil.HomePK;
 import com.example.intel.fireapp.R;
 import com.example.intel.fireapp.TukangRombeng.Home_tr;
-import com.example.intel.fireapp.otpActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskExecutors;
@@ -76,7 +70,7 @@ public class register extends AppCompatActivity {
                     Toast.makeText(register.this, "Lengkapi data diri anda", Toast.LENGTH_LONG).show();
                 }else{
                     final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-                    String user = telp.getText().toString();
+                    String user = "+62"+telp.getText().toString();
                     final Query query = databaseReference.child("users").orderByChild("telp").equalTo(user);
 
                     query.addListenerForSingleValueEvent(new ValueEventListener() {

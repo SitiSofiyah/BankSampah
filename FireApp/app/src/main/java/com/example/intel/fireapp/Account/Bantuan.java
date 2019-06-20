@@ -9,13 +9,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
 import com.example.intel.fireapp.Anggota.Home_Anggota;
+import com.example.intel.fireapp.PengepulKecil.db_ReadAkun;
 import com.example.intel.fireapp.R;
+import com.example.intel.fireapp.TukangRombeng.ListTransaksi;
+
+import org.w3c.dom.Text;
 
 public class Bantuan extends AppCompatActivity {
-    private Button bt_anggota, bt_pk, bt_tr;
+    private TextView bt_anggota, bt_pk, bt_tr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,11 +31,10 @@ public class Bantuan extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Tabungan Sampah");
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        bt_anggota = (Button) findViewById(R.id.untukanggota);
-        bt_pk = (Button) findViewById(R.id.untukpengepul);
-        bt_tr = (Button) findViewById(R.id.untuktukang);
+        bt_anggota = (TextView) findViewById(R.id.untukanggota);
+        bt_pk = (TextView) findViewById(R.id.untukpengepul);
+        bt_tr = (TextView) findViewById(R.id.untuktukang);
 
         bt_anggota.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,12 +75,13 @@ public class Bantuan extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.akun:
-                // User chose the "Settings" item, show the app settings UI...
+                Intent intents = new Intent(Bantuan.this, db_ReadAkun.class);
+                startActivity(intents);
                 return true;
 
             case R.id.help:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
+                Intent intentt = new Intent(Bantuan.this,Bantuan.class);
+                startActivity(intentt);
                 return true;
 
             case R.id.out:

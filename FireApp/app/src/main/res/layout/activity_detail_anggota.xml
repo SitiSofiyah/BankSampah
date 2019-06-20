@@ -32,15 +32,16 @@
     <TextView
         android:padding="2dp"
         android:id="@+id/judnama"
+        android:textSize="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="79dp"
         android:text="Nama "
         android:textColor="@color/black" />
     <TextView
         android:padding="2dp"
+        android:textSize="20dp"
         android:id="@+id/nama"
         android:textColor="@color/colorPrimaryDark"
         android:layout_below="@id/judnama"
@@ -53,40 +54,20 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/green"></View>
-    <TextView
-        android:padding="2dp"
-        android:id="@+id/judJeniskel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/garis1"
-        android:text="Jenis Kelamin "
-        android:textColor="@color/black" />
-    <TextView
-        android:padding="2dp"
-        android:id="@+id/jeniskel"
-        android:textColor="@color/colorPrimaryDark"
-        android:layout_below="@id/judJeniskel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <View
-        android:padding="2dp"
-        android:id="@+id/garis2"
-        android:layout_below="@id/jeniskel"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/green"></View>
 
     <TextView
         android:padding="2dp"
         android:id="@+id/judAlamat"
+        android:textSize="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/garis2"
+        android:layout_below="@id/garis1"
         android:text="Alamat "
         android:textColor="@color/black" />
     <TextView
         android:padding="2dp"
         android:id="@+id/alamat"
+        android:textSize="20dp"
         android:textColor="@color/colorPrimaryDark"
         android:layout_below="@id/judAlamat"
         android:layout_width="match_parent"
@@ -101,6 +82,7 @@
     <TextView
         android:padding="2dp"
         android:id="@+id/judSaldo"
+        android:textSize="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/garis3"
@@ -109,6 +91,7 @@
     <TextView
         android:padding="2dp"
         android:id="@+id/saldo"
+        android:textSize="20dp"
         android:textColor="@color/colorPrimaryDark"
         android:layout_below="@id/judSaldo"
         android:layout_width="match_parent"
@@ -126,7 +109,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
         android:layout_marginBottom="221dp"
         android:padding="10dp"
         android:layout_marginStart="30dp"

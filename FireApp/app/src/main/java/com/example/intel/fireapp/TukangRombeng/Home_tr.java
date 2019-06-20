@@ -38,6 +38,7 @@ public class Home_tr extends AppCompatActivity {
     TextView nama;
     NotificationBadge nBadge;
     int a=0;
+    DatabaseReference transDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,16 +64,43 @@ public class Home_tr extends AppCompatActivity {
                 System.out.println(databaseError.getDetails()+" "+databaseError.getMessage());
             }
         });
-
+        final List<TransaksiKeTR> listTransaksi= new ArrayList<>();
+        transDB = FirebaseDatabase.getInstance().getInstance().getReference();
         nBadge  = (NotificationBadge) findViewById(R.id.badge);
+        nBadge.setNumber(10);
         database.child("transaksiTR").orderByChild("status").equalTo("belum").addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                if(dataSnapshot.exists()){
-                    nBadge.setNumber((int) dataSnapshot.getChildrenCount());
+                Iterable<DataSnapshot> getTrans = dataSnapshot.getChildren();
+                for (DataSnapshot data : getTrans){
+                    TransaksiKeTR trans = data.getValue(TransaksiKeTR.class);
+                    if(trans.getStatus().equals("belum")){
+                        listTransaksi.add(trans);
+                    }
                 }
+
+                for (int i = 0; i < listTransaksi.size(); i++) {
+                    final TransaksiKeTR tr = listTransaksi.get(i);
+                    transDB.child("penawaran").child(tr.getId_ordersampah()).child(SaveSharedPreference.getId(getApplicationContext())).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if(dataSnapshot.exists()){
+                                listTransaksi.remove(tr);
+                            }
+                         nBadge.setNumber((int) listTransaksi.size());
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+                }
+
             }
 
             @Override

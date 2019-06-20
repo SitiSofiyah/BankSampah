@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.intel.fireapp.Account.Bantuan;
 import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
 import com.example.intel.fireapp.Account.login;
 import com.example.intel.fireapp.Adapter.AdapterTransaksiTR;
@@ -56,14 +57,14 @@ public class ListTransaksiJualSampah extends AppCompatActivity {
         mLayoutmanajer.setReverseLayout(true);
         mLayoutmanajer.setStackFromEnd(true);
         recyclerListView.setLayoutManager(mLayoutmanajer);
-        myAdapter = new AdapterTransaksiTR(this, "PKJS");
+        myAdapter = new AdapterTransaksiTR(recyclerListView,this, "PKJS");
         viewTrans();
         recyclerListView.setAdapter(myAdapter);
     }
 
     public void viewTrans(){
         transDB = FirebaseDatabase.getInstance().getInstance().getReference();
-        final Query query = transDB.child("transaksiTR").orderByChild("tanggal");
+        final Query query = transDB.child("transaksiTR").orderByChild("status").equalTo("belum");
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -132,8 +133,8 @@ public class ListTransaksiJualSampah extends AppCompatActivity {
                 return true;
 
             case R.id.help:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
+                Intent intentt = new Intent(ListTransaksiJualSampah.this, Bantuan.class);
+                startActivity(intentt);
                 return true;
 
             case R.id.out:

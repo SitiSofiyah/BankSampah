@@ -27,6 +27,9 @@
     <RelativeLayout
         android:id="@+id/relativeLayout2"
         android:layout_width="350dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginLeft="12dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
@@ -50,35 +53,55 @@
                 android:textColor="@color/green"
                 android:textSize="30dp"
                 android:text=" TATA CARA UNTUK PENGEPUL KECIL "/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:textAlignment="center"
                 android:textColor="@color/green"
                 android:textSize="20dp"
-                android:text=" 1. Pengepul kecil melakukan login dengan melakuakn registrasi sebelumnya  "/>
+                android:text=" 1. Pengepul kecil melakukan login dengan melakukan registrasi sebelumnya  "/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:textAlignment="center"
                 android:textColor="@color/green"
                 android:textSize="20dp"
-                android:text=" 2. Pengepul kecil menambhakan grup dan menambhakan anggota   "/>
+                android:text=" 2. Pengepul kecil menambahakan grup dan menambahakan anggota   "/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:textAlignment="center"
                 android:textColor="@color/green"
                 android:textSize="20dp"
                 android:text=" 3. Pengepul menambahkan transaski dari anggota   "/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:textAlignment="center"
                 android:textColor="@color/green"
                 android:textSize="20dp"
                 android:text=" 4. Pengepuldapat menjual dan melakukan penawaean dengan tukang rombeng  "/>

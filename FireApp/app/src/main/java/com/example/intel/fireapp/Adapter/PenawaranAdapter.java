@@ -15,6 +15,8 @@ import com.example.intel.fireapp.Model.Tawaran;
 import com.example.intel.fireapp.Model.User;
 import com.example.intel.fireapp.Model.transaksi_anggota;
 import com.example.intel.fireapp.PengepulKecil.HomePK;
+import com.example.intel.fireapp.PengepulKecil.ListTransaksiJualSampah;
+import com.example.intel.fireapp.PengepulKecil.MenuPenjualan;
 import com.example.intel.fireapp.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -90,19 +92,11 @@ public class PenawaranAdapter extends RecyclerView.Adapter<PenawaranAdapter.MyVi
                 dbr.child("id_tr").setValue(tawaran.getId_tr());
 
                 final DatabaseReference dbt = FirebaseDatabase.getInstance().getReference().child("penawaran");
-                final Query query = dbt.child(tawaran.getId_js());
-                query.addValueEventListener(new ValueEventListener() {
+                final Query query = dbt.child(tawaran.getId_js()).child(tawaran.getId_tr());
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        Iterable<DataSnapshot> getTawar = dataSnapshot.getChildren();
-                        for (DataSnapshot data : getTawar){
-                            Tawaran tawars = data.getValue(Tawaran.class);
-                            if(tawars.getId_tr().equals(tawaran.getId_tr())){
-                                dbt.child(tawaran.getId_js()).child(tawaran.getId_tr()).child("status").setValue("terima");
-                            }else{
-                                dbt.child(tawaran.getId_js()).child(tawaran.getId_tr()).child("status").setValue("tolak");
-                            }
-                        }
+                        dbt.child(tawaran.getId_js()).child(tawaran.getId_tr()).child("status").setValue("terima");
                     }
 
                     @Override
@@ -111,7 +105,7 @@ public class PenawaranAdapter extends RecyclerView.Adapter<PenawaranAdapter.MyVi
                     }
                 });
                 Toast.makeText(mContext,"Berhasil diterima",Toast.LENGTH_LONG).show();
-                Intent i = new Intent(mContext, HomePK.class);
+                Intent i = new Intent(mContext, ListTransaksiJualSampah.class);
                 mContext.startActivity(i);
             }
         });

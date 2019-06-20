@@ -68,9 +68,9 @@ public class TransaksiAnggotaAdapter extends RecyclerView.Adapter<TransaksiAnggo
 
         }else{
             if(jenis.equals("pk")){
-                holder.ket.setText("Dana Masuk Sebesar "+nf.format(transaksi.getKeluar())+",-");
+                holder.ket.setText("Dana Keluar Sebesar "+nf.format(transaksi.getKeluar())+",-");
             }else{
-                holder.ket.setText(transaksi.getKeterangan()+"\nDana Masuk Sebesar Rp. "+nf.format(transaksi.getKeluar())+",-");
+                holder.ket.setText(transaksi.getKeterangan()+"\nDana Keluar Sebesar Rp. "+nf.format(transaksi.getKeluar())+",-");
             }
 
         }

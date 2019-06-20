@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.intel.fireapp.Account.Bantuan;
 import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
 import com.example.intel.fireapp.Account.login;
 import com.example.intel.fireapp.Adapter.AdapterTransaksiTR;
@@ -53,21 +54,21 @@ public class selesaiSampah extends AppCompatActivity {
         mLayoutmanajer.setReverseLayout(true);
         mLayoutmanajer.setStackFromEnd(true);
         recyclerListView.setLayoutManager(mLayoutmanajer);
-        myAdapter = new AdapterTransaksiTR(this, "PKselesai");
+        myAdapter = new AdapterTransaksiTR(recyclerListView,this, "PKselesai");
         viewTrans();
         recyclerListView.setAdapter(myAdapter);
     }
 
     public void viewTrans(){
         transDB = FirebaseDatabase.getInstance().getInstance().getReference();
-        final Query query = transDB.child("transaksiTR").orderByChild("tanggal");
+        final Query query = transDB.child("transaksiTR").orderByChild("status").equalTo("selesai");
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> getTrans = dataSnapshot.getChildren();
                 for (DataSnapshot data : getTrans){
                     TransaksiKeTR trans = data.getValue(TransaksiKeTR.class);
-                    if(trans.getId_pk().equals(SaveSharedPreference.getId(getApplicationContext()))&&trans.getStatus().equals("selesai")){
+                    if(trans.getId_pk().equals(SaveSharedPreference.getId(getApplicationContext()))){
                         listTransaksi.add(trans);
                     }
                 }
@@ -129,8 +130,8 @@ public class selesaiSampah extends AppCompatActivity {
                 return true;
 
             case R.id.help:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
+                Intent intentt = new Intent(selesaiSampah.this, Bantuan.class);
+                startActivity(intentt);
                 return true;
 
             case R.id.out:

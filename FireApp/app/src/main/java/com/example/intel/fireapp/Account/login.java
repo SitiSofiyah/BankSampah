@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -90,9 +91,9 @@ public class login extends AppCompatActivity {
         }else{
             prolog.setVisibility(View.VISIBLE);
             final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-            String nama = "+62"+username.getText().toString();
+            String telp = "+62"+username.getText().toString();
             final String pass = password.getText().toString();
-            final Query query = databaseReference.child("users").orderByChild("telp").equalTo(nama);
+            final Query query = databaseReference.child("users").orderByChild("telp").equalTo(telp);
 
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -101,41 +102,43 @@ public class login extends AppCompatActivity {
                         for(DataSnapshot userSnapshot : dataSnapshot.getChildren()){
                             User login = userSnapshot.getValue(User.class);
                             if(login.getPassword().equals(pass)){
+                                prolog.setVisibility(View.INVISIBLE);
                                 level = login.getLevel().toString();
                                 String phonenumber = "+62"+username.getText().toString().trim();
                                 sendVerification(phonenumber);
-                                AlertDialog.Builder builder = new AlertDialog.Builder(login.this);
-                                builder.setTitle("Masukkan kode verifikasi !");
-
                                 final EditText input = new EditText(login.this);
                                 input.setInputType(InputType.TYPE_CLASS_NUMBER);
-                                builder.setView(input);
-                                builder.setPositiveButton("Verifikasi", new DialogInterface.OnClickListener() {
+                                final AlertDialog builder = new AlertDialog.Builder(login.this)
+                                .setTitle("Masukkan kode verifikasi !")
+                                .setView(input)
+                                .setPositiveButton("Verifikasi", null)
+                                .setNegativeButton("Batal", null)
+                                .show();
+                                Button positive = builder.getButton(AlertDialog.BUTTON_POSITIVE);
+                                Button negative = builder.getButton(AlertDialog.BUTTON_NEGATIVE);
+                                positive.setOnClickListener(new View.OnClickListener() {
                                     @Override
-                                    public void onClick(DialogInterface dialog, int which) {
+                                    public void onClick(View v) {
                                         kode = input.getText().toString();
                                         verifyCode(kode);
+                                        builder.dismiss();
                                     }
                                 });
-                                builder.setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+                                negative.setOnClickListener(new View.OnClickListener() {
                                     @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.cancel();
+                                    public void onClick(View v) {
+                                        builder.cancel();
                                     }
                                 });
 
-                                //081249752256
-
-                                builder.show();
                             }else{
                                 prolog.setVisibility(View.INVISIBLE);
                                 Toast.makeText(login.this, "Akun tidak tersedia!", Toast.LENGTH_LONG).show();
                             }
-
-                           // Toast.makeText(login.this, "nama anda : "+login.getNama(), Toast.LENGTH_LONG).show();
                         }
                     }else {
-
+                        prolog.setVisibility(View.INVISIBLE);
+                        Toast.makeText(login.this, "Akun tidak tersedia!", Toast.LENGTH_LONG).show();
                     }
                 }
 
@@ -182,8 +185,12 @@ public class login extends AppCompatActivity {
     };
 
     private void verifyCode(String code) {
-        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationid,code);
-        signInWithCredential(credential);
+        try {
+            PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationid, code);
+            signInWithCredential(credential);
+        }catch (Exception e){
+            Toast.makeText(getApplicationContext(), "Verification Code is wrong", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void signInWithCredential(PhoneAuthCredential credential) {
@@ -213,7 +220,7 @@ public class login extends AppCompatActivity {
                                 finish();
                             }
                         }else{
-                            Toast.makeText(login.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();
+                            Toast.makeText(login.this,"Kode verifikasi keliru",Toast.LENGTH_LONG).show();
                         }
                     }
                 });

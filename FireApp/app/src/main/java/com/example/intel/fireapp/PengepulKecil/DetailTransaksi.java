@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.intel.fireapp.Account.Bantuan;
 import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
 import com.example.intel.fireapp.Account.login;
 import com.example.intel.fireapp.Model.User;
@@ -24,6 +25,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.text.NumberFormat;
 
 public class DetailTransaksi extends AppCompatActivity {
 
@@ -39,7 +42,6 @@ public class DetailTransaksi extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Tabungan Sampah");
         setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         tanggal = (TextView) findViewById(R.id.tanggal);
         keterangan = (TextView) findViewById(R.id.ket);
@@ -53,11 +55,11 @@ public class DetailTransaksi extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot transSnapshot : dataSnapshot.getChildren()) {
                     transaksi_anggota trans  = transSnapshot.getValue(transaksi_anggota.class);
-
+                    NumberFormat nf = NumberFormat.getInstance();
                     if(trans.getMasuk()>0){
-                        rincian.setText("Dana Masuk Sebesar Rp. "+trans.getMasuk()+",-");
+                        rincian.setText("Dana Masuk Sebesar Rp. "+nf.format(trans.getMasuk())+",-");
                     }else{
-                        rincian.setText("Dana Keluar Sebesar Rp. "+trans.getKeluar()+",-");
+                        rincian.setText("Dana Keluar Sebesar Rp. "+nf.format(trans.getKeluar())+",-");
                     }
                     tanggal.setText(trans.getTanggal().toString());
                     keterangan.setText(trans.getKeterangan().toString());
@@ -97,8 +99,8 @@ public class DetailTransaksi extends AppCompatActivity {
                 return true;
 
             case R.id.help:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
+                Intent intentt = new Intent(DetailTransaksi.this, Bantuan.class);
+                startActivity(intentt);
                 return true;
 
             case R.id.out:

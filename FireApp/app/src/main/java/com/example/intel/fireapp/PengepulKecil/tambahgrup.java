@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.intel.fireapp.Account.Bantuan;
 import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
 import com.example.intel.fireapp.Account.login;
 import com.example.intel.fireapp.Adapter.GrupAdapter;
@@ -98,8 +99,8 @@ public class tambahgrup extends AppCompatActivity {
                 return true;
 
             case R.id.help:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
+                Intent intentt = new Intent(tambahgrup.this, Bantuan.class);
+                startActivity(intentt);
                 return true;
 
             case R.id.out:

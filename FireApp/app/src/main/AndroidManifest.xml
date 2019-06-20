@@ -12,9 +12,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".PengepulKecil.MainActivity">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".Account.register" />
         <activity android:name=".Account.login" />
@@ -27,13 +30,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".PengepulKecil.HomePK" />
-        </activity>
-        <activity android:name=".Splash">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".PengepulKecil.InputAnggota" />
         <activity
@@ -83,10 +79,10 @@
         </activity>
         <activity
             android:name=".PengepulKecil.ListTransaksiJualSampah"
-            android:parentActivityName=".PengepulKecil.HomePK">
+            android:parentActivityName=".PengepulKecil.MenuPenjualan">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".PengepulKecil.HomePK" />
+                android:value=".PengepulKecil.MenuPenjualan" />
         </activity>
         <activity
             android:name=".PengepulKecil.transaksikeTR"
@@ -136,11 +132,24 @@
         <activity android:name=".Account.tatacaraanggota_update" />
         <activity android:name=".Account.pk_bantuan" />
         <activity android:name=".Account.tr_bantuan" />
-        <activity android:name=".cobagambar" />
-        <activity android:name=".PengepulKecil.MenuPenjualan" />
-        <activity android:name=".PengepulKecil.sampahMenunggu" />
-        <activity android:name=".PengepulKecil.selesaiSampah" />
-        <activity android:name=".otpActivity"></activity>
+        <activity android:name=".PengepulKecil.MenuPenjualan"
+            android:parentActivityName=".PengepulKecil.HomePK">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".PengepulKecil.HomePK" />
+        </activity>
+        <activity android:name=".PengepulKecil.sampahMenunggu"
+            android:parentActivityName=".PengepulKecil.MenuPenjualan">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".PengepulKecil.MenuPenjualan" />
+        </activity>
+        <activity android:name=".PengepulKecil.selesaiSampah"
+            android:parentActivityName=".PengepulKecil.MenuPenjualan">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".PengepulKecil.MenuPenjualan" />
+        </activity>
     </application>
 
 </manifest>

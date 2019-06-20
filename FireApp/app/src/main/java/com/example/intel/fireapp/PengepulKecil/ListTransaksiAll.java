@@ -20,10 +20,12 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Toast;
 
+import com.example.intel.fireapp.Account.Bantuan;
 import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
 import com.example.intel.fireapp.Account.login;
 import com.example.intel.fireapp.Adapter.TransaksiAnggotaAdapter;
 import com.example.intel.fireapp.Adapter.TransaksiAnggotaAllAdapter;
+import com.example.intel.fireapp.Model.Anggota;
 import com.example.intel.fireapp.Model.TambahGrup;
 import com.example.intel.fireapp.Model.User;
 import com.example.intel.fireapp.Model.transaksi_anggota;
@@ -44,12 +46,9 @@ public class ListTransaksiAll extends AppCompatActivity {
     public RecyclerView recyclerListView;
     public TransaksiAnggotaAllAdapter myAdapter;
     private DatabaseReference  transDB;
-    public ArrayList<String> grup = new ArrayList<>();
-    public ArrayList<String> anggota = new ArrayList<>();
     FloatingActionButton add;
-    String nama;
     List<transaksi_anggota> listTransaksi = new ArrayList<>();
-    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+    List<User> listAnggota = new ArrayList<>();
     LinearLayoutManager mLayoutmanajer;
 
     @Override
@@ -86,17 +85,36 @@ public class ListTransaksiAll extends AppCompatActivity {
 
     private void getTrans() {
         transDB = FirebaseDatabase.getInstance().getInstance().getReference();
-        final Query query = transDB.child("transaksi_anggota").orderByChild("tanggal");
+        final Query query = transDB.child("transaksi_anggota").orderByChild("id_pk").equalTo(SaveSharedPreference.getId(getApplicationContext()));
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot data : dataSnapshot.getChildren()){
                     transaksi_anggota trans = data.getValue(transaksi_anggota.class);
-                    if(trans.getId_pk().equals(SaveSharedPreference.getId(getApplicationContext()))){
-                        listTransaksi.add(trans);
-                    }
+                    listTransaksi.add(trans);
                 }
+
                 displayUsers(listTransaksi);
+
+                for (int i = 0; i < listTransaksi.size(); i++) {
+                    final transaksi_anggota anggota = listTransaksi.get(i);
+                    transDB.child("users").orderByChild("id").equalTo(anggota.getId_user()).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Iterable<DataSnapshot> getUser = dataSnapshot.getChildren();
+                            for (DataSnapshot data : getUser){
+                                User user = data.getValue(User.class);
+                                listAnggota.add(user);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+                }
             }
 
             @Override
@@ -104,6 +122,7 @@ public class ListTransaksiAll extends AppCompatActivity {
 
             }
         });
+
     }
 
 
@@ -136,14 +155,13 @@ public class ListTransaksiAll extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange( String s) {
-                 ArrayList<transaksi_anggota> dataFilter= new ArrayList<>();
+                final ArrayList<transaksi_anggota> dataFilter= new ArrayList<>();
                 for( transaksi_anggota data : listTransaksi){
-                    String name = getName(data.getId_user());
-                    String nama = data.getTanggal().toLowerCase();
-                        if(nama.contains(s.toLowerCase())||name.contains(s.toLowerCase())){
+                    String tgl = data.getTanggal().toLowerCase();
+                    String nama = getName(data.getId_user()).toLowerCase();
+                        if(tgl.contains(s.toLowerCase())||nama.contains(s.toLowerCase())){
                             dataFilter.add(data);
                         }
-
                 }
                 myAdapter.setFilter(dataFilter);
                 return true;
@@ -162,8 +180,8 @@ public class ListTransaksiAll extends AppCompatActivity {
                 return true;
 
             case R.id.help:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
+                Intent intentt = new Intent(ListTransaksiAll.this, Bantuan.class);
+                startActivity(intentt);
                 return true;
 
             case R.id.out:
@@ -183,23 +201,13 @@ public class ListTransaksiAll extends AppCompatActivity {
     }
 
     public String getName(String id){
-        final Query query = databaseReference.child("users").orderByChild("id").equalTo(id);
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                        User login = userSnapshot.getValue(User.class);
-                        nama = login.getNama().toLowerCase();
-                    }
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+        String namaa = "";
+        for( User data : listAnggota){
+            if(data.getId().toString().equals(id)){
+                namaa = data.getNama().toString();
             }
-        });
-        return nama;
+        }
+        return namaa;
     }
 }

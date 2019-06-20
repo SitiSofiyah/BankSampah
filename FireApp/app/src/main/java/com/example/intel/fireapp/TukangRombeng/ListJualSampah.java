@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.intel.fireapp.Account.Bantuan;
 import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
 import com.example.intel.fireapp.Account.login;
 import com.example.intel.fireapp.Adapter.AdapterTransaksiTR;
@@ -56,7 +57,7 @@ public class ListJualSampah extends AppCompatActivity {
         mLayoutmanajer.setReverseLayout(true);
         mLayoutmanajer.setStackFromEnd(true);
         recyclerListView.setLayoutManager(mLayoutmanajer);
-        myAdapter= new AdapterTransaksiTR(this,"TRJS");
+        myAdapter= new AdapterTransaksiTR(recyclerListView,this,"TRJS");
         viewTrans();
         recyclerListView.setAdapter(myAdapter);
 
@@ -127,8 +128,8 @@ public class ListJualSampah extends AppCompatActivity {
                 return true;
 
             case R.id.help:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
+                Intent intentt = new Intent(ListJualSampah.this,Bantuan.class);
+                startActivity(intentt);
                 return true;
 
             case R.id.out:

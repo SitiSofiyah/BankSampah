@@ -25,6 +25,7 @@
 
     <TextView
         android:text="Tanggal"
+        android:textSize="20dp"
         android:layout_marginStart="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -32,6 +33,7 @@
     <TextView
         android:textColor="@color/black"
         android:id="@+id/tanggal"
+        android:textSize="20dp"
         android:text="tanggal"
         android:layout_marginStart="20dp"
         android:layout_width="match_parent"
@@ -40,11 +42,13 @@
     <TextView
         android:layout_marginStart="20dp"
         android:text="Rincian"
+        android:textSize="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/rincian"
+        android:textSize="20dp"
         android:textColor="@color/black"
         android:layout_marginStart="20dp"
         android:text="rincian masuk / keluar"
@@ -54,6 +58,7 @@
     <TextView
         android:layout_marginStart="20dp"
         android:text="Keterangan"
+        android:textSize="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -62,6 +67,7 @@
         android:textColor="@color/black"
         android:layout_marginStart="20dp"
         android:text="keterangan"
+        android:textSize="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.intel.fireapp.Account.Bantuan;
 import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
 import com.example.intel.fireapp.Account.login;
 import com.example.intel.fireapp.Model.TransaksiKeTR;
@@ -115,8 +116,8 @@ public class transaksikeTR extends AppCompatActivity {
                 return true;
 
             case R.id.help:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
+                Intent intentt = new Intent(transaksikeTR.this, Bantuan.class);
+                startActivity(intentt);
                 return true;
 
             case R.id.out:
@@ -156,76 +157,5 @@ public class transaksikeTR extends AppCompatActivity {
 
         menDatabase.child(id_ordersampah).setValue(transaksiKeTR);
     }
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//
-//        if(requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK){
-//
-//            if(data.getClipData() != null){
-//
-//                int totalItemsSelected = data.getClipData().getItemCount();
-//
-//                for(int i = 0; i < totalItemsSelected; i++){
-//
-//                    Uri fileUri = data.getClipData().getItemAt(i).getUri();
-//
-//                    String fileName = getFileName(fileUri);
-//
-//
-//                    StorageReference fileToUpload = mStorage.child("Images").child(fileName);
-//
-//                    final int finalI = i;
-//                    fileToUpload.putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                        @Override
-//                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//
-//                            fileDoneList.remove(finalI);
-//                            fileDoneList.add(finalI, "done");
-//
-//                            uploadListAdapter.notifyDataSetChanged();
-//
-//                        }
-//                    });
-//
-//                }
-//
-//                //Toast.makeText(MainActivity.this, "Selected Multiple Files", Toast.LENGTH_SHORT).show();
-//
-//            } else if (data.getData() != null){
-//
-//                Toast.makeText(MainActivity.this, "Selected Single File", Toast.LENGTH_SHORT).show();
-//
-//            }
-//
-//        }
-//
-//    }
-//
-//
-//
-//    public String getFileName(Uri uri) {
-//        String result = null;
-//        if (uri.getScheme().equals("content")) {
-//            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-//            try {
-//                if (cursor != null && cursor.moveToFirst()) {
-//                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-//                }
-//            } finally {
-//                cursor.close();
-//            }
-//        }
-//        if (result == null) {
-//            result = uri.getPath();
-//            int cut = result.lastIndexOf('/');
-//            if (cut != -1) {
-//                result = result.substring(cut + 1);
-//            }
-//        }
-//        return result;
-//    }
 
 }

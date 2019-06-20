@@ -1,6 +1,7 @@
 package com.example.intel.fireapp.TukangRombeng;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -12,11 +13,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.example.intel.fireapp.Account.Bantuan;
 import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
 import com.example.intel.fireapp.Account.login;
 import com.example.intel.fireapp.Adapter.AdapterTransaksiTR;
 import com.example.intel.fireapp.Model.TransaksiKeTR;
+import com.example.intel.fireapp.OnLoadMoreListener;
+import com.example.intel.fireapp.PengepulKecil.TransaksiAnggota;
 import com.example.intel.fireapp.PengepulKecil.db_ReadAkun;
 import com.example.intel.fireapp.R;
 import com.google.firebase.database.ChildEventListener;
@@ -35,6 +41,8 @@ public class ListTransaksi extends AppCompatActivity {
     public RecyclerView recyclerListView;
     public AdapterTransaksiTR myAdapter;
     DatabaseReference transDB;
+    List<TransaksiKeTR> listTransaksi= new ArrayList<>();
+    LinearLayoutManager mLayoutmanajer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,15 +55,47 @@ public class ListTransaksi extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recyclerListView=(RecyclerView) findViewById(R.id.transaksiAnggota_list);
-        recyclerListView.setLayoutManager(new LinearLayoutManager(this));
-        myAdapter= new AdapterTransaksiTR(this,"TRtrans");
+        mLayoutmanajer = new LinearLayoutManager(this);
+        mLayoutmanajer.setReverseLayout(true);
+        mLayoutmanajer.setStackFromEnd(true);
+        recyclerListView.setLayoutManager(mLayoutmanajer);
+        myAdapter= new AdapterTransaksiTR(recyclerListView,this,"TRtrans");
         viewTrans();
         recyclerListView.setAdapter(myAdapter);
+
+        myAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                if (listTransaksi.size() <= 20) {
+                    listTransaksi.add(null);
+                    myAdapter.notifyItemInserted(listTransaksi.size() - 1);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            listTransaksi.remove(listTransaksi.size() - 1);
+                            myAdapter.notifyItemRemoved(listTransaksi.size());
+
+                            //Generating more data
+                            int index = listTransaksi.size();
+                            int end = index + 1;
+                            for (int i = index; i < end; i++) {
+                                TransaksiKeTR transTr = new TransaksiKeTR();
+                                listTransaksi.add(transTr);
+                            }
+                            myAdapter.notifyDataSetChanged();
+                            myAdapter.setLoaded();
+                        }
+                    }, 5000);
+                } else {
+                    Toast.makeText(ListTransaksi.this, "Loading data completed", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
     }
 
     public void viewTrans(){
-        final List<TransaksiKeTR> listTransaksi= new ArrayList<>();
+
         transDB = FirebaseDatabase.getInstance().getInstance().getReference();
         final Query query = transDB.child("transaksiTR").orderByChild("tanggal");
         query.addValueEventListener(new ValueEventListener() {
@@ -99,8 +139,8 @@ public class ListTransaksi extends AppCompatActivity {
                 return true;
 
             case R.id.help:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
+                Intent intentt = new Intent(ListTransaksi.this,Bantuan.class);
+                startActivity(intentt);
                 return true;
 
             case R.id.out:

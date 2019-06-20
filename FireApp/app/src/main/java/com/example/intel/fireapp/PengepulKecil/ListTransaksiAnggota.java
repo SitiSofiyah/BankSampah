@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.intel.fireapp.Account.Bantuan;
 import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
 import com.example.intel.fireapp.Account.login;
 import com.example.intel.fireapp.Adapter.GrupAdapter;
@@ -51,7 +52,6 @@ public class ListTransaksiAnggota extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Tabungan Sampah");
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recyclerListView=(RecyclerView) findViewById(R.id.transaksiAnggota_list);
         mLayoutmanajer = new LinearLayoutManager(this);
@@ -79,15 +79,13 @@ public class ListTransaksiAnggota extends AppCompatActivity {
     private void updateAdapter(){
         final List<transaksi_anggota> listTransaksi= new ArrayList<>();
         transDB = FirebaseDatabase.getInstance().getInstance().getReference();
-        final Query query = transDB.child("transaksi_anggota").orderByChild("tanggal");
+        final Query query = transDB.child("transaksi_anggota").orderByChild("id_user").equalTo(getIntent().getStringExtra("id"));
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot data : dataSnapshot.getChildren()){
                     transaksi_anggota trans = data.getValue(transaksi_anggota.class);
-                    if(trans.getId_user().equals(getIntent().getStringExtra("id"))){
-                        listTransaksi.add(trans);
-                    }
+                    listTransaksi.add(trans);
                 }
                 displayUsers(listTransaksi);
             }
@@ -97,8 +95,6 @@ public class ListTransaksiAnggota extends AppCompatActivity {
 
             }
         });
-
-
     }
 
     private boolean isEmpty(String s){
@@ -127,8 +123,8 @@ public class ListTransaksiAnggota extends AppCompatActivity {
                 return true;
 
             case R.id.help:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
+                Intent intentt = new Intent(ListTransaksiAnggota.this, Bantuan.class);
+                startActivity(intentt);
                 return true;
 
             case R.id.out:
@@ -143,8 +139,6 @@ public class ListTransaksiAnggota extends AppCompatActivity {
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
-
         }
     }
-
 }

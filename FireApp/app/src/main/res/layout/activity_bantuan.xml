@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -30,31 +29,64 @@
             android:layout_height="wrap_content"
             android:padding="15dp"
             >
-            <Button
+            <TextView
                 android:id="@+id/untukanggota"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="18dp"
                 android:text="Tata cara untuk anggota "
-                android:background="@color/red"
-                android:textColor="@color/white"
-
+                android:textColor="@color/black"
                 />
-            <Button
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/green"
+                />
+
+            <TextView
                 android:id="@+id/untukpengepul"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="18dp"
                 android:text="Tata cara untuk Pengepul Kecil"
-                android:background="@color/red"
-                android:textColor="@color/white"
-
+                android:textColor="@color/black"
                 />
-            <Button
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/green"
+                />
+
+            <TextView
                 android:id="@+id/untuktukang"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="18dp"
                 android:text="Tata cara untuk Tukang Rombeng  "
-                android:background="@color/red"
-                android:textColor="@color/white"/>
+                android:textColor="@color/black"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/green"
+                />
         </LinearLayout>
     </LinearLayout>
 

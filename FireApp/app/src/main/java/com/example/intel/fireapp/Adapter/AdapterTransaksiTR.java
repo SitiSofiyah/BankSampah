@@ -1,24 +1,31 @@
 package com.example.intel.fireapp.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
 import com.example.intel.fireapp.Model.Tawaran;
 import com.example.intel.fireapp.Model.TransaksiKeTR;
 import com.example.intel.fireapp.Model.User;
+import com.example.intel.fireapp.OnLoadMoreListener;
+import com.example.intel.fireapp.PengepulKecil.HomePK;
 import com.example.intel.fireapp.PengepulKecil.ListPenawaran;
 import com.example.intel.fireapp.PengepulKecil.db_ReadAkun;
+import com.example.intel.fireapp.PengepulKecil.sampahMenunggu;
+import com.example.intel.fireapp.PengepulKecil.transaksikeTR;
 import com.example.intel.fireapp.R;
 import com.example.intel.fireapp.TukangRombeng.ListJualSampah;
 import com.google.firebase.database.DataSnapshot;
@@ -31,17 +38,38 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdapterTransaksiTR extends RecyclerView.Adapter<AdapterTransaksiTR.MyViewHolder>{
+public class AdapterTransaksiTR extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private final Context mContext;
     private static String jenis;
     String m_Text;
+    private boolean isLoading;
+    private int visibleThreshold = 5;
+    private int lastVisibleItem, totalItemCount;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private List<TransaksiKeTR> transList = new ArrayList<>();
+    private final int VIEW_TYPE_ITEM = 0;
+    private final int VIEW_TYPE_LOADING = 1;
 
-    public AdapterTransaksiTR(Context context, String jenis)
+    public AdapterTransaksiTR(RecyclerView recyclerView, Context context, String jenis)
     {
         this.jenis=jenis;
         mContext = context;
+
+        final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                totalItemCount = linearLayoutManager.getItemCount();
+                lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
+                if (!isLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
+                    if (onLoadMoreListener != null) {
+                        onLoadMoreListener.onLoadMore();
+                    }
+                    isLoading = true;
+                }
+            }
+        });
     }
 
     public void setData(List<TransaksiKeTR> transaksi) {
@@ -53,25 +81,41 @@ public class AdapterTransaksiTR extends RecyclerView.Adapter<AdapterTransaksiTR.
 
 
     @Override
-    public AdapterTransaksiTR.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_transaksirombeng, parent, false);
-        return new AdapterTransaksiTR.MyViewHolder(v);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == VIEW_TYPE_ITEM) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_transaksirombeng, parent, false);
+            return new MyViewHolder(view);
+        } else if (viewType == VIEW_TYPE_LOADING) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_loading, parent, false);
+            return new LoadingViewHolder(view);
+        }
+        return null;
     }
 
 
+    private OnLoadMoreListener onLoadMoreListener;
+    public void setOnLoadMoreListener(OnLoadMoreListener mOnLoadMoreListener) {
+        this.onLoadMoreListener = mOnLoadMoreListener;
+    }
 
     @Override
-    public void onBindViewHolder(final AdapterTransaksiTR.MyViewHolder holder, final int position) {
-        final TransaksiKeTR trans = transList.get(position);
+    public int getItemViewType(int position) {
+        return transList.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
+    }
 
-        holder.tanggal.setText(trans.getTanggal());
-        holder.total.setText("Total Sampah : "+trans.getTotal().toString()+" Kg");
-        holder.kaca.setText("Sampah Kaca : "+trans.getKaca_pk().toString()+" Kg");
-        holder.plastik.setText("Sampah Plastik : "+trans.getPlastik_pk().toString()+" Kg");
-        holder.logam.setText("Sampah Logam : "+trans.getLogam_pk().toString()+" Kg");
-        holder.kertas.setText("Sampah Kertas : "+trans.getKertas_pk().toString()+" Kg");
-        holder.lain.setText("Sampah Lainnya : "+trans.getLainnya_pk().toString()+" Kg");
-        if(jenis.equals("TRtrans")){
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof MyViewHolder) {
+            final TransaksiKeTR trans = transList.get(position);
+            final MyViewHolder myholder = (MyViewHolder) holder;
+            myholder.tanggal.setText(trans.getTanggal());
+            myholder.total.setText("Total Sampah : " + trans.getTotal().toString() + " Kg");
+            myholder.kaca.setText("Sampah Kaca : " + trans.getKaca_pk().toString() + " Kg");
+            myholder.plastik.setText("Sampah Plastik : " + trans.getPlastik_pk().toString() + " Kg");
+            myholder.logam.setText("Sampah Logam : " + trans.getLogam_pk().toString() + " Kg");
+            myholder.kertas.setText("Sampah Kertas : " + trans.getKertas_pk().toString() + " Kg");
+            myholder.lain.setText("Sampah Lainnya : " + trans.getLainnya_pk().toString() + " Kg");
+
             final Query query = databaseReference.child("users").orderByChild("id").equalTo(trans.getId_pk());
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -79,7 +123,7 @@ public class AdapterTransaksiTR extends RecyclerView.Adapter<AdapterTransaksiTR.
                     if (dataSnapshot.exists()) {
                         for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                             User login = userSnapshot.getValue(User.class);
-                            holder.user.setText(""+login.getNama().toString()+", "+login.getAlamat().toString()+"\n "+login.getTelp().toString()+"");
+                            myholder.user.setText("" + login.getNama().toString() + ", " + login.getAlamat().toString() + "\n " + login.getTelp().toString() + "");
                         }
                     }
                 }
@@ -90,138 +134,132 @@ public class AdapterTransaksiTR extends RecyclerView.Adapter<AdapterTransaksiTR.
                 }
             });
 
-            holder.tawar.setText("Status Pengambilan : "+trans.getStatus().toString());
-        }else if(jenis.equals("PKJS")){
-            holder.tawar.setText("Lihat Penawaran -->");
-            holder.jml.setVisibility(View.VISIBLE);
-            final Query query2 = databaseReference.child("penawaran").child(trans.getId_ordersampah());
-            query2.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if(dataSnapshot.exists()){
-                        holder.jml.setText((int)dataSnapshot.getChildrenCount()+" Penawaran");
-                    }else{
-                        holder.jml.setText("0 Penawaran");
+            if (jenis.equals("TRtrans")) {
+                myholder.tawar.setText("Status Pengambilan : " + trans.getStatus().toString());
+            } else if (jenis.equals("PKJS")) {
+                myholder.tawar.setText("Lihat Penawaran -->");
+                myholder.jml.setVisibility(View.VISIBLE);
+                final Query query2 = databaseReference.child("penawaran").child(trans.getId_ordersampah());
+                query2.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            myholder.jml.setText((int) dataSnapshot.getChildrenCount() + " Penawaran");
+                        } else {
+                            myholder.jml.setText("0 Penawaran");
+                        }
                     }
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                }
-            });
-            holder.tawar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Context context = v.getContext();
-                    Intent intents = new Intent(context, ListPenawaran.class);
-                    intents.putExtra("id_order",""+trans.getId_ordersampah());
-                    context.startActivity(intents);
-                }
-            });
-        } else if(jenis.equals("TRJS")){
-            holder.tawar.setText("Lakukan Penawaran -->");
-            holder.tawar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                    builder.setTitle("Masukkan penawaran");
+                    }
+                });
+                myholder.tawar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Context context = v.getContext();
+                        Intent intents = new Intent(context, ListPenawaran.class);
+                        intents.putExtra("id_order", "" + trans.getId_ordersampah());
+                        context.startActivity(intents);
+                    }
+                });
+            } else if (jenis.equals("TRJS")) {
+                myholder.tawar.setText("Lakukan Penawaran -->");
+                myholder.tawar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                        builder.setTitle("Masukkan penawaran");
 
-                    final EditText input = new EditText(mContext);
-                    input.setInputType(InputType.TYPE_CLASS_NUMBER);
-                    builder.setView(input);
-                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            m_Text = input.getText().toString();
-                            final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("penawaran");
-                            String id = databaseReference.push().getKey();
-                            Tawaran tawaran = new Tawaran(id, trans.getId_pk(), SaveSharedPreference.getId(mContext),trans.getId_ordersampah(),m_Text,"menunggu");
-                            databaseReference.child(trans.getId_ordersampah()).child(SaveSharedPreference.getId(mContext)).setValue(tawaran);
-                        }
-                    });
-                    builder.setNegativeButton("Batal", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
-
-                    builder.show();
-                }
-            });
-        } else if(jenis.equals("PKtunggu")){
-            holder.jml.setVisibility(View.VISIBLE);
-            holder.jml.setText("Tandai Selesai");
-            holder.jml.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    final Query getSelesai = databaseReference.child("transaksiTR").child(trans.getId_ordersampah());
-                    getSelesai.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if(dataSnapshot.exists()){
-                                databaseReference.child("transaksiTR").child(trans.getId_ordersampah()).child("status").setValue("selesai");
+                        final EditText input = new EditText(mContext);
+                        input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                        builder.setView(input);
+                        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                m_Text = input.getText().toString();
+                                final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("penawaran");
+                                String id = databaseReference.push().getKey();
+                                Tawaran tawaran = new Tawaran(id, trans.getId_pk(), SaveSharedPreference.getId(mContext), trans.getId_ordersampah(), m_Text, "menunggu");
+                                databaseReference.child(trans.getId_ordersampah()).child(SaveSharedPreference.getId(mContext)).setValue(tawaran);
                             }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-                }
-            });
-            holder.tawar.setText("Batalkan Penjualan");
-            holder.tawar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    final Query getBatal = databaseReference.child("transaksiTR").child(trans.getId_ordersampah());
-                    getBatal.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if(dataSnapshot.exists()){
-                                databaseReference.child("transaksiTR").child(trans.getId_ordersampah()).child("status").setValue("belum");
+                        });
+                        builder.setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
                             }
-                        }
+                        });
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                        builder.show();
+                    }
+                });
+            } else if (jenis.equals("PKtunggu")) {
+                myholder.jml.setVisibility(View.VISIBLE);
+                myholder.jml.setText("Tandai Selesai");
+                myholder.jml.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        databaseReference.child("transaksiTR").child(trans.getId_ordersampah()).child("status").setValue("selesai");
+                        Intent intent = new Intent(mContext, sampahMenunggu.class);
+                        mContext.startActivity(intent);
+                    }
+                });
+                myholder.tawar.setText("Batalkan Penjualan");
+                myholder.tawar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        databaseReference.child("transaksiTR").child(trans.getId_ordersampah()).child("status").setValue("belum");
+                        databaseReference.child("transaksiTR").child(trans.getId_ordersampah()).child("id_tr").setValue("");
+                        databaseReference.child("penawaran").child(trans.getId_ordersampah()).child(trans.id_tr).child("status").setValue("menunggu");
+                        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                        builder.setTitle("Batalkan Penjualan");
+                        builder.setMessage("Pembatalan penjualan berhasil !");
 
-                        }
-                    });
-
-                    final Query getKembali = databaseReference.child("penawaran").child(trans.getId_ordersampah());
-                    getKembali.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if(dataSnapshot.exists()){
-                                for(DataSnapshot data : dataSnapshot.getChildren()){
-                                    Tawaran tawar = data.getValue(Tawaran.class);
-                                    tawar.setStatus("menunggu");
-                                }
+                        // add a button
+                        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(mContext, sampahMenunggu.class);
+                                mContext.startActivity(intent);
                             }
-                        }
+                        });
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-                }
-            });
-        }else if(jenis.equals("PKselesai")){
-            holder.tawar.setVisibility(View.INVISIBLE);
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                        Intent intent = new Intent(mContext, sampahMenunggu.class);
+                        mContext.startActivity(intent);
+                    }
+                });
+            } else {
+                myholder.tawar.setVisibility(View.INVISIBLE);
+            }
+        }else if(holder instanceof LoadingViewHolder) {
+            LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
+            loadingViewHolder.progressBar.setIndeterminate(true);
         }
     }
 
     @Override
     public int getItemCount() {
-        return transList.size();
+        return transList == null ? 0 : transList.size();
     }
 
+    public void setLoaded() {
+        isLoading = false;
+    }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    private class LoadingViewHolder extends RecyclerView.ViewHolder {
+        public ProgressBar progressBar;
+
+        public LoadingViewHolder(View view) {
+            super(view);
+            progressBar = (ProgressBar) view.findViewById(R.id.progressBar1);
+        }
+    }
+
+    private class MyViewHolder extends RecyclerView.ViewHolder {
 
         public TextView tanggal, kaca, plastik, logam,kertas, lain,total, user,tawar, jml;
 //        public Button detail, tambah;

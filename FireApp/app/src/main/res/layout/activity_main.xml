@@ -3,41 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent"
-    android:padding="10dp"
-    tools:context=".PengepulKecil.MainActivity">
+    tools:context=".MainActivity">
 
-    <LinearLayout
-        android:id="@+id/isi"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:orientation="horizontal"
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/splash" />
+
+    <ProgressBar
+        android:id="@+id/progressBar1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <EditText
-            android:id="@+id/id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="+62" />
-
-        <EditText
-            android:id="@+id/phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Phone Number" />
-    </LinearLayout>
-
-    <Button
-        android:onClick="regis"
-        android:id="@+id/register"
-        android:text="REGISTER"
-        android:background="@color/green"
-        android:textColor="@color/white"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/isi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-
+        android:layout_marginBottom="55dp"
+        tools:layout_editor_absoluteX="168dp"
+        tools:layout_editor_absoluteY="417dp" />
 
 </RelativeLayout>

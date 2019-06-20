@@ -14,7 +14,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
+import com.example.intel.fireapp.Account.Bantuan;
 import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
 import com.example.intel.fireapp.Account.login;
 import com.example.intel.fireapp.Model.Pemberitahuan;
@@ -69,26 +71,30 @@ public class TransaksiAnggota extends AppCompatActivity {
 
         meDatabase = FirebaseDatabase.getInstance().getReference("transaksi_anggota");
         int saldoLama = getIntent().getIntExtra("saldo",0);
-
-        anggota.child("saldo").setValue(saldoLama+totalHarga);
         String id = meDatabase.push().getKey();
 
-        transaksi_anggota ta;
+        transaksi_anggota ta = null;
 
         String idnotif = notif.push().getKey();
-        Pemberitahuan pemberitahuan ;
+        Pemberitahuan pemberitahuan = null;
 
         if(selectedId == masuk.getId()){
             anggota.child("saldo").setValue(saldoLama+totalHarga);
             ta = new transaksi_anggota(id,getIntent().getStringExtra("id"),SaveSharedPreference.getId(getApplicationContext()),0,ket.getText().toString(),totalHarga,curdate );
             pemberitahuan = new Pemberitahuan(idnotif, SaveSharedPreference.getId(getApplicationContext()),getIntent().getStringExtra("id"),curdate,"Saldo anda bertambah sebesar Rp. "+totalHarga, "send");
+            meDatabase.child(id).setValue(ta);
+            notif.child(getIntent().getStringExtra("id")).child(idnotif).setValue(pemberitahuan);
         } else{
-            anggota.child("saldo").setValue(saldoLama-totalHarga);
-            ta = new transaksi_anggota(id,getIntent().getStringExtra("id"),SaveSharedPreference.getId(getApplicationContext()),totalHarga,ket.getText().toString(),0,curdate );
-            pemberitahuan = new Pemberitahuan(idnotif, SaveSharedPreference.getId(getApplicationContext()),getIntent().getStringExtra("id"),curdate,"Saldo anda berkurang sebesar Rp. "+totalHarga, "send");
+            if(saldoLama-totalHarga < 0){
+                Toast.makeText(TransaksiAnggota.this,"Saldo anda tidak mencukupi !",Toast.LENGTH_LONG).show();
+            }else{
+                anggota.child("saldo").setValue(saldoLama-totalHarga);
+                ta = new transaksi_anggota(id,getIntent().getStringExtra("id"),SaveSharedPreference.getId(getApplicationContext()),totalHarga,ket.getText().toString(),0,curdate );
+                pemberitahuan = new Pemberitahuan(idnotif, SaveSharedPreference.getId(getApplicationContext()),getIntent().getStringExtra("id"),curdate,"Saldo anda berkurang sebesar Rp. "+totalHarga, "send");
+                meDatabase.child(id).setValue(ta);
+                notif.child(getIntent().getStringExtra("id")).child(idnotif).setValue(pemberitahuan);
+            }
         }
-        meDatabase.child(id).setValue(ta);
-        notif.child(getIntent().getStringExtra("id")).child(idnotif).setValue(pemberitahuan);
 
         Intent intent = new Intent(TransaksiAnggota.this,DetailAnggota.class);
         intent.putExtra("idGrup", ""+getIntent().getStringExtra("idGrup"));
@@ -112,8 +118,8 @@ public class TransaksiAnggota extends AppCompatActivity {
                 return true;
 
             case R.id.help:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
+                Intent intentt = new Intent(TransaksiAnggota.this, Bantuan.class);
+                startActivity(intentt);
                 return true;
 
             case R.id.out:

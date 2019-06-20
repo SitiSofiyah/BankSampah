@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.intel.fireapp.Account.Bantuan;
 import com.example.intel.fireapp.Account.Utils.SaveSharedPreference;
 import com.example.intel.fireapp.Account.login;
 import com.example.intel.fireapp.Model.Anggota;
@@ -25,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.NumberFormat;
 import java.util.List;
 
 public class DetailAnggota extends AppCompatActivity {
@@ -42,7 +44,6 @@ public class DetailAnggota extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Tabungan Sampah");
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         nama = (TextView) findViewById(R.id.nama);
         alamat = (TextView) findViewById(R.id.alamat);
@@ -72,7 +73,8 @@ public class DetailAnggota extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 saldoo = dataSnapshot.child("saldo").getValue(Integer.class);
-                saldo.setText(""+saldoo);
+                NumberFormat nf = NumberFormat.getInstance();
+                saldo.setText("Rp. "+nf.format(saldoo)+",-");
             }
 
             @Override
@@ -113,8 +115,8 @@ public class DetailAnggota extends AppCompatActivity {
                 return true;
 
             case R.id.help:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
+                Intent intentt = new Intent(DetailAnggota.this, Bantuan.class);
+                startActivity(intentt);
                 return true;
 
             case R.id.out:
