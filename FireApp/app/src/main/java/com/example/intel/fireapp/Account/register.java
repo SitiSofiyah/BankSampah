@@ -41,7 +41,7 @@ public class register extends AppCompatActivity {
 
      private Button regis;
      private Spinner levell;
-     private EditText nama, telp, alamat, password;
+     private EditText nama, telp, alamat, password, username;
      private DatabaseReference meDatabase;
     FirebaseAuth auth;
     String verificationid, kode;
@@ -56,6 +56,7 @@ public class register extends AppCompatActivity {
 
         // Get reference of widgets from XML layout
         nama = (EditText) findViewById(R.id.nama) ;
+        username = (EditText) findViewById(R.id.username) ;
         telp = (EditText) findViewById(R.id.telp) ;
         alamat = (EditText) findViewById(R.id.alamat) ;
         password = (EditText) findViewById(R.id.password) ;
@@ -191,13 +192,14 @@ public class register extends AppCompatActivity {
 
     public void createAccount(){
         final String name = nama.getText().toString();
+        final String usernama = username.getText().toString();
         final String address = alamat.getText().toString();
         final String telpon = "+62"+telp.getText().toString();
         final String pass = password.getText().toString();
         final String level = levell.getSelectedItem().toString();
         meDatabase = FirebaseDatabase.getInstance().getReference("users");
         String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        User user = new User(id, name,address, telpon, level, pass, "no");
+        User user = new User(id, name,usernama,address, telpon, level, pass, "no");
         meDatabase.child(id).setValue(user);
     }
 }

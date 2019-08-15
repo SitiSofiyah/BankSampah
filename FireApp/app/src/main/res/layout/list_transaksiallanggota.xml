@@ -47,6 +47,23 @@
                 android:textColorHint="@color/grey"
                 android:text="Nama"/>
 
+            <TextView
+                android:layout_below="@id/ket"
+                android:id="@+id/rinci"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:text="Rincian :"/>
+
+            <TextView
+                android:layout_below="@id/rinci"
+                android:id="@+id/rincian"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"/>
+
             <View
                 android:layout_centerHorizontal="true"
                 android:layout_width="400dp"

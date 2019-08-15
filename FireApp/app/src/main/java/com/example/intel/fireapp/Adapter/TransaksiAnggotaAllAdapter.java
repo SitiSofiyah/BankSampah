@@ -83,6 +83,8 @@ public class TransaksiAnggotaAllAdapter extends RecyclerView.Adapter<TransaksiAn
 
         NumberFormat nf = NumberFormat.getInstance();
 
+        holder.rinci.setText(transaksi.getKeterangan());
+
         holder.tanggal.setText(transaksi.getTanggal());
         if(transaksi.getMasuk() > 0){
             holder.ket.setText("Sampah Masuk senilai Rp. "+nf.format(transaksi.getMasuk())+",-");
@@ -99,7 +101,7 @@ public class TransaksiAnggotaAllAdapter extends RecyclerView.Adapter<TransaksiAn
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView tanggal, ket, nama;
+        public TextView tanggal, ket, nama, rinci;
 //        public Button detail, tambah;
 
         public MyViewHolder(View itemView) {
@@ -107,6 +109,7 @@ public class TransaksiAnggotaAllAdapter extends RecyclerView.Adapter<TransaksiAn
             nama = (TextView) itemView.findViewById(R.id.nama);
             tanggal = (TextView) itemView.findViewById(R.id.tanggal);
             ket = (TextView) itemView.findViewById(R.id.ket);
+            rinci = (TextView) itemView.findViewById(R.id.rincian);
 
         }
     }

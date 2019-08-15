@@ -91,9 +91,9 @@ public class login extends AppCompatActivity {
         }else{
             prolog.setVisibility(View.VISIBLE);
             final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-            String telp = "+62"+username.getText().toString();
+            String telp = username.getText().toString();
             final String pass = password.getText().toString();
-            final Query query = databaseReference.child("users").orderByChild("telp").equalTo(telp);
+            final Query query = databaseReference.child("users").orderByChild("username").equalTo(telp);
 
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -104,8 +104,7 @@ public class login extends AppCompatActivity {
                             if(login.getPassword().equals(pass)){
                                 prolog.setVisibility(View.INVISIBLE);
                                 level = login.getLevel().toString();
-                                String phonenumber = "+62"+username.getText().toString().trim();
-                                sendVerification(phonenumber);
+                                sendVerification(login.getTelp().toString().trim());
                                 final EditText input = new EditText(login.this);
                                 input.setInputType(InputType.TYPE_CLASS_NUMBER);
                                 final AlertDialog builder = new AlertDialog.Builder(login.this)

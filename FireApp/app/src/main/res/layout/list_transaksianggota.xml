@@ -29,6 +29,24 @@
                 android:text="Dana Masuk Rp. 30.000,-"/>
 
             <TextView
+                android:layout_below="@id/ket"
+                android:id="@+id/rinci"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:text="Rincian :"/>
+
+            <TextView
+                android:layout_below="@id/rinci"
+                android:id="@+id/rincian"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"/>
+
+
+            <TextView
                 android:id="@+id/tanggal"
                 android:textColor="@color/black"
                 android:layout_width="wrap_content"

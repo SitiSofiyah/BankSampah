@@ -15,6 +15,8 @@ import com.example.intel.fireapp.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.w3c.dom.Text;
+
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +76,7 @@ public class TransaksiAnggotaAdapter extends RecyclerView.Adapter<TransaksiAnggo
             }
 
         }
-
+        holder.rinci.setText(transaksi.getKeterangan());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,13 +109,14 @@ public class TransaksiAnggotaAdapter extends RecyclerView.Adapter<TransaksiAnggo
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView tanggal, ket;
+        public TextView tanggal, ket, rinci;
 //        public Button detail, tambah;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             tanggal = (TextView) itemView.findViewById(R.id.tanggal);
             ket = (TextView) itemView.findViewById(R.id.ket);
+            rinci = (TextView) itemView.findViewById(R.id.rincian);
 
         }
     }
